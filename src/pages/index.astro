@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PhoneMockup from '../components/PhoneMockup.astro';
+import Icon from '../components/Icon.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { site, faqs } from '../data/site';
+import '../styles/home.css';
+const features = [
+ {icon:'card', title:'デジタル会員証', description:'お店とのつながりを、スマートフォンの中に。'},
+ {icon:'stamp', title:'スタンプ・ポイント', description:'また来たくなる、日々の小さな楽しみを。'},
+ {icon:'coupon', title:'クーポン・会員特典', description:'常連のお客様に、お店らしい「ありがとう」を。'},
+ {icon:'bell', title:'お知らせ・商品案内', description:'新商品や季節の便りを、伝えたいときに。'},
+ {icon:'grid', title:'お店の管理画面', description:'会員情報や日々の更新を、扱いやすく。'},
+];
+const steps = [
+ ['お問い合わせ','気になることや、実現したいことをお聞かせください。'],
+ ['ヒアリング','お店の個性、お客様のこと、日々の課題を整理します。'],
+ ['ご提案・デモ','必要な機能やデザイン、費用・進め方をご相談します。'],
+ ['制作・設定','合意した内容に沿って、お店のアプリを形にします。'],
+ ['公開・運用','使い方を確認し、無理なく続ける方法を考えます。'],
+];
+---
+<BaseLayout title="oneight">
+  <section class="hero container" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="hero-kicker"><span class="tiny-line"></span>お店専用のWebアプリ制作・運用</p>
+      <h1 id="hero-title">お店のらしさが、<br /><span>つながり</span>になる。</h1>
+      <p class="hero-description">会員証も、スタンプも、お知らせも。<br />あなたのお店に、あなたのお店らしいアプリを。<br class="desktop-break" />制作から運用まで、一緒に考えるoneightです。</p>
+      <div class="hero-actions"><a href="/contact/" class="button button--primary">無料相談・デモを相談する</a><a href="/service/" class="hero-detail-link">サービスを知る</a></div>
+      <p class="hero-note">現在、サービス提供に向けて準備中です。</p>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-arch" aria-hidden="true"><span class="arch-orbit"></span><span class="arch-orbit arch-orbit--second"></span></div>
+      <span class="visual-caption">YOUR SHOP, YOUR APP.</span>
+      <div class="hero-phone-back"><PhoneMockup variant="stamp" /></div>
+      <div class="hero-phone-main"><PhoneMockup /></div>
+      <div class="floating-label floating-label--member"><span class="label-icon"><Icon name="card" size={22} /></span><span>いつものお店が、<br /><strong>わたしのアプリに。</strong></span></div>
+      <div class="floating-label floating-label--stamp"><span class="stamp-flower"><Icon name="flower" size={24} /></span><span>また来たくなる、<br />小さなきっかけ。</span></div>
+      <p class="visual-disclaimer">画面イメージ・架空店舗のサンプルです。<br />機能・デザインは検討中です。</p>
+    </div>
+  </section>
+  <div class="audience-strip"><div class="container audience-inner"><span>地域のお店の、新しい選択肢に。</span><div><span>ベーカリー</span><span>カフェ</span><span>菓子店</span><span>美容サロン</span><span>トリミングサロン</span></div></div></div>
+
+  <section class="section introduction" aria-labelledby="intro-title"><div class="container intro-grid" data-reveal>
+    <div><p class="eyebrow">A LITTLE CLOSER</p><h2 id="intro-title">「また来たい」を、<br />お店らしいかたちで。</h2></div>
+    <div class="intro-copy"><p>いつものパン。お気に入りの一杯。<br />お客様が通いたくなる理由は、<br />きっと、あなたのお店の中にあります。</p><p>その魅力を、来店していない時間にも届けられたら。<br />紙のカードを、もっと気軽に使えたら。</p><p>oneightが目指すのは、<strong>お店とお客様の関係を育てる<br />「お店専用のWebアプリ」</strong>です。</p></div>
+  </div></section>
+
+  <section class="section service-section" aria-labelledby="service-title"><div class="container">
+    <div class="section-heading service-heading" data-reveal><div><p class="eyebrow">OUR SERVICE</p><h2 id="service-title">いつもの接客に、<br />もうひとつのつながりを。</h2></div><p>お店の雰囲気を映したデザインに、<br />必要な機能を組み合わせて。<br />URLやQRコードから、気軽に使える仕組みです。</p></div>
+    <div class="service-showcase" data-reveal>
+      <div class="showcase-visual"><span class="showcase-word" aria-hidden="true">closer.</span><div class="showcase-phone"><PhoneMockup variant="card" /></div><span class="showcase-label">画面イメージ</span></div>
+      <div class="showcase-copy"><span class="outlined-label">お店の個性を、大切に。</span><h3>お店の色で。お店の言葉で。<br />お店だけの会員サービスを。</h3><p>ロゴや色、伝えたい雰囲気を反映して、お客様に親しんでもらえるアプリへ。共通のシステムを土台に、導入しやすさと、そのお店らしさの両立を目指します。</p><div class="showcase-points"><p><Icon name="check" size={18} />URL・QRコードからアクセス</p><p><Icon name="check" size={18} />スマートフォンのホーム画面への追加を検討</p><p><Icon name="check" size={18} />日々の運用を見据えてご提案</p></div><a class="text-link" href="/service/">サービスを詳しく見る</a></div>
+    </div>
+    <div class="feature-heading"><h3>お店に合う機能を、一緒に。</h3><p>以下は導入を検討している機能例です。標準搭載・提供開始を確約するものではありません。</p></div>
+    <div class="feature-grid">{features.map(feature => <div class="feature-item"><div class="feature-icon"><Icon name={feature.icon} size={26} /></div><h3>{feature.title}</h3><p>{feature.description}</p></div>)}</div>
+  </div></section>
+
+  <section class="section possibilities" aria-labelledby="possibility-title"><div class="container"><div class="section-heading" data-reveal><p class="eyebrow">FOR YOUR EVERYDAY</p><h2 id="possibility-title">こんなお店の想いに、<br />寄り添うために。</h2></div>
+    <div class="possibility-grid" data-reveal><article><span class="possibility-illustration illustration-card" aria-hidden="true"><i></i><i></i><b>mori.</b></span><h3>紙のカードを、もっと身軽に。</h3><p>「カードを忘れた」を減らしたい。会員証やスタンプを、いつも持ち歩くスマートフォンへ。</p></article><article><span class="possibility-illustration illustration-message" aria-hidden="true"><i></i><b>季節の便りを、お客様へ。</b><i></i></span><h3>お店の今を、お客様に。</h3><p>新商品のお知らせや会員限定の特典。お店に足を運ぶきっかけになる情報を届けたい。</p></article><article><span class="possibility-illustration illustration-shop" aria-hidden="true"><b>your shop.</b><i></i></span><h3>小さなお店にも、自分らしいアプリを。</h3><p>大切にしてきた世界観をそのままに。お店のブランドに、デジタルの接点を増やしたい。</p></article></div>
+    <p class="section-footnote">利用イメージの例です。導入効果や売上・再来店率の向上を保証するものではありません。</p>
+  </div></section>
+
+  <section class="section pricing-section" aria-labelledby="pricing-title"><div class="container pricing-overview" data-reveal><div class="pricing-intro"><p class="eyebrow">SIMPLE START</p><h2 id="pricing-title">つくって終わりではなく、<br />続けていくための料金に。</h2><p>制作も、日々の運用も。<br />小さなお店が無理なく取り入れられる<br />サービスを目指して、準備しています。</p><a class="text-link" href="/pricing/">料金の考え方を詳しく</a></div><div class="price-card"><div class="price-card-top"><span>基本プラン</span><span class="price-status">{site.pricing.status}</span></div><p class="price-amount"><span>月額</span><strong>{site.pricing.monthlyLabel}</strong><span>円</span></p><p class="price-tax">{site.pricing.tax}</p><div class="price-divider"></div><p class="initial-fee">{site.pricing.initialFee}</p><p class="price-conditions">{site.pricing.conditions}</p><a class="button button--primary" href="/contact/">自分のお店について相談する</a></div></div></section>
+
+  <section class="section flow-section" aria-labelledby="flow-title"><div class="container"><div class="section-heading"><p class="eyebrow">HOW WE START</p><h2 id="flow-title">お話を聞くことから、<br />一緒にはじめます。</h2><p>導入の進め方の一例です。お店の状況に合わせて調整します。</p></div><ol class="flow-list">{steps.map((step,i) => <li><span class="step-label">STEP {i+1}</span><h3>{step[0]}</h3><p>{step[1]}</p></li>)}</ol></div></section>
+
+  <section class="section faq-section" id="faq" aria-labelledby="faq-title"><div class="container faq-grid"><div><p class="eyebrow">QUESTIONS & ANSWERS</p><h2 id="faq-title">気になること、<br />お答えします。</h2><p>ここにないご質問も、<br />気軽にご相談ください。</p></div><div class="faq-list">{faqs.map(faq => <details><summary>{faq.question}<span class="faq-toggle" aria-hidden="true"></span></summary><p>{faq.answer}</p></details>)}</div></div></section>
+
+  <section class="section about-teaser"><div class="container about-teaser-inner"><div class="about-mark" aria-hidden="true">oneight<span></span></div><div><p class="eyebrow">ABOUT ONEIGHT</p><h2>地域のお店の可能性を、<br />デジタルでもっと。</h2><p>大切にされているお店が、これからもお客様とつながっていくために。<br class="desktop-break" />oneightは、一つひとつの店舗の課題に向き合うところからはじめます。</p><a class="text-link" href="/about/">oneightについて知る</a></div></div></section>
+  <ContactCTA />
+</BaseLayout>

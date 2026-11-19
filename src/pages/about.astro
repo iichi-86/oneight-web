@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/details.css';
+
+const commitments = [
+  { en: 'LISTEN FIRST', title: 'お店の話を、出発点に。', text: '必要なものは、お店によって違うから。日々のお仕事やお客様との関係を理解し、どんな仕組みが役立つかを一緒に考えます。' },
+  { en: 'DESIGN WITH PURPOSE', title: '見た目にも、使い方にも。', text: 'お店らしい印象と、迷わず使えること。その両方を大切に、画面のデザインから言葉の選び方、運用の流れまで丁寧に考えます。' },
+  { en: 'BUILD HONESTLY', title: 'できることを、誠実に。', text: '提供できる範囲や準備が必要なことを、わかりやすくお伝えします。実証と対話を重ねながら、継続して使えるサービスを目指します。' },
+];
+---
+
+<BaseLayout title="oneightについて｜地域のお店のデジタルを、身近に" description="oneight（ワンエイト）は、地域の個人店舗・小規模事業者に向けたWebアプリ制作・運用サービスを準備する事業ブランドです。お店の個性と日々の使いやすさを大切にしています。">
+  <section class="page-hero detail-about-hero"><div class="container"><p class="eyebrow">About oneight</p><h1>お店の個性が、<br />つながりになる。</h1><p class="page-lead">デジタルの仕組みを、地域のお店の身近な道具に。<br />お店とお客様の間にある、日々の接点を考えています。</p></div><div class="detail-about-brand" aria-hidden="true"><span>oneight</span><div class="detail-brand-orbit"></div></div></section>
+
+  <section class="section detail-about-intro"><div class="container detail-editorial-grid"><div><p class="eyebrow">Who we are</p><h2 class="section-heading">地域のお店の、<br />次の一歩を考える。</h2></div><div class="detail-body-copy"><p>oneight（ワンエイト）は、地域の個人店舗・小規模事業者に向けて、お店専用のWebアプリの制作・運用サービスを準備している事業ブランドです。</p><p>お店には、それぞれの雰囲気や接客、お客様との関係があります。デジタル化を進めるときも、その個性を大切にしたいと考えています。</p><p>会員証やスタンプカード、お知らせなどの仕組みを通じて、お店とお客様の接点を少し身近に。日々のお仕事に無理なく取り入れられる使い方を、一緒に探していきます。</p></div></div></section>
+
+  <section class="section detail-commitments"><div class="container"><p class="eyebrow">Our approach</p><h2 class="section-heading">つくるときに、<br />大切にしたいこと。</h2><div class="detail-commitment-list">{commitments.map((commitment) => <article><p class="eyebrow">{commitment.en}</p><h3>{commitment.title}</h3><p>{commitment.text}</p></article>)}</div></div></section>
+
+  <section class="section detail-about-status"><div class="container detail-editorial-grid"><div><p class="eyebrow">Where we are</p><h2 class="section-heading">小さく始めて、<br />丁寧に育てていく。</h2></div><div class="detail-body-copy"><p>現在は、事業立ち上げとサービスの準備を進めている段階です。店舗での実証やご相談を通じて、必要な機能や使いやすさ、継続的に運用する仕組みを整えていきます。</p><p>料金や提供機能、契約条件はまだ確定していません。このサイトでは、検討中の内容と画面イメージを区別してお伝えしています。</p><div class="detail-brand-info"><p><span>事業ブランド</span><strong>oneight <small>（ワンエイト）</small></strong></p><p><span>取り組んでいること</span><strong>地域店舗向けWebアプリの制作・運用</strong></p><p><span>現在の段階</span><strong>事業立ち上げ・サービス準備中</strong></p></div><p class="detail-section-note">oneightは現在、法人化前の事業ブランドです。掲載している内容は、法人としての実績や提供済みサービスを示すものではありません。</p></div></div></section>
+
+  <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">Start a conversation</p><h2>お店のこと、聞かせてください。</h2><p>会員サービスのことも、日々のお困りごとも。<br />デジタルでできることを、一緒に考えます。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">無料相談・デモ相談</a><a class="detail-text-link" href="/service/">oneightのサービスを見る</a></div></div></section>
+</BaseLayout>

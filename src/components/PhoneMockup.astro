@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+interface Props { variant?: 'card' | 'home' | 'stamp'; compact?: boolean; }
+const { variant = 'home', compact = false } = Astro.props;
+---
+<div class:list={['phone', `phone--${variant}`, { 'phone--compact': compact }]} role="img" aria-label={`架空のカフェの${variant === 'stamp' ? 'スタンプカード' : variant === 'card' ? 'デジタル会員証' : 'ホーム'}画面イメージ。提供機能・デザインは検討中です。`}>
+  <div class="phone-status" aria-hidden="true"><span>9:41</span><span class="phone-island"></span><span>••• ▰</span></div>
+  <div class="phone-appbar"><span class="cafe-wordmark">mori.</span><Icon name="bell" size={18} /></div>
+  {variant === 'home' ? <>
+    <div class="cafe-visual"><div class="cafe-shadow"></div><div class="coffee-saucer"><div class="coffee-cup"><span></span></div></div><div class="cafe-caption">A little break,<br />a lovely day.</div><span class="cafe-small">COFFEE & EVERYDAY</span></div>
+    <div class="app-greeting">こんにちは、ゲストさん<span>今日も、いつもの一杯を。</span></div>
+    <div class="mini-member"><div><span>MEMBERS CARD</span><strong>mori. membership</strong></div><div class="mini-qr" aria-hidden="true"></div></div>
+    <div class="app-menu"><span><Icon name="stamp" size={22} />スタンプ</span><span><Icon name="coupon" size={22} />クーポン</span><span><Icon name="grid" size={22} />メニュー</span></div>
+    <div class="app-news"><strong>お店からのお知らせ</strong><span>季節のコーヒー、はじまりました。</span><span class="app-date">サンプルのお知らせ</span></div>
+  </> : variant === 'stamp' ? <>
+    <div class="app-greeting">いつもの楽しみを、<br />ひとつずつ。<span>STAMP CARD</span></div>
+    <div class="stamp-grid">{Array.from({ length: 8 }, (_, i) => <span class:list={{ collected: i < 5 }}><Icon name={i < 5 ? 'flower' : 'stamp'} size={26} /></span>)}</div>
+    <p class="stamp-caption">5 / 8 stamps</p><div class="app-note">お店を訪れる楽しみを、<br />あなたのスマートフォンに。</div>
+  </> : <>
+    <div class="app-greeting">お店とつながる、<br />わたしの会員証。<span>MEMBERS CARD</span></div><div class="full-member"><span>mori.</span><strong>MEMBER</strong><div class="mini-qr" aria-hidden="true"></div><small>画面イメージ</small></div>
+  </>}
+  <div class="app-bottom"><span class="app-home-icon"><Icon name="shop" size={18} />ホーム</span><span><Icon name="card" size={18} />会員証</span><span><Icon name="bell" size={18} />お知らせ</span></div>
+  <div class="phone-home-line"></div>
+</div>
