@@ -8,6 +8,7 @@
 | --- | --- |
 | Astroの静的解析 | 17ファイル、エラー0・警告0・ヒント0 |
 | Pages FunctionsのTypeScript解析 | 成功（`tsc --project tsconfig.functions.json --noEmit`） |
+| GitHub Actions | `npm ci`・`npm run verify` 成功。公式Actionsの現行安定版とNode.js 24を使用 |
 | 問い合わせAPIの自動テスト | 11件成功、失敗0。外部APIはモックで検証 |
 | 初期設定でのAstroビルド | 主要6ページ・404の計7ページを生成 |
 | 生成物の検査 | ページ・内部リンク・画像参照・アンカー・SEO・初期noindex設定を確認、成功 |
