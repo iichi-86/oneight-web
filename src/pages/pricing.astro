@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+import '../styles/details.css';
+
+const considerations = [
+  { title: 'アプリの制作・設定', text: 'お店の雰囲気や必要な機能を整理し、共通の仕組みを土台に制作することを想定しています。デザイン・設定の対応範囲はご提案時に確認します。' },
+  { title: '日々の運用', text: '公開するだけでなく、お店で使い続けるための運用を考えます。保守・更新・お問い合わせ対応などの具体的な範囲は検討中です。' },
+  { title: '改善に向けた相談', text: '使ってみて気づくことを次の使い方へ。運用後のご相談や改善の進め方についても、実証を通じて整えていく予定です。' },
+];
+---
+
+<BaseLayout title="料金｜店舗専用Webアプリの提供予定価格" description="oneightの店舗向けWebアプリ制作・運用サービスの料金案内。月額の提供予定価格、初期制作費の考え方、検討中の標準範囲と追加開発についてご説明します。">
+  <section class="page-hero detail-pricing-hero"><div class="container"><p class="eyebrow">Pricing</p><h1>始めやすく、<br />続けることまで。</h1><p class="page-lead">お店の規模に合った、無理のない導入を。<br />制作と運用をあわせて考える、月額制のサービスを準備しています。</p></div></section>
+
+  <section class="section detail-price-section"><div class="container detail-price-layout">
+    <div class="detail-price-context"><p class="eyebrow">Basic plan / in preparation</p><h2 class="section-heading">お店専用のアプリを、<br />ひとつのプランから。</h2><p>最初からたくさんの機能を揃えるのではなく、<br class="desktop-break" />お店に必要な使い方を、一緒に整理します。</p><p class="muted">現在は事業立ち上げ・サービス準備段階です。<br />このページは料金の方向性をお伝えするもので、<br class="desktop-break" />正式なお見積もりや契約条件ではありません。</p></div>
+    <div class="detail-price-card"><div class="detail-price-card-top"><h3>基本プラン <span>想定</span></h3><p>{site.pricing.status}</p></div><p class="detail-price-amount"><span class="detail-price-unit">月額</span><strong>{site.pricing.monthlyLabel}</strong><span class="detail-price-yen">円</span></p><p class="detail-price-tax">{site.pricing.tax}</p><div class="detail-price-initial"><span>初期制作費について</span><p>{site.pricing.initialFee}</p></div><p class="detail-price-conditions">{site.pricing.conditions}</p><a class="button button--primary" href="/contact/">お店に合うプランを相談する</a></div>
+  </div></section>
+
+  <section class="section detail-price-value"><div class="container"><div class="detail-section-intro"><div><p class="eyebrow">Beyond the launch</p><h2 class="section-heading">つくるだけでなく、<br />使い続けるために。</h2></div><p>月額制のなかで、制作から運用までを<br />見据えた仕組みを考えています。</p></div><p class="detail-preparing-note"><span>対応範囲は検討中です</span>以下はサービス設計の方向性です。すべての作業や機能が月額料金に含まれると確約するものではありません。</p><div class="detail-principles">{considerations.map((item) => <article><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
+
+  <section class="section detail-scope-section"><div class="container detail-editorial-grid"><div><p class="eyebrow">Scope & options</p><h2 class="section-heading">必要なことを、<br />必要な分だけ。</h2><p>標準で考えることと、個別に考えること。<br />ご契約の前に、内容と費用を整理します。</p></div><div class="detail-scope-list"><article><span class="detail-scope-tag">標準範囲として検討</span><h3>共通システムを活かした導入</h3><p>お店に合わせたデザイン、会員サービスの基本機能、導入時の設定などを想定しています。採用する機能や制作の範囲は、今後の実証を通じて決定します。</p></article><article><span class="detail-scope-tag detail-scope-tag--outline">個別に検討・ご案内</span><h3>お店固有の機能や連携</h3><p>独自の業務に合わせた追加開発、外部サービスとの連携、予約・取り置きなどは、必要性と対応可否を個別に確認します。</p><p>{site.pricing.extra}</p></article></div></div></section>
+
+  <section class="section detail-price-questions"><div class="container"><p class="eyebrow">Before you decide</p><h2 class="section-heading">ご相談の前に、<br />お伝えしておきたいこと。</h2><dl class="detail-terms-list"><div><dt>税区分・お支払い方法</dt><dd>{site.pricing.tax}{site.pricing.payment}</dd></div><div><dt>契約期間・解約条件</dt><dd>{site.pricing.contract}</dd></div><div><dt>導入までの期間</dt><dd>一律の納期は設けていません。ご希望の機能や素材の準備、サービスの準備状況を確認し、スケジュールをご相談します。</dd></div><div><dt>ご相談・デモについて</dt><dd>無料相談やデモのご相談が可能です。デモは準備状況に応じたご案内となります。無条件の無料トライアルは現時点でご案内していません。</dd></div></dl></div></section>
+
+  <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">A plan for your shop</p><h2>まずは、やりたいことから。</h2><p>「こんな会員サービスを考えている」<br />そのお話から、必要な機能と費用を整理していきましょう。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">無料相談・デモ相談</a><a class="detail-text-link" href="/service/">サービスを詳しく見る</a></div></div></section>
+</BaseLayout>

@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+import '../styles/contact.css';
+const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
+---
+<BaseLayout title="無料相談・デモのご相談" description="お店専用のWebアプリについて、oneightへお気軽にご相談ください。ご希望の機能や、お店の課題がまだまとまっていなくても大丈夫です。">
+  <section class="page-hero container contact-heading">
+    <p class="eyebrow">CONTACT</p>
+    <h1>お店のこれからを、<br />一緒に考えませんか。</h1>
+    <p class="page-lead">「こんなことはできる？」から、気軽に。<br />お店のお話を聞かせてください。</p>
+  </section>
+  <section class="container contact-grid section" aria-label="ご相談フォーム">
+    <aside class="contact-aside">
+      <span class="contact-mark" aria-hidden="true">hello.</span>
+      <h2>まだ、まとまって<br />いなくても大丈夫です。</h2>
+      <p>紙のカードを見直したい。お客様に新商品を伝えたい。まずは、日々感じていることからお聞かせください。</p>
+      <ul class="contact-benefits">
+        <li>サービスや料金について知りたい</li>
+        <li>お店に合う機能を相談したい</li>
+        <li>画面イメージ・デモを見たい</li>
+      </ul>
+      <p class="contact-small">ご相談に費用はかかりません。<br />対応内容やデモのご案内は、準備状況に応じてご相談します。</p>
+    </aside>
+    <div class="contact-panel">
+      {!accepting && <div class="contact-notice" role="status"><strong>お問い合わせの受付準備中です。</strong><p>フォームの内容をご確認いただけます。現在は送信できません。受付開始後に、あらためてご相談ください。</p></div>}
+      <p class="contact-required-note"><span>必須</span> の項目をご入力ください。</p>
+      <form id="contact-form" action="/api/contact" method="post" data-enabled={accepting ? 'true' : 'false'} data-sitekey={site.contact.turnstileSiteKey} novalidate>
+        <div class="contact-field">
+          <label for="contact-name">お名前 <span class="required-badge">必須</span></label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" maxlength="100" required aria-describedby="error-name" />
+          <p class="field-error" id="error-name"></p>
+        </div>
+        <div class="contact-field">
+          <label for="contact-shop">店舗名 <span class="required-badge">必須</span></label>
+          <input id="contact-shop" name="shop" type="text" autocomplete="organization" maxlength="150" required aria-describedby="shop-hint error-shop" />
+          <p class="field-hint" id="shop-hint">開業前の場合は「開業準備中」とご入力ください。</p>
+          <p class="field-error" id="error-shop"></p>
+        </div>
+        <div class="contact-field">
+          <label for="contact-email">メールアドレス <span class="required-badge">必須</span></label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required aria-describedby="error-email" />
+          <p class="field-error" id="error-email"></p>
+        </div>
+        <div class="contact-field">
+          <label for="contact-industry">店舗の業種 <span class="required-badge">必須</span></label>
+          <div class="contact-select"><select id="contact-industry" name="industry" required aria-describedby="error-industry">
+            <option value="">選択してください</option><option value="bakery">ベーカリー</option><option value="cafe">カフェ・コーヒースタンド</option><option value="sweets">和菓子・洋菓子</option><option value="beauty">美容・ネイル等のサロン</option><option value="pet">トリミングサロン</option><option value="other">その他</option>
+          </select></div>
+          <p class="field-error" id="error-industry"></p>
+        </div>
+        <div class="contact-field">
+          <label for="contact-message">相談内容 <span class="required-badge">必須</span></label>
+          <textarea id="contact-message" name="message" rows="7" minlength="20" maxlength="4000" required aria-describedby="message-hint error-message"></textarea>
+          <p class="field-hint" id="message-hint">お困りごとや、ご希望の機能などを20〜4,000文字でお聞かせください。パスワードや、お客様の個人情報は記入しないでください。</p>
+          <p class="field-error" id="error-message"></p>
+        </div>
+        <div class="contact-honeypot" aria-hidden="true"><label for="contact-website">Webサイト（入力しないでください）</label><input id="contact-website" name="website" tabindex="-1" autocomplete="off" type="text" /></div>
+        <div class="contact-consent">
+          <label for="contact-consent"><input id="contact-consent" type="checkbox" name="consent" required aria-describedby="error-consent" /><span><a href="/privacy/">個人情報の取り扱い</a>を確認し、同意します。<span class="required-badge">必須</span></span></label>
+          <p class="field-error" id="error-consent"></p>
+        </div>
+        {accepting && <div id="contact-challenge" class="contact-challenge" aria-label="送信前の確認"></div>}
+        <div id="contact-status" class="contact-status" role="status" aria-live="polite" tabindex="-1"></div>
+        <button type="submit" class="button button--primary contact-submit" disabled>{accepting ? 'この内容で相談する' : '受付準備中'}</button>
+        <p class="contact-small">入力内容は、ご相談への対応のために使用します。</p>
+        <noscript><p class="contact-notice">フォームの送信にはJavaScriptを有効にしてください。</p></noscript>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  interface ChallengeApi {
+    render: (element: string, options: Record<string, unknown>) => string;
+    reset: (widgetId?: string) => void;
+  }
+  declare global { interface Window { turnstile?: ChallengeApi; oneightTurnstileReady?: () => void } }
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  if (form) {
+    const status = document.querySelector<HTMLElement>('#contact-status')!;
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    let startedAt = Date.now();
+    let token = '';
+    let widgetId: string | undefined;
+    let sending = false;
+    let requestId = crypto.randomUUID();
+    let lastContent = '';
+    const enabled = form.dataset.enabled === 'true';
+    if (enabled) submit.disabled = false;
+    function announce(message: string, failure = false) {
+      status.textContent = message;
+      status.classList.toggle('is-error', failure);
+      status.focus();
+    }
+    function clearErrors() {
+      form!.querySelectorAll<HTMLElement>('.field-error').forEach(element => { element.textContent = ''; });
+      form!.querySelectorAll<HTMLElement>('[aria-invalid]').forEach(element => element.removeAttribute('aria-invalid'));
+    }
+    function showErrors(errors: Record<string, string>) {
+      for (const [name, message] of Object.entries(errors)) {
+        const element = document.getElementById(`error-${name}`);
+        if (element) element.textContent = message;
+        form!.querySelector<HTMLElement>(`[name="${name}"]`)?.setAttribute('aria-invalid', 'true');
+      }
+      form!.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+    }
+    if (enabled && form.dataset.sitekey) {
+      window.oneightTurnstileReady = () => {
+        if (!window.turnstile) return;
+        widgetId = window.turnstile.render('#contact-challenge', {
+          sitekey: form.dataset.sitekey, action: 'contact', theme: 'light', size: window.matchMedia('(max-width: 480px)').matches ? 'compact' : 'normal',
+          callback: (value: string) => { token = value; },
+          'expired-callback': () => { token = ''; },
+          'error-callback': () => { token = ''; announce('送信前の確認を読み込めませんでした。ページを開き直してお試しください。', true); },
+        });
+      };
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=oneightTurnstileReady&render=explicit';
+      script.async = true;
+      script.defer = true;
+      script.onerror = () => announce('送信前の確認を読み込めませんでした。通信環境をご確認のうえ、ページを開き直してください。', true);
+      document.head.append(script);
+    }
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!enabled || sending) return;
+      clearErrors();
+      const values = new FormData(form);
+      const content = { name: String(values.get('name') || '').trim(), shop: String(values.get('shop') || '').trim(), email: String(values.get('email') || '').trim(), industry: String(values.get('industry') || ''), message: String(values.get('message') || '').trim(), consent: values.get('consent') === 'on' };
+      const errors: Record<string, string> = {};
+      if (!content.name) errors.name = 'お名前を入力してください。';
+      if (!content.shop) errors.shop = '店舗名を入力してください。';
+      if (!content.email || !form.querySelector<HTMLInputElement>('[name="email"]')!.validity.valid) errors.email = '有効なメールアドレスを入力してください。';
+      if (!content.industry) errors.industry = '業種を選んでください。';
+      if (content.message.length < 20 || content.message.length > 4000) errors.message = '相談内容を20〜4,000文字で入力してください。';
+      if (!content.consent) errors.consent = '個人情報の取り扱いへの同意が必要です。';
+      if (Object.keys(errors).length) { announce('入力内容をご確認ください。', true); showErrors(errors); return; }
+      if (!token) { announce('送信前の確認を完了してください。', true); return; }
+      if (Date.now() - startedAt < 2500) { announce('少し時間をおいてから送信してください。', true); return; }
+      const fingerprint = JSON.stringify(content);
+      if (lastContent && fingerprint !== lastContent) requestId = crypto.randomUUID();
+      lastContent = fingerprint;
+      sending = true;
+      submit.disabled = true;
+      submit.textContent = '送信しています…';
+      form.setAttribute('aria-busy', 'true');
+      status.textContent = '送信しています。しばらくお待ちください。';
+      try {
+        const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin', body: JSON.stringify({ ...content, website: String(values.get('website') || ''), startedAt, requestId, token }), signal: AbortSignal.timeout(25_000) });
+        const type = response.headers.get('content-type') || '';
+        const result: { ok?: boolean; message?: string; errors?: Record<string, string> } = type.includes('application/json') ? await response.json() : {};
+        if (response.ok && result.ok === true) {
+          announce(result.message || 'ご相談の送信を受け付けました。');
+          form.reset();
+          requestId = crypto.randomUUID();
+          lastContent = '';
+          startedAt = Date.now();
+        } else {
+          announce(result.message || '送信の受付を確認できませんでした。時間をおいて再度お試しください。', true);
+          if (result.errors) showErrors(result.errors);
+        }
+      } catch {
+        announce('通信が完了せず、送信の受付を確認できませんでした。入力内容は残っています。内容を変えずに再度お試しください。', true);
+      } finally {
+        sending = false;
+        token = '';
+        window.turnstile?.reset(widgetId);
+        submit.disabled = false;
+        submit.textContent = 'この内容で相談する';
+        form.removeAttribute('aria-busy');
+      }
+    });
+  }
+</script>
