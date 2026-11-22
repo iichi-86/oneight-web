@@ -2,7 +2,7 @@
 
 地域の個人店舗・小規模事業者向けWebアプリ制作・運用サービス「oneight（ワンエイト）」の公式サイトです。Astro・TypeScript・CSSで構成した静的サイトと、お問い合わせ用のCloudflare Pages Functionsを分離しています。顧客向けアプリや各店舗の顧客データは、このプロジェクトで管理しません。
 
-所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日、フォーム有効化の修正 `536e65fa` のデプロイ成功と、[公開フォーム](https://oneight.jp/contact/) の有効化表示・必須入力エラー・TurnstileのSuccess表示を実ブラウザで確認しました。その後、所有者が自分で実フォームを送信し、Gmailへの到達を確認したと報告しています。Productionへの `PUBLIC_ALLOW_INDEXING=true` 保存も所有者から報告済みで、再デプロイと公開検索設定の確認を進めています。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
+所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日、フォーム有効化の修正 `536e65fa` のデプロイ成功と、[公開フォーム](https://oneight.jp/contact/) の有効化表示・必須入力エラー・TurnstileのSuccess表示を実ブラウザで確認しました。その後、所有者が自分で実フォームを送信し、Gmailへの到達を確認したと報告しています。Productionの `PUBLIC_ALLOW_INDEXING=true` を反映した再デプロイも成功し、公開サイトの検索許可設定を確認しました。Google Search Consoleでの所有権確認・登録依頼はこれからです。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
 
 ## ローカルで確認する
 
@@ -77,7 +77,7 @@ npm run preview
 
 公式公開URLは `https://oneight.jp` です。既定値または `PUBLIC_SITE_URL` の上書き値を主要ページのcanonical・OGPへ反映する構成です。コードの更新が公開済みサイトへ反映されたかは、再ビルド・再デプロイ後に確認してください。`PUBLIC_ALLOW_INDEXING=true` の場合にのみ検索登録を許可し、sitemapに主要ページを含めます。検索登録の抑止中はsitemapを空にし、404は常にnoindexでcanonical・og:urlを付けません。`noindex`やrobotsは閲覧制限ではないため、プレビューに秘密情報や個人情報を置かないでください。
 
-所有者はProductionに `PUBLIC_ALLOW_INDEXING=true` を保存したと報告しています。再デプロイ後の公開robots・sitemap・ページメタデータの確認、Google Search Consoleの所有権確認・sitemap送信・インデックス登録依頼は未完了です。検索設定を許可しても、検索結果への掲載や順位は保証されません。
+所有者が保存した `PUBLIC_ALLOW_INDEXING=true` をコミット `ad8096a` の再デプロイで反映しました。公開トップ・お問い合わせページの `index, follow` とcanonical、robotsのクロール許可、主要6ページのsitemapを確認済みです。Google Search Consoleの所有権確認・sitemap送信・インデックス登録依頼は未完了です。検索設定を許可しても、検索結果への掲載や順位は保証されません。
 
 `PUBLIC_` で始まる値はブラウザへ公開される前提です。メール送信用APIキーやTurnstile secret keyは、承認後にCloudflare Pages Functionsの秘密情報として設定し、Git・HTML・フロントエンドには入れません。
 

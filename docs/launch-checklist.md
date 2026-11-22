@@ -2,7 +2,7 @@
 
 所有者の確認と引き継ぎ用です。未記入の項目を実施・承認済みと扱わないでください。本番公開、DNS変更、新規外部サービスの契約・課金、秘密情報の設定は、所有者が具体的な内容を確認してから実施します。
 
-現在、公式ドメインのDNS・HTTPS、修正 `536e65fa` のCI・Pagesデプロイ成功、公開フォームの有効化・必須エラー・Turnstile Success表示を確認済みです。実フォーム送信のGmail到達とProductionの `PUBLIC_ALLOW_INDEXING=true` 保存は所有者から報告済みです。エージェントは実送信・メールボックス閲覧を行っていません。検索設定の再デプロイ・公開確認、Search Consoleの所有権確認・登録依頼、プロバイダログ・返信先・モバイル表示は未確認です。複合項目は一部だけ確認できた場合も未完了として残します。
+現在、公式ドメインのDNS・HTTPS、修正 `536e65fa` のCI・Pagesデプロイ成功、公開フォームの有効化・必須エラー・Turnstile Success表示を確認済みです。実フォーム送信のGmail到達とProductionの `PUBLIC_ALLOW_INDEXING=true` 保存は所有者から報告済みです。エージェントは実送信・メールボックス閲覧を行っていません。検索設定は `ad8096a` の再デプロイで公開反映を確認済みです。Search Consoleの所有権確認・登録依頼、プロバイダログ・返信先・モバイル表示は未確認です。複合項目は一部だけ確認できた場合も未完了として残します。
 
 ## 1. 公開に必要な判断
 
@@ -32,7 +32,7 @@
 - [ ] 公式URLの既定値 `https://oneight.jp` を確認する。`PUBLIC_SITE_URL` で上書きする場合はHTTPS originを指定し、仮ドメイン・パス・クエリ・認証情報を入れない。
 - [ ] Previewでは `PUBLIC_ALLOW_INDEXING=false` とし、本番の検索登録は承認後のみ `true` にする。
 - [ ] 検索登録前にcanonical・OGP・sitemapが同じ正式URLを指すことを確認する。
-- [ ] Productionの検索許可設定を再デプロイし、公開ページのindex許可、robots、sitemapを確認する。設定保存は本人報告済み。
+- [x] Productionの検索許可設定を再デプロイし、公開トップ・お問い合わせページのindex許可とcanonical、robots、主要6ページのsitemapを確認する（`ad8096a`）。
 - [ ] Google Search Consoleで所有権確認、sitemap送信、インデックス登録依頼を行う。
 - [ ] [お問い合わせの設定](contact-setup.md) を完了し、Pages Functionsに必要な設定値がそろっている。
 - [ ] 承認済みの `src/data/contact-release.ts` の公開状態・公式origin・本番ブランチが、Pagesのビルド環境に一致する。両有効化フラグを未設定にする場合は共有判定を使用する。
