@@ -3,20 +3,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/details.css';
 
 const commitments = [
-  { en: 'LISTEN FIRST', title: 'お店の話を、出発点に。', text: '必要なものは、お店によって違うから。日々のお仕事やお客様との関係を理解し、どんな仕組みが役立つかを一緒に考えます。' },
-  { en: 'DESIGN WITH PURPOSE', title: '見た目にも、使い方にも。', text: 'お店らしい印象と、迷わず使えること。その両方を大切に、画面のデザインから言葉の選び方、運用の流れまで丁寧に考えます。' },
-  { en: 'BUILD HONESTLY', title: 'できることを、誠実に。', text: '提供できる範囲や準備が必要なことを、わかりやすくお伝えします。実証と対話を重ねながら、継続して使えるサービスを目指します。' },
+  { en: 'LISTEN FIRST', title: 'お店の話を、出発点に。', text: '日々の仕事や困っている場面を伺い、その原因を一緒に整理します。どんな状態を目指すのかを共有し、お店に合う解決方法を考えます。' },
+  { en: 'BUILD FOR YOUR SHOP', title: '身近な技術を、お店の力に。', text: 'AIや共通の仕組みを活用して制作の手間を抑え、必要な部分をお店に合わせて調整。規模や仕事の流れに合う、使いやすい仕組みを目指します。' },
+  { en: 'KEEP WORKING TOGETHER', title: '使い始めてからも、一緒に。', text: '実際に使って気づくことを聞きながら、合意した課題の解決に向けて改善します。解決後も月額保守を通じて、日々の維持や運用を支えます。' },
 ];
 ---
 
-<BaseLayout title="oneightについて｜地域のお店のデジタルを、身近に" description="oneight（ワンエイト）は、地域の個人店舗・小規模事業者に向けたWebアプリ制作・運用サービスを準備する事業ブランドです。お店の個性と日々の使いやすさを大切にしています。">
-  <section class="page-hero detail-about-hero"><div class="container"><p class="eyebrow">About oneight</p><h1>お店の個性が、<br />つながりになる。</h1><p class="page-lead">デジタルの仕組みを、地域のお店の身近な道具に。<br />お店とお客様の間にある、日々の接点を考えています。</p></div><div class="detail-about-brand" aria-hidden="true"><span>oneight</span><div class="detail-brand-orbit"></div></div></section>
+<BaseLayout title="ONE EIGHTについて｜地域のお店の課題を、一緒に解決" description="ONE EIGHT（ワンエイト）は、地域の個人店の課題をAIや技術で一緒に解決する事業です。実家が和菓子屋である大学生の視点から、お店ごとに違う困りごとに向き合います。">
+  <section class="page-hero detail-about-hero"><div class="container"><p class="eyebrow">About ONE EIGHT</p><h1>地域のお店の課題に、<br />一緒に向き合う。</h1><p class="page-lead">お店ごとに、困っていることも、目指す姿も違うから。<br />話を聞き、つくり、使いながら解決を目指します。</p></div><div class="detail-about-brand" aria-hidden="true"><span>oneight</span><div class="detail-brand-orbit"></div></div></section>
 
-  <section class="section detail-about-intro"><div class="container detail-editorial-grid"><div><p class="eyebrow">Who we are</p><h2 class="section-heading">地域のお店の、<br />次の一歩を考える。</h2></div><div class="detail-body-copy"><p>oneight（ワンエイト）は、地域の個人店舗・小規模事業者に向けて、お店専用のWebアプリの制作・運用サービスを準備している事業ブランドです。</p><p>お店には、それぞれの雰囲気や接客、お客様との関係があります。デジタル化を進めるときも、その個性を大切にしたいと考えています。</p><p>会員証やスタンプカード、お知らせなどの仕組みを通じて、お店とお客様の接点を少し身近に。日々のお仕事に無理なく取り入れられる使い方を、一緒に探していきます。</p></div></div></section>
+  <section class="section detail-about-intro"><div class="container detail-editorial-grid"><div><p class="eyebrow">Why ONE EIGHT</p><h2 class="section-heading">実家の和菓子屋から、<br />地域のお店へ。</h2></div><div class="detail-body-copy"><p>ONE EIGHT（ワンエイト）は、地域の個人店が抱える課題を、AIや技術を使って一緒に解決する事業です。大学生が、お店専用のWebサイトやアプリ、業務システムの制作から運用まで取り組みます。</p><p>実家が和菓子屋であることから、個人店にはそれぞれに違う課題があると、身近に学んできました。お店の規模や仕事の進め方、お客様との関係に合わせて、役立つ方法を考えたいと思っています。</p><p>まず大切にするのは、お店の話を聞くことです。困りごとの原因と、解決したと言える状態を一緒に整理し、必要な仕組みを形にしていきます。</p></div></div></section>
 
-  <section class="section detail-commitments"><div class="container"><p class="eyebrow">Our approach</p><h2 class="section-heading">つくるときに、<br />大切にしたいこと。</h2><div class="detail-commitment-list">{commitments.map((commitment) => <article><p class="eyebrow">{commitment.en}</p><h3>{commitment.title}</h3><p>{commitment.text}</p></article>)}</div></div></section>
+  <section class="section detail-commitments"><div class="container"><p class="eyebrow">Our approach</p><h2 class="section-heading">一緒に進めるために、<br />大切にしていること。</h2><div class="detail-commitment-list">{commitments.map((commitment) => <article><p class="eyebrow">{commitment.en}</p><h3>{commitment.title}</h3><p>{commitment.text}</p></article>)}</div></div></section>
 
-  <section class="section detail-about-status"><div class="container detail-editorial-grid"><div><p class="eyebrow">Where we are</p><h2 class="section-heading">小さく始めて、<br />丁寧に育てていく。</h2></div><div class="detail-body-copy"><p>現在は、事業立ち上げとサービスの準備を進めている段階です。店舗での実証やご相談を通じて、必要な機能や使いやすさ、継続的に運用する仕組みを整えていきます。</p><p>料金や提供機能、契約条件はまだ確定していません。このサイトでは、検討中の内容と画面イメージを区別してお伝えしています。</p><div class="detail-brand-info"><p><span>事業ブランド</span><strong>oneight <small>（ワンエイト）</small></strong></p><p><span>取り組んでいること</span><strong>地域店舗向けWebアプリの制作・運用</strong></p><p><span>現在の段階</span><strong>事業立ち上げ・サービス準備中</strong></p></div><p class="detail-section-note">oneightは現在、法人化前の事業ブランドです。掲載している内容は、法人としての実績や提供済みサービスを示すものではありません。</p></div></div></section>
+  <section class="section detail-about-status"><div class="container detail-editorial-grid"><div><p class="eyebrow">Our next step</p><h2 class="section-heading">小さな課題から、<br />役立つ仕組みへ。</h2></div><div class="detail-body-copy"><p>現在は事業立ち上げの段階です。今後、実家の和菓子屋やご協力いただけるお店での実践を通じて、現場で役立つ仕組みや、無理なく続けられる支援の形を確かめていきたいと考えています。</p><p>大学生ならではの柔軟さを活かし、お店の状況を学びながら取り組みます。ご相談には、対応できる範囲や進め方を確認したうえで、達成条件・固定報酬・実施期間を事前に共有します。</p><div class="detail-brand-info"><p><span>事業ブランド</span><strong>ONE EIGHT <small>（ワンエイト）</small></strong></p><p><span>取り組んでいること</span><strong>地域の個人店の課題整理・専用システム制作・運用支援</strong></p><p><span>大切にしていること</span><strong>お店ごとの課題に合わせ、一緒に解決を目指すこと</strong></p></div></div></div></section>
 
-  <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">Start a conversation</p><h2>お店のこと、聞かせてください。</h2><p>会員サービスのことも、日々のお困りごとも。<br />デジタルでできることを、一緒に考えます。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">無料相談・デモ相談</a><a class="detail-text-link" href="/service/">oneightのサービスを見る</a></div></div></section>
+  <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">Start a conversation</p><h2>お店のこと、聞かせてください。</h2><p>毎日の作業のことも、お客様との接点のことも。<br />何ができるかを、無料ヒアリングから一緒に考えます。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">お店の課題を無料相談</a><a class="detail-text-link" href="/service/">ONE EIGHTのサービスを見る</a></div></div></section>
 </BaseLayout>

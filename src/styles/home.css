@@ -1251,3 +1251,23 @@
     font-size: clamp(2.8rem, 12vw, 4.5rem);
   }
 }
+
+/* 課題解決型サービスの事業・料金・運用フロー */
+.hero-note { font-size: 0.875rem; }
+.business-pair, .approach-grid { display: grid; gap: 2.5rem; margin: 2.75rem 0 3rem; }
+.business-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.business-pair article, .approach-grid article { border-top: 1px solid var(--line); padding-top: 1.5rem; min-width: 0; }
+.business-pair h3, .approach-grid h3 { font-size: 1.25rem; margin: 0.75rem 0 1rem; line-height: 1.7; }
+.business-pair p:not(.eyebrow), .approach-grid p { color: var(--muted); line-height: 2; }
+.approach-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 0; }
+.home-plan-list { list-style: none; margin: 1.25rem 0; padding: 0; }
+.home-plan-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--line); font-size: 0.9375rem; }
+.home-plan-list strong { font-weight: 650; white-space: nowrap; }
+.home-plan-list strong span { font-weight: 400; font-size: 0.875rem; }
+.flow-list--problem-solving { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+@media (max-width: 950px) { .flow-list--problem-solving { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .business-pair, .approach-grid { grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2rem; }
+  .flow-list--problem-solving { grid-template-columns: 1fr; gap: 0; }
+  .home-plan-list li { flex-wrap: wrap; }
+}

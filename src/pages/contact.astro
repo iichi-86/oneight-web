@@ -4,23 +4,23 @@ import { site } from '../data/site';
 import '../styles/contact.css';
 const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
 ---
-<BaseLayout title="無料相談・デモのご相談" description="お店専用のWebアプリについて、oneightへお気軽にご相談ください。ご希望の機能や、お店の課題がまだまとまっていなくても大丈夫です。">
+<BaseLayout title="お店の課題を無料相談" description="地域の個人店の困りごとや、専用Webサイト・アプリ・業務システムについてONE EIGHTへご相談ください。ヒアリング・ご提案は無料です。">
   <section class="page-hero container contact-heading">
     <p class="eyebrow">CONTACT</p>
     <h1>お店のこれからを、<br />一緒に考えませんか。</h1>
-    <p class="page-lead">「こんなことはできる？」から、気軽に。<br />お店のお話を聞かせてください。</p>
+      <p class="page-lead">「毎日の、この作業を何とかしたい」から。<br />お店の困りごとを、お聞かせください。</p>
   </section>
   <section class="container contact-grid section" aria-label="ご相談フォーム">
     <aside class="contact-aside">
       <span class="contact-mark" aria-hidden="true">hello.</span>
       <h2>まだ、まとまって<br />いなくても大丈夫です。</h2>
-      <p>紙のカードを見直したい。お客様に新商品を伝えたい。まずは、日々感じていることからお聞かせください。</p>
+      <p>手作業に時間がかかる。情報がうまく共有できない。お客様に新商品を伝えたい。日々の小さな困りごとから、一緒に整理します。</p>
       <ul class="contact-benefits">
-        <li>サービスや料金について知りたい</li>
-        <li>お店に合う機能を相談したい</li>
-        <li>画面イメージ・デモを見たい</li>
+        <li>お店の課題と解決方法を整理したい</li>
+        <li>専用Web・アプリや業務の仕組みを相談したい</li>
+        <li>固定報酬や継続支援の料金を知りたい</li>
       </ul>
-      <p class="contact-small">ご相談に費用はかかりません。<br />対応内容やデモのご案内は、準備状況に応じてご相談します。</p>
+      <p class="contact-small">ヒアリング・ご提案は無料です。<br />取り組む範囲・達成条件・報酬額・実施期間は、着手前に確認します。</p>
     </aside>
     <div class="contact-panel">
       {!accepting && <div class="contact-notice" role="status"><strong>お問い合わせの受付準備中です。</strong><p>フォームの内容をご確認いただけます。現在は送信できません。受付開始後に、あらためてご相談ください。</p></div>}

@@ -3,7 +3,7 @@ import '../styles/global.css';
 import { site, navigation } from '../data/site';
 interface Props { title: string; description?: string; noindex?: boolean; }
 const { title, description = site.description, noindex = false } = Astro.props;
-const fullTitle = title === 'oneight' ? 'oneight（ワンエイト）｜お店専用のWebアプリ制作・運用' : `${title}｜oneight（ワンエイト）`;
+const fullTitle = title === site.name || title === 'oneight' ? 'ONE EIGHT（ワンエイト）｜地域の個人店の課題解決・Webアプリ開発' : `${title}｜ONE EIGHT（ワンエイト）`;
 const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofollow';
 ---
@@ -20,20 +20,20 @@ const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofo
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
-    <meta property="og:site_name" content="oneight" />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
     {Astro.site && <meta property="og:image" content={new URL('/images/social-card.png', Astro.site).href} />}
     <meta property="og:image:alt" content="oneight お店のらしさが、つながりになる。" />
     <meta name="twitter:card" content="summary_large_image" />
-    {Astro.site && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'oneight', alternateName: 'ワンエイト', url: Astro.site.href, inLanguage: 'ja' })} />}
+    {Astro.site && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, alternateName: ['ワンエイト', 'oneight'], url: Astro.site.href, inLanguage: 'ja' })} />}
   </head>
   <body>
     <a class="skip-link" href="#main">本文へ移動</a>
     <header class="site-header">
       <div class="header-inner">
-        <a href="/" class="wordmark" aria-label="oneight トップページ">oneight<span class="wordmark-dot" aria-hidden="true"></span></a>
+        <a href="/" class="wordmark" aria-label="ONE EIGHT トップページ">oneight<span class="wordmark-dot" aria-hidden="true"></span></a>
         <button class="menu-button" aria-expanded="false" aria-controls="site-navigation" type="button">メニュー<span class="menu-lines" aria-hidden="true"></span></button>
         <nav id="site-navigation" class="site-nav" aria-label="メインナビゲーション">
           {navigation.map(item => <a class="nav-link" href={item.href} aria-current={Astro.url.pathname === item.href ? 'page' : undefined}>{item.label}</a>)}
@@ -44,14 +44,14 @@ const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofo
     <main id="main"><slot /></main>
     <footer class="site-footer">
       <div class="container footer-top">
-        <div><a href="/" class="wordmark" aria-label="oneight トップページ">oneight<span class="wordmark-dot" aria-hidden="true"></span></a><p class="footer-description">お店のらしさが、つながりになる。<br />地域のお店に、デジタルの新しい選択肢を。</p></div>
+        <div><a href="/" class="wordmark" aria-label="ONE EIGHT トップページ">oneight<span class="wordmark-dot" aria-hidden="true"></span></a><p class="footer-description">地域のお店の課題に、いっしょに答えを。<br />課題の発見から、開発・運用・改善まで。</p></div>
         <nav class="footer-links" aria-label="フッターナビゲーション">
           {navigation.map(item => <a href={item.href}>{item.label}</a>)}
           <a href="/contact/">お問い合わせ</a>
           <a href="/privacy/">プライバシーポリシー</a>
         </nav>
       </div>
-      <div class="container footer-bottom"><span>© {new Date().getFullYear()} oneight</span><span>現在、サービス提供に向けて準備中です。</span></div>
+      <div class="container footer-bottom"><span>© {new Date().getFullYear()} ONE EIGHT</span><span>地域の個人店と、一緒に。</span></div>
     </footer>
     <script>
       const button = document.querySelector<HTMLButtonElement>('.menu-button');

@@ -1,5 +1,5 @@
 ---
 interface Props { title?: string; }
-const { title = 'あなたのお店なら、\nどんなアプリになるだろう。' } = Astro.props;
+const { title = 'お店の「困った」を、\n一緒にほどいていきませんか。' } = Astro.props;
 ---
-<section class="contact-cta section" aria-label="無料相談のご案内"><div class="container cta-inner"><div><p class="eyebrow">LET’S TALK</p><h2>{title.split('\n').map(line => <span>{line}</span>)}</h2><p>まだ、アイデアの段階でも大丈夫。<br />お店のことから、お聞かせください。</p></div><a class="button button--light" href="/contact/">無料相談・デモを相談する</a></div><span class="cta-orbit" aria-hidden="true"></span></section>
+<section class="contact-cta section" aria-label="無料相談のご案内"><div class="container cta-inner"><div><p class="eyebrow">LET’S TALK</p><h2>{title.split('\n').map(line => <span>{line}</span>)}</h2><p>ヒアリング・ご提案は無料です。<br />まだ整理できていない困りごとも、お聞かせください。</p></div><a class="button button--light" href="/contact/">お店の課題を無料で相談する</a></div><span class="cta-orbit" aria-hidden="true"></span></section>

@@ -1,8 +1,10 @@
-# oneight 公式Webサイト
+# ONE EIGHT 公式Webサイト
 
-地域の個人店舗・小規模事業者向けWebアプリ制作・運用サービス「oneight（ワンエイト）」の公式サイトです。Astro・TypeScript・CSSで構成した静的サイトと、お問い合わせ用のCloudflare Pages Functionsを分離しています。顧客向けアプリや各店舗の顧客データは、このプロジェクトで管理しません。
+地域の個人店の課題発見から、専用Webサイト・アプリ・業務システムの開発、運用・改善まで支援する「ONE EIGHT（ワンエイト）」の公式サイトです。確認済みの事業モデルは [事業モデル](docs/business-model.md) を参照してください。Astro・TypeScript・CSSで構成した静的サイトと、お問い合わせ用のCloudflare Pages Functionsを分離しています。顧客向けアプリや各店舗の顧客データは、このプロジェクトで管理しません。
 
-所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日、フォーム有効化の修正 `536e65fa` のデプロイ成功と、[公開フォーム](https://oneight.jp/contact/) の有効化表示・必須入力エラー・TurnstileのSuccess表示を実ブラウザで確認しました。その後、所有者が自分で実フォームを送信し、Gmailへの到達を確認したと報告しています。Productionの `PUBLIC_ALLOW_INDEXING=true` を反映した再デプロイも成功し、公開サイトの検索許可設定を確認しました。Google Search Consoleでの所有権確認・登録依頼はこれからです。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
+この改訂では、条件達成時の固定報酬3万〜20万円程度と、解決後の月額5,000円・10,000円・20,000円を分けて説明しています。すべて税込です。既存ロゴ・配色を引き継ぎ、架空の実績や無制限の対応範囲は追加していません。確認用ブランチ `feat/oneight-problem-solving` から、本番ブランチ `feat/oneight-official-site` への反映は所有者の確認後に行います。
+
+所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日、フォーム有効化の修正 `536e65fa` のデプロイ成功と、[公開フォーム](https://oneight.jp/contact/) の有効化表示・必須入力エラー・TurnstileのSuccess表示を実ブラウザで確認しました。その後、所有者が自分で実フォームを送信し、Gmailへの到達を確認したと報告しています。Productionの `PUBLIC_ALLOW_INDEXING=true` を反映した再デプロイも成功し、公開サイトの検索許可設定を確認しました。その後、Google Search Consoleの所有権確認・サイトマップ送信・掲載リクエストも完了したと所有者から報告されています。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
 
 ## ローカルで確認する
 
@@ -77,7 +79,7 @@ npm run preview
 
 公式公開URLは `https://oneight.jp` です。既定値または `PUBLIC_SITE_URL` の上書き値を主要ページのcanonical・OGPへ反映する構成です。コードの更新が公開済みサイトへ反映されたかは、再ビルド・再デプロイ後に確認してください。`PUBLIC_ALLOW_INDEXING=true` の場合にのみ検索登録を許可し、sitemapに主要ページを含めます。検索登録の抑止中はsitemapを空にし、404は常にnoindexでcanonical・og:urlを付けません。`noindex`やrobotsは閲覧制限ではないため、プレビューに秘密情報や個人情報を置かないでください。
 
-所有者が保存した `PUBLIC_ALLOW_INDEXING=true` をコミット `ad8096a` の再デプロイで反映しました。公開トップ・お問い合わせページの `index, follow` とcanonical、robotsのクロール許可、主要6ページのsitemapを確認済みです。Google Search Consoleの所有権確認・sitemap送信・インデックス登録依頼は未完了です。検索設定を許可しても、検索結果への掲載や順位は保証されません。
+所有者が保存した `PUBLIC_ALLOW_INDEXING=true` をコミット `ad8096a` の再デプロイで反映しました。公開トップ・お問い合わせページの `index, follow` とcanonical、robotsのクロール許可、主要6ページのsitemapを確認済みです。Google Search Consoleの所有権確認・sitemap送信・インデックス登録依頼は、その後の所有者報告で完了を確認しています。検索結果の掲載は未確認です。検索設定を許可しても、検索結果への掲載や順位は保証されません。
 
 `PUBLIC_` で始まる値はブラウザへ公開される前提です。メール送信用APIキーやTurnstile secret keyは、承認後にCloudflare Pages Functionsの秘密情報として設定し、Git・HTML・フロントエンドには入れません。
 

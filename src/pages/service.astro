@@ -3,102 +3,99 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PhoneMockup from '../components/PhoneMockup.astro';
 import '../styles/details.css';
 
-const features = [
-  { kind: 'member', en: 'MEMBERSHIP', title: '「いつものお店」の会員証。', name: 'デジタル会員証・会員管理', text: 'お客様のスマートフォンに、お店専用の会員証を。紙のカードを持ち歩かなくても、会員サービスにアクセスできる仕組みを検討しています。' },
-  { kind: 'stamp', en: 'STAMP & POINT', title: '次の来店が、少し楽しみに。', name: 'スタンプカード・ポイント', text: '来店やお買い物の楽しみを、デジタルのスタンプやポイントに。付与の方法や特典の条件は、お店の運用に合わせて検討します。' },
-  { kind: 'coupon', en: 'COUPON', title: 'お店から、うれしいきっかけを。', name: 'クーポン・会員限定特典', text: '季節のキャンペーンや会員限定のお知らせを、お店らしい特典として届けるために。発行方法や利用ルールも一緒に整理します。' },
-  { kind: 'news', en: 'NEWS & MENU', title: '伝えたいことを、ひとつの場所に。', name: 'お知らせ・商品・サービス一覧', text: '新商品や営業日、メニューなどをまとめ、お客様が必要な情報を見つけやすく。情報の更新方法も含めてご提案を検討します。' },
-  { kind: 'manage', en: 'STORE MANAGEMENT', title: 'お店の日常に、なじむ使い方を。', name: '店舗側の管理画面', text: '会員情報やお知らせなどを、お店側で管理するための画面を想定しています。使う人や作業の流れを確認し、必要な操作を考えます。' },
-  { kind: 'insight', en: 'CUSTOMER INSIGHT', title: 'お客様との接点を、振り返る。', name: '顧客の利用状況の確認・分析', text: '会員サービスの利用傾向を、お店の施策を考えるヒントに。確認できる項目やデータの扱いは、実証を通じて決めていく予定です。' },
+const solutions = [
+  { kind: 'news', en: 'WEBSITE', title: 'お店の情報を、伝わる形に。', name: 'お店専用のWebサイト', text: '営業日や商品、サービスを見つけてもらいにくい。そんな課題に、必要な情報をまとめたWebサイトや、更新しやすい仕組みをご提案します。' },
+  { kind: 'manage', en: 'DAILY OPERATIONS', title: '毎日の作業を、進めやすく。', name: '予約・受注・業務管理システム', text: '紙やメッセージに分かれた情報、何度も転記している作業。実際の仕事の流れを確認し、予約や受注の管理など、お店専用の仕組みを検討します。' },
+  { kind: 'member', en: 'CUSTOMER CONNECTION', title: 'お客様との接点を、育てる。', name: '店舗専用のWebアプリ', text: '会員証、スタンプ、お知らせなど、お客様との関係づくりを支える仕組み。お店の接客や使い方に合わせ、必要な機能から組み立てます。' },
+  { kind: 'insight', en: 'DATA & IMPROVEMENT', title: '振り返りを、次の工夫に。', name: 'データの整理・確認画面', text: '日々の記録をまとめる手間や、状況のわかりにくさを整理。売上や予約など、確認したい情報を見やすくする方法を一緒に考えます。' },
 ];
 
 const scenes = [
-  { type: 'ベーカリー・お菓子店', tag: 'また立ち寄りたくなる接点に', text: 'お買い物のスタンプと、新商品のご案内をひとつに。日々のおいしさを、会員サービスでも伝える使い方を考えられます。' },
-  { type: 'カフェ・コーヒースタンド', tag: 'お店の空気まで伝わる場所に', text: 'メニューや豆の紹介、季節のお知らせを、お店の色や雰囲気と一緒に。来店の前後にも、お客様がお店に触れられる場所を目指します。' },
-  { type: '美容・ネイル・トリミングサロン', tag: '次のご相談につながる関係に', text: '会員向けのお知らせやサービス紹介を、スマートフォンで確認しやすく。お店ごとの接客や運用に合わせ、必要な機能を検討します。' },
+  { type: '和菓子店・ベーカリー', tag: '予約の確認を、ひとつの場所に。', text: '電話やメッセージで受けた予約の確認に時間がかかるなら、受注一覧や受け渡しの確認画面など、日々の流れに合う管理方法を検討します。' },
+  { type: 'カフェ・コーヒースタンド', tag: '営業日やメニューを、届けやすく。', text: 'お客様が必要な情報を見つけにくいなら、営業日やメニューをまとめたWebサイトなど、お店側も更新を続けやすい形を考えます。' },
+  { type: '美容・ネイル・トリミングサロン', tag: '次のご来店を、支える仕組みに。', text: 'お客様との継続的な接点に悩んでいるなら、会員向けのお知らせや店舗専用Webアプリなど、今の接客に取り入れやすい方法を検討します。' },
 ];
 
 const flow = [
-  { title: 'お問い合わせ', text: 'まとまっていなくても大丈夫です。気になっていることや、お店のお困りごとをお聞かせください。' },
-  { title: 'ヒアリング', text: 'お客様との接点、現在の会員サービス、日々の運用について一緒に整理します。' },
-  { title: 'ご提案・デモ', text: '必要な機能、デザインの方向性、費用や進め方をご相談します。デモのご案内は準備状況に応じます。' },
-  { title: '制作・設定', text: '合意した内容をもとに制作・設定。実際の使い方を確認しながら、導入の準備を進めます。' },
-  { title: '公開・運用開始', text: 'お客様へのご案内や店舗での使い方を確認し、継続的な運用を目指します。' },
+  { title: '無料ヒアリング', text: '日々のお困りごとを伺い、原因を一緒に整理します。課題がはっきりしていなくてもご相談いただけます。' },
+  { title: 'ご提案・事前合意', text: '解決方法をご提案し、達成条件・固定報酬・実施期間・制作範囲を、着手前に確認して合意します。' },
+  { title: '制作・一緒に運用', text: 'AIも活用して、お店専用のWebサイトや業務システムを制作。実際に使いながら、合意した課題の解決に向けて改善します。' },
+  { title: '条件達成・固定報酬', text: '事前に決めた方法で達成状況を一緒に確認し、合意した条件を達成した時点で、固定報酬をお支払いいただきます。' },
+  { title: '解決後の月額保守', text: '課題解決後、継続契約から原則として月額保守が始まります。プランに応じて、システムの維持や運用・改善を支えます。' },
 ];
 ---
 
-<BaseLayout title="サービス｜店舗専用Webアプリの制作・運用" description="地域の個人店舗に向けたoneightのWebアプリ制作・運用サービス。会員証、スタンプ、クーポンなど、検討中の機能やお店での利用シーンをご紹介します。">
+<BaseLayout title="サービス｜個人店の課題をAI・技術で一緒に解決" description="ONE EIGHTは、地域の個人店のお困りごとを整理し、専用Webサイト・アプリ・業務システムで解決を支援します。無料ヒアリングから制作、運用、課題解決後の月額保守までご案内します。">
   <section class="page-hero detail-service-hero">
     <div class="container detail-hero-grid">
       <div>
         <p class="eyebrow">Service</p>
-        <h1>お店らしさを、<br />いつものスマホに。</h1>
-        <p class="page-lead">会員証も、お知らせも、お店の空気も。<br class="desktop-break" />お客様とのつながりを育てる、お店専用のWebアプリ。</p>
-        <p class="detail-hero-note">oneightは、地域の個人店舗・小規模事業者に向けた<br class="desktop-break" />アプリの制作・運用サービスを準備しています。</p>
-        <a class="button button--primary" href="/contact/">無料相談・デモ相談</a>
+        <h1>お店の課題に、<br />専用の解決策を。</h1>
+        <p class="page-lead">集客、日々の作業、お客様との接点。<br class="desktop-break" />お困りごとを整理し、Webサイトやアプリで解決を支えます。</p>
+        <p class="detail-hero-note">まずは無料で、お店の話を伺うところから。<br class="desktop-break" />制作も、使い始めてからの改善も、一緒に進めます。</p>
+        <a class="button button--primary" href="/contact/">お店の課題を無料相談</a>
       </div>
       <div class="detail-service-visual">
         <div class="detail-orbit" aria-hidden="true"></div>
-        <span class="detail-visual-label">YOUR SHOP, YOUR APP.</span>
+        <span class="detail-visual-label">SOLUTIONS FOR YOUR SHOP.</span>
         <PhoneMockup variant="home" compact />
-        <p class="detail-visual-caption">画面イメージ・架空の店舗を用いたデザイン例</p>
+        <p class="detail-visual-caption">店舗Webアプリの画面イメージ・架空の店舗を用いたデザイン例</p>
       </div>
     </div>
   </section>
 
   <section class="section detail-intro">
     <div class="container detail-editorial-grid">
-      <div><p class="eyebrow">What we create</p><h2 class="section-heading">お店とお客様の間に、<br />もうひとつの接点を。</h2></div>
+      <div><p class="eyebrow">Start with your challenge</p><h2 class="section-heading">課題の整理から、<br />一緒に。</h2></div>
       <div class="detail-body-copy">
-        <p>いつものお客様に新商品を知ってほしい。紙のスタンプカードを見直したい。お店の雰囲気が伝わる会員サービスを持ちたい。</p>
-        <p>そんな思いから始める、お店専用のWebアプリです。スマートフォンのブラウザで開けるため、URLや店頭のQRコードからご案内する使い方を想定しています。</p>
-        <p>お店に必要な機能を一緒に考え、デザインから日々の運用まで。小さく始めて、無理なく使い続けられる仕組みを目指します。</p>
+        <p>予約の確認に時間がかかる。お店の情報がうまく伝わらない。毎日の集計を、もう少し楽にしたい。</p>
+        <p>ONE EIGHTは、お店ごとに違う困りごとを伺い、原因を整理するところから始めます。何をつくるかに加え、「どんな状態になれば解決か」も一緒に考えます。</p>
+        <p>必要な仕組みが見えてきたら、AIや技術を活用して、お店専用のWebサイト・アプリ・業務システムへ。現場で使いながら、課題の解決を目指します。</p>
       </div>
     </div>
     <div class="container detail-access-strip">
-      <div><span class="detail-access-symbol" aria-hidden="true">URL</span><p><strong>見つけやすく</strong><span>URLやQRコードからアクセス</span></p></div>
-      <div><span class="detail-access-symbol detail-home-symbol" aria-hidden="true">＋</span><p><strong>使いやすく</strong><span>ホーム画面への追加にも対応を検討</span></p></div>
-      <div><span class="detail-access-symbol detail-brand-symbol" aria-hidden="true">a</span><p><strong>お店らしく</strong><span>ロゴや色、雰囲気を反映</span></p></div>
+      <div><span class="detail-access-symbol" aria-hidden="true">01</span><p><strong>まずは無料相談</strong><span>日々の困りごとと原因を整理</span></p></div>
+      <div><span class="detail-access-symbol" aria-hidden="true">02</span><p><strong>条件を決めて着手</strong><span>達成条件・報酬・期間を事前合意</span></p></div>
+      <div><span class="detail-access-symbol" aria-hidden="true">03</span><p><strong>解決後も支える</strong><span>月額保守で維持・運用を支援</span></p></div>
     </div>
   </section>
 
   <section class="section detail-features" id="features">
     <div class="container">
-      <div class="detail-section-intro"><div><p class="eyebrow">Feature ideas</p><h2 class="section-heading">つながり方は、<br />お店に合わせて。</h2></div><p>すべてを詰め込むのではなく、必要なものから。<br />お店での使い方を想像しながら考えています。</p></div>
-      <p class="detail-preparing-note"><span>検討中の機能</span>以下は機能候補です。完成済み・標準提供を示すものではありません。提供範囲は今後の実証やご要望に応じて決定します。</p>
+      <div class="detail-section-intro"><div><p class="eyebrow">What we can build</p><h2 class="section-heading">専用サイトも、<br />毎日の業務システムも。</h2></div><p>お店の課題に合う方法を、一緒に選びます。<br />必要な機能と使い方を、ご相談から具体的に。</p></div>
+      <p class="detail-preparing-note"><span>課題に応じた制作例</span>以下はご提案できる仕組みの例です。完成済みの機能や一律の提供範囲を示すものではなく、必要な内容を個別にご相談します。</p>
       <div class="detail-feature-grid">
-        {features.map((feature) => <article class="detail-feature">
-          <div class:list={['detail-feature-art', `detail-art-${feature.kind}`]} aria-hidden="true">
-            {feature.kind === 'member' && <div class="detail-mini-member"><span>MEMBERS CARD</span><b>your shop.</b><div class="detail-mini-barcode"></div></div>}
-            {feature.kind === 'stamp' && <div class="detail-mini-stamps">{Array.from({ length: 8 }, (_, i) => <i class:list={{ filled: i < 5 }}>{i < 5 ? '✦' : ''}</i>)}</div>}
-            {feature.kind === 'coupon' && <div class="detail-mini-coupon"><span>JUST FOR YOU</span><b>お店からの、<br />小さな楽しみ。</b><i>COUPON</i></div>}
-            {feature.kind === 'news' && <div class="detail-mini-news"><span>FROM YOUR SHOP</span><b>季節のお知らせ</b><i></i><i></i><i></i></div>}
-            {feature.kind === 'manage' && <div class="detail-mini-manage"><span>STORE DESK</span><div><i></i><i></i><i></i></div><hr /><hr /><hr /></div>}
-            {feature.kind === 'insight' && <div class="detail-mini-insight"><span>お店の振り返り</span><div><i></i><i></i><i></i><i></i><i></i></div><small>利用状況の表示イメージ</small></div>}
+        {solutions.map((solution) => <article class="detail-feature">
+          <div class:list={['detail-feature-art', `detail-art-${solution.kind}`]} aria-hidden="true">
+            {solution.kind === 'news' && <div class="detail-mini-news"><span>YOUR SHOP WEBSITE</span><b>営業日・商品情報</b><i></i><i></i><i></i></div>}
+            {solution.kind === 'manage' && <div class="detail-mini-manage"><span>予約・受注一覧</span><div><i></i><i></i><i></i></div><hr /><hr /><hr /></div>}
+            {solution.kind === 'member' && <div class="detail-mini-member"><span>MEMBERS CARD</span><b>your shop.</b><div class="detail-mini-barcode"></div></div>}
+            {solution.kind === 'insight' && <div class="detail-mini-insight"><span>お店の振り返り</span><div><i></i><i></i><i></i><i></i><i></i></div><small>データの表示イメージ</small></div>}
           </div>
-          <div class="detail-feature-copy"><p class="eyebrow">{feature.en}</p><h3>{feature.title}</h3><p class="detail-feature-name">{feature.name}</p><p>{feature.text}</p></div>
+          <div class="detail-feature-copy"><p class="eyebrow">{solution.en}</p><h3>{solution.title}</h3><p class="detail-feature-name">{solution.name}</p><p>{solution.text}</p></div>
         </article>)}
       </div>
-      <p class="detail-section-note">予約・取り置きなどは、ご要望や必要性に応じて検討します。表示した図は機能のイメージであり、実際の利用データではありません。</p>
+      <p class="detail-section-note">図は仕組みを説明するためのイメージです。従来の月額制の店舗向けWebアプリの制作・運用についても、引き続きご相談いただけます。</p>
     </div>
   </section>
 
   <section class="section detail-scenes">
-    <div class="container detail-editorial-grid"><div><p class="eyebrow">For local shops</p><h2 class="section-heading">いつもの風景に、<br />新しい使い方を。</h2><p class="muted">以下は利用シーンの例です。<br />導入実績ではありません。</p></div><div class="detail-scene-list">{scenes.map((scene) => <article><p class="detail-scene-type">{scene.type}</p><h3>{scene.tag}</h3><p>{scene.text}</p></article>)}</div></div>
+    <div class="container detail-editorial-grid"><div><p class="eyebrow">For local shops</p><h2 class="section-heading">いつもの仕事にある、<br />こんなお困りごとから。</h2><p class="muted">以下はご相談内容と解決方法の例です。<br />導入実績ではありません。</p></div><div class="detail-scene-list">{scenes.map((scene) => <article><p class="detail-scene-type">{scene.type}</p><h3>{scene.tag}</h3><p>{scene.text}</p></article>)}</div></div>
   </section>
 
   <section class="section detail-approach">
-    <div class="container"><div class="detail-section-intro"><div><p class="eyebrow">Our approach</p><h2 class="section-heading">お店の個性と、<br />続けられる仕組み。</h2></div><p>見た目だけでなく、使い始めてからのことまで。<br />お店の規模と日常に合う導入を考えます。</p></div>
-      <div class="detail-principles"><article><h3>お店のブランドを大切に。</h3><p>共通の仕組みを土台にしながら、ロゴや色、伝え方をお店に合わせて。必要な機能や表現の範囲を丁寧に確認します。</p></article><article><h3>運用する人の視点で。</h3><p>更新の頻度や接客の流れ、担当する方の使いやすさを考慮。店舗自身がアカウントや顧客データを管理する構造を基本に検討しています。</p></article><article><h3>導入後も、少しずつ。</h3><p>使い方を振り返りながら、継続的な運用・改善を目指します。具体的なサポート範囲は、サービスの準備と実証を通じて整えます。</p></article></div>
-      <p class="detail-section-note">既存のLINE公式アカウントなどとの併用もご相談いただけます。個別のシステム連携は別途検討となります。売上や再来店率などの成果を保証するサービスではありません。</p>
+    <div class="container"><div class="detail-section-intro"><div><p class="eyebrow">Our approach</p><h2 class="section-heading">進め方も費用も、<br />納得してから。</h2></div><p>お店の仕事に合うこと、使い続けられること。<br />解決までの道筋を、事前に共有します。</p></div>
+      <div class="detail-principles"><article><h3>困りごとの原因から考える。</h3><p>今のやり方や、時間がかかっている作業を確認。既存の道具も踏まえながら、課題に合う解決方法と必要な制作範囲を整理します。</p></article><article><h3>小さくつくり、現場で確かめる。</h3><p>AIや共通の仕組みを活用し、制作の手間を抑えながら、お店の流れに合わせて調整します。実際に使う方と確認し、運用しやすい形を目指します。</p></article><article><h3>達成条件と報酬を先に決める。</h3><p>着手前に、何をもって課題解決とするか、固定報酬と実施期間を合意します。制作費の先払いは原則不要で、条件達成時に固定報酬をお支払いいただく仕組みです。</p></article></div>
+      <p class="detail-section-note">課題解決の報酬は、売上の何％という形ではなく、事前に決める固定額です。解決後の月額保守とは分けてご案内します。詳しくは<a class="detail-text-link" href="/pricing/">料金の考え方</a>をご覧ください。</p>
     </div>
   </section>
 
   <section class="section detail-flow-section">
-    <div class="container"><p class="eyebrow">Getting started</p><h2 class="section-heading">ご相談から、その先まで。</h2><p class="detail-flow-intro">まずはお店のことを聞くところから。<br />以下は、今後の導入の流れを示した案です。ご提案内容や準備状況により変更する場合があります。</p>
+    <div class="container"><p class="eyebrow">Getting started</p><h2 class="section-heading">ご相談から、解決後まで。</h2><p class="detail-flow-intro">課題の発見、制作、運用、そして日々の保守へ。<br />お店と一緒に、ひとつずつ確認しながら進めます。</p>
       <ol class="detail-flow">{flow.map((step) => <li><h3>{step.title}</h3><p>{step.text}</p></li>)}</ol>
+      <p class="detail-section-note">未達の場合や途中で中止する場合の扱いも、着手前にご相談します。大規模な追加開発や、新たな課題への対応は別途お見積もりします。</p>
     </div>
   </section>
 
-  <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">Let's talk</p><h2>「うちのお店なら？」を、<br />一緒に考えませんか。</h2><p>機能が決まっていなくても大丈夫。<br />まずは、お店のことをお聞かせください。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">無料相談・デモ相談</a><a class="detail-text-link" href="/pricing/">料金の考え方を見る</a></div></div></section>
+  <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">Let's talk</p><h2>「これ、少し困っている」から、<br />聞かせてください。</h2><p>つくりたいものが決まっていなくても大丈夫。<br />お店の課題を整理するところから始めます。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">お店の課題を無料相談</a><a class="detail-text-link" href="/pricing/">料金の考え方を見る</a></div></div></section>
 </BaseLayout>
