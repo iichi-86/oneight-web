@@ -2,7 +2,7 @@
 
 地域の個人店舗・小規模事業者向けWebアプリ制作・運用サービス「oneight（ワンエイト）」の公式サイトです。Astro・TypeScript・CSSで構成した静的サイトと、お問い合わせ用のCloudflare Pages Functionsを分離しています。顧客向けアプリや各店舗の顧客データは、このプロジェクトで管理しません。
 
-所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日にDNSの反映と、HTTPSでのトップページ表示（HTTP 200）を確認しています。検索登録は無効のままです。所有者の「フォームを有効にしてください」という指示に基づく変更をpushしましたが、Cloudflareのビルド失敗で公開反映が止まっています。公開フォームはまだ「受付準備中」です。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
+所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日、フォーム有効化の修正 `536e65fa` のデプロイ成功と、[公開フォーム](https://oneight.jp/contact/) の有効化表示・必須入力エラー・TurnstileのSuccess表示を実ブラウザで確認しました。実メール送信は行っておらず、サーバー側の実キー検証・Resend受付・受信箱への到達は未確認です。検索登録は無効のままです。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
 
 ## ローカルで確認する
 
@@ -24,9 +24,9 @@ npm run verify
 
 Astro・TypeScriptの静的解析、お問い合わせ処理のテスト、本番ビルド、生成物の検査を順に実行します。生成物の検査では、主要6ページと404、内部リンク・画像参照、ページ固有のtitle・description・h1、OGP・favicon・robots・sitemap、公開URLと検索登録、CSPでのスクリプト実行許可を確認します。
 
-フォーム有効化変更（`7c1cf4e`）は、Pages内蔵Wrangler 3.114.17でJSONのimport属性を解析できず、公開ビルドが失敗しました。公開設定をTypeScriptへ移してimport属性を除去した後、`npm run verify`（テスト20件）と同じWrangler 3.114.17によるFunctionsコンパイルは成功しました。修正のpush・再デプロイ、実キーによるTurnstile・実メール到達の確認が残っています。詳しくは [検証記録](docs/validation.md) を参照してください。
+公開設定をTypeScriptへ移してJSONのimport属性を除去し、Pages内蔵Wrangler 3.114.17の構文互換性を修正しました。`npm run verify`（テスト20件）、同版WranglerでのFunctionsコンパイル、修正 `536e65fa` のGitHub ActionsとPagesデプロイは成功しています。実メール到達とモバイル表示の確認は残っています。詳しくは [検証記録](docs/validation.md) を参照してください。
 
-互換修正のCIには、`npm run verify` に加えてWrangler 3.114.17でFunctionsをコンパイルする検査を追加しました。Pagesと同じ世代で構文互換性を確認するための検査で、デプロイは行いません。追加後のCI実行結果はpush後に確認します。
+互換修正のCIには、`npm run verify` に加えてWrangler 3.114.17でFunctionsをコンパイルする検査を追加し、成功を確認しました。Pagesと同じ世代で構文互換性を確認するための検査で、このCIステップではデプロイは行いません。
 
 個別に実行する場合は次のとおりです。
 
@@ -90,7 +90,7 @@ npm run preview
 5. [お問い合わせの設定](docs/contact-setup.md) に従い、承認済みの外部サービスとPages Functionsの秘密情報を設定します。ルートの `functions/` がデプロイに含まれる構成を維持してください。`dist/` の静的ファイルだけを配信するホスティングでは送信APIは動きません。
 6. 承認された公開方法でデプロイし、全ページ、404、スマートフォン表示、フォームの成功・失敗、メール到達、canonical・robots・sitemapを確認します。独自ドメイン・DNSの設定は別途承認後に行います。
 
-環境変数の変更後は再ビルド・再デプロイが必要です。追加のホスティングサービスは使用せず、所有者の既存Cloudflare Pagesへの自動デプロイを利用します。所有者からProduction変数7件の登録とResendのドメインVerifiedを報告いただき、関連DNS3件の公開応答も確認しています。実キーの値・有効性、実行時バインディング、実メール到達は未検証です。
+環境変数の変更後は再ビルド・再デプロイが必要です。追加のホスティングサービスは使用せず、所有者の既存Cloudflare Pagesへの自動デプロイを利用します。所有者からProduction変数7件の登録とResendのドメインVerifiedを報告いただき、関連DNS3件の公開応答も確認しています。公開画面のTurnstile Successは確認済みですが、秘密情報の実値・API側でのSiteverify検証・Resend受付・実メール到達は未検証です。
 
 フォームは、両有効化フラグが未設定の場合、`src/data/contact-release.ts` の承認済み設定に従います。画面側はCloudflare Pagesの本番ブランチ `feat/oneight-official-site` と公式originが一致するビルド、API側は許可origin・リクエストoriginが公式originに一致する場合に限って有効化します。必須キーが不足するAPIは503を返します。`PUBLIC_CONTACT_ENABLED`・`CONTACT_ENABLED` の追加手入力は不要です。停止する場合は両方を `false` にして再ビルド・再デプロイしてください。本番ブランチ変更時は同TSファイルの本番ブランチ設定も更新します。詳細は [お問い合わせの設定](docs/contact-setup.md) を参照してください。
 
