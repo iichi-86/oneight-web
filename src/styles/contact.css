@@ -285,3 +285,7 @@
     margin-right: -0.4rem;
   }
 }
+
+.contact-mark { color: #a74c3d; font-size: 2.5rem; letter-spacing: 0.02em; transform: rotate(-4deg); }
+.contact-panel { background: #f1f7f3; border-color: #cbdccc; border-radius: 16px 5px 16px 5px; }
+.contact-field input,.contact-field textarea,.contact-field select { background-color: #fff; }

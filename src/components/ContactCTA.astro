@@ -1,5 +1,6 @@
 ---
+import ShopSketch from './ShopSketch.astro';
 interface Props { title?: string; }
-const { title = 'お店の「困った」を、\n一緒にほどいていきませんか。' } = Astro.props;
+const { title = 'まずは、お店の話を\n聞かせてください。' } = Astro.props;
 ---
-<section class="contact-cta section" aria-label="無料相談のご案内"><div class="container cta-inner"><div><p class="eyebrow">LET’S TALK</p><h2>{title.split('\n').map(line => <span>{line}</span>)}</h2><p>ヒアリング・ご提案は無料です。<br />まだ整理できていない困りごとも、お聞かせください。</p></div><a class="button button--light" href="/contact/">お店の課題を無料で相談する</a></div><span class="cta-orbit" aria-hidden="true"></span></section>
+<section class="contact-cta section" aria-label="無料相談のご案内"><div class="container cta-inner"><div><p class="eyebrow">相談・ご提案は無料です</p><h2>{title.split('\n').map(line => <span>{line}</span>)}</h2><p>「これ、ちょっと面倒でね」くらいの話からどうぞ。<br />何ができそうか、一緒に考えます。</p></div><div class="cta-action"><ShopSketch kind="flower" /><a class="button button--primary" href="/contact/">無料で相談してみる</a></div></div></section>

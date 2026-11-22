@@ -1,17 +1,21 @@
 @charset "UTF-8";
 :root {
-  --blue: #2453fa;
-  --blue-dark: #183fc6;
-  --ink: #16202e;
-  --muted: #576272;
-  --line: #e0e5eb;
-  --pale: #f3f6fc;
-  --sky: #e8efff;
+  --blue: #284bc8;
+  --blue-dark: #213a95;
+  --ink: #293d56;
+  --muted: #586571;
+  --line: #d7dfdf;
+  --pale: #f1f7f3;
+  --sky: #e9eefb;
+  --coral: #ed7a69;
+  --coral-dark: #b84837;
+  --yellow: #f5cf65;
+  --mint: #a8cdb7;
   --white: #fff;
   --radius: 12px;
   --max: 1200px;
   font-family:
-    -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+    "Hiragino Maru Gothic ProN", -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
     "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
   color: var(--ink);
   background: #fff;
@@ -119,7 +123,7 @@ select:focus-visible {
   font-size: 0.875rem;
   line-height: 1.5;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
   color: var(--blue);
   margin-bottom: 20px;
 }
@@ -144,7 +148,7 @@ select:focus-visible {
   text-align: center;
   padding: 14px 27px;
   gap: 12px;
-  border-radius: 7px;
+  border-radius: 999px;
   border: 1px solid transparent;
   font-size: 1rem;
   line-height: 1.5;
@@ -161,6 +165,8 @@ select:focus-visible {
 .button--primary {
   background: var(--blue);
   color: white;
+  border-color: #213a95;
+  box-shadow: 3px 3px 0 #b9d5c3;
 }
 .button--primary:hover {
   background: var(--blue-dark);
@@ -205,13 +211,12 @@ select:focus-visible {
   top: 12px;
 }
 .site-header {
-  height: 104px;
+  height: 88px;
   position: sticky;
   top: 0;
   z-index: 30;
-  background: #ffffffed;
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid #e3e7ef80;
+  background: #fffffffa;
+  border-bottom: 1px solid #d7dfdf;
 }
 .header-inner {
   width: calc(100% - 96px);
@@ -935,4 +940,20 @@ select:focus-visible {
 }
 .nav-link {
   font-size: 0.875rem;
+}
+
+/* A softer, colorful shop-front identity, shared across all pages. */
+.site-footer { background: #f6f9f5; border-top: 1px solid #d6e1d6; }
+.wordmark-dot { background: var(--coral-dark); }
+.contact-cta { background: #dceee2; color: var(--ink); border-block: 1px solid #c5d8c9; }
+.contact-cta .eyebrow { color: #2d6557; }
+.contact-cta p:not(.eyebrow) { color: #455d52; }
+.cta-action { flex: 0 0 275px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+.cta-action .shop-sketch { width: 105px; transform: rotate(8deg); }
+.cta-action .button { min-width: 265px; }
+@media (max-width: 760px) {
+  .cta-action { flex-basis: auto; width: 100%; }
+  .cta-action .shop-sketch { width: 78px; }
+  .cta-inner { gap: 20px; }
+  .contact-cta .button { min-width: 0; }
 }

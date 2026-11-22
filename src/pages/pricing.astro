@@ -4,26 +4,31 @@ import ContactCTA from '../components/ContactCTA.astro';
 import { site } from '../data/site';
 import '../styles/details.css';
 const agreements = [
-  { title: '取り組む課題と達成条件', text: '何を改善し、何をもって解決とするか。現状や確認するデータ、測定方法、店舗側にお願いする準備も一緒に整理します。' },
-  { title: '固定報酬と実施期間', text: '課題の難易度・経済的価値・開発工数を踏まえ、報酬額と実施期間を合意します。金額を事前に決める方式です。' },
-  { title: '運用と変更時の扱い', text: '条件未達・中断・延長が生じた場合の対応や費用、外部サービス利用料、追加の課題が出た際の進め方も、着手前に確認します。' },
+  { title: 'どんな状態を「解決」にする？', text: 'まずは、お店の困りごとを伺います。何ができたら解決とするか、どのデータで確かめるか、お店にお願いする準備も含めて、一緒に整理します。' },
+  { title: '報酬はいくら？いつまで取り組む？', text: '課題の難しさや、解決することで生まれる価値、開発に必要な作業をもとに、固定報酬額と実施期間をご相談します。どちらも、始める前に合意します。' },
+  { title: '途中で変更があったら？', text: '条件に届かない場合や、中断・延長する場合の対応と費用も、着手前に確認します。外部サービスの利用料や、新たな課題が出てきたときの進め方も、あらかじめ整理します。' },
 ];
+const supportLabels: Record<string, string> = {
+  light: '基本の維持',
+  standard: '使い方も一緒に',
+  premium: '分析・改善まで',
+};
 ---
-<BaseLayout title="料金｜課題解決時の固定報酬と月額支援" description="ONE EIGHTの料金は、事前合意した条件達成時の固定報酬3万〜20万円程度と、解決後の月額保守5,000円・10,000円・20,000円。すべて税込。ヒアリング・提案は無料、制作費の先払いは原則不要です。">
-  <section class="page-hero detail-pricing-hero"><div class="container"><p class="eyebrow">Pricing</p><h1>解決した時の報酬と、<br />その先を支える月額。</h1><p class="page-lead">達成条件・固定報酬額・実施期間を、着手前に合意。<br />お店の課題と、必要な支援の範囲に合わせて決めます。</p></div></section>
+<BaseLayout title="料金｜成功報酬ではじめるお店の課題解決" description="ONE EIGHTはヒアリング・ご提案無料、制作費の先払いは原則不要。事前に決めた条件達成時の成功報酬は固定3万〜20万円程度です。解決後の継続契約は月額5,000円・10,000円・20,000円。すべて税込でご案内します。">
+  <section class="page-hero detail-pricing-hero friendly-pricing-hero"><div class="container"><p class="eyebrow">はじめやすい料金のしくみ</p><h1>まずは無料でご相談。<br />解決できたら、成功報酬。</h1><p class="page-lead">{site.pricing.consultation}{site.pricing.initialFee}<br />「何ができたら解決か」と報酬額を、始める前に一緒に決めます。</p></div></section>
 
   <section class="section detail-price-section"><div class="container detail-price-layout">
-    <div class="detail-price-context"><p class="eyebrow">Project fee</p><h2 class="section-heading">条件を達成した時に、<br />事前合意の固定報酬。</h2><p>{site.pricing.consultation}<br />{site.pricing.initialFee}</p><p>{site.pricing.conditions}</p><p class="muted">売上の何％かを受け取る方式ではありません。<br />事前に合意した条件に沿って、達成状況を確認します。</p></div>
-    <div class="detail-price-card"><div class="detail-price-card-top"><h3>課題解決時の固定報酬</h3><p>税込・目安</p></div><p class="detail-price-amount"><strong>{site.pricing.projectMinimum / 10000}〜{site.pricing.projectMaximum / 10000}</strong><span class="detail-price-yen">万円程度</span></p><p class="detail-price-tax">{site.pricing.tax}課題に応じて個別にお見積もりします。</p><div class="detail-price-initial"><span>報酬が発生するタイミング</span><p>{site.pricing.settlement}</p></div><p class="detail-price-conditions">{site.pricing.payment}</p><a class="button button--primary" href="/contact/">課題と費用を無料で相談する</a></div>
+    <div class="detail-price-context"><p class="eyebrow">成功報酬について</p><h2 class="section-heading">成功報酬は固定額。<br />売上の歩合ではありません。</h2><p>お店の困りごとに合わせて、取り組む内容と金額をご提案します。<br />まずは、気になっていることを聞かせてください。</p><p>{site.pricing.conditions}</p><p class="muted">成功報酬をお支払いいただくのは、事前に合意した達成条件を満たした時点です。条件に届かない場合や、途中で予定が変わった場合の扱いも、始める前に確認します。</p></div>
+    <div class="detail-price-card"><div class="detail-price-card-top"><h3>条件達成時の成功報酬</h3><p>税込・目安</p></div><p class="detail-price-amount"><strong>{site.pricing.projectMinimum / 10000}〜{site.pricing.projectMaximum / 10000}</strong><span class="detail-price-yen">万円程度</span></p><p class="detail-price-tax">{site.pricing.tax}課題に合わせて個別にお見積もりします。</p><div class="detail-price-initial"><span>お支払いのタイミング</span><p>{site.pricing.settlement}</p></div><p class="detail-price-conditions">{site.pricing.payment}</p><a class="button button--primary" href="/contact/">無料で相談してみる</a></div>
   </div></section>
 
-  <section class="section maintenance-section" aria-labelledby="maintenance-title"><div class="container"><div class="detail-section-intro"><div><p class="eyebrow">After the solution</p><h2 id="maintenance-title" class="section-heading">解決したあとも、<br />一緒に使い続けるために。</h2></div><p>{site.pricing.monthlyStart}<br />必要な支援に合わせて、3つのプランからご相談いただけます。</p></div>
-    <div class="maintenance-plans">{site.pricing.plans.map(plan => <article class="maintenance-plan"><p class="eyebrow">Monthly support</p><h3>{plan.name}</h3><p class="maintenance-summary">{plan.summary}</p><p class="maintenance-amount"><span>月額</span><strong>{plan.monthlyLabel}</strong><span>円</span></p><p class="maintenance-tax">税込</p><ul>{plan.services.map(service => <li>{service}</li>)}</ul><a class="button button--outline" href="/contact/">この支援内容を相談する</a></article>)}</div>
+  <section class="section maintenance-section" aria-labelledby="maintenance-title"><div class="container"><div class="detail-section-intro"><div><p class="eyebrow">そのあとのサポート</p><h2 id="maintenance-title" class="section-heading">解決したあとも、<br />使い方に合わせてお手伝い。</h2></div><p>{site.pricing.monthlyStart}<br />「まずは維持だけ」「使い方も相談したい」など、必要なお手伝いに合わせて選べます。</p></div>
+    <div class="maintenance-plans">{site.pricing.plans.map(plan => <article class="maintenance-plan"><p class="eyebrow">{supportLabels[plan.id] || '使い続けるための支援'}</p><h3>{plan.name}</h3><p class="maintenance-summary">{plan.summary}</p><p class="maintenance-amount"><span>月額</span><strong>{plan.monthlyLabel}</strong><span>円</span></p><p class="maintenance-tax">税込</p><ul>{plan.services.map(service => <li>{service}</li>)}</ul><a class="button button--outline" href="/contact/">このプランを相談する</a></article>)}</div>
     <div class="pricing-scope-note"><p><strong>対応範囲は、ご契約前に具体化します。</strong><br />{site.pricing.contract}</p><p>{site.pricing.extra}</p></div>
   </div></section>
 
-  <section class="section"><div class="container"><div class="detail-section-intro"><div><p class="eyebrow">Agree before we start</p><h2 class="section-heading">お互いの認識を、<br />はじめに揃えます。</h2></div><p>同じゴールを見ながら取り組めるように、<br />契約前に、条件と進め方を確認します。</p></div><div class="detail-principles">{agreements.map(item => <article><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
+  <section class="section"><div class="container"><div class="detail-section-intro"><div><p class="eyebrow">始める前に、一緒に確認</p><h2 class="section-heading">「どこまで？」「いくら？」<br />最初に決めておきましょう。</h2></div><p>お店とONE EIGHTで、同じゴールを見ながら進めるために。<br />内容も費用も、納得いただいてから取り組みます。</p></div><div class="detail-principles">{agreements.map(item => <article><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
 
-  <section class="section detail-price-questions"><div class="container"><p class="eyebrow">Before you decide</p><h2 class="section-heading">料金について、<br />ご相談の前に。</h2><dl class="detail-terms-list"><div><dt>制作費の先払い</dt><dd>{site.pricing.initialFee}支払時期や例外的な費用が生じる場合の扱いは、契約前に確認します。</dd></div><div><dt>条件未達・実施期間の変更</dt><dd>当初の条件に届かない場合、判定が難しい場合、実施期間を終えた場合の対応や費用の扱いは、着手前に確認します。</dd></div><div><dt>追加開発・新たな課題</dt><dd>{site.pricing.extra}</dd></div><div><dt>月額制の店舗専用アプリ</dt><dd>店舗専用アプリを月額制で導入・運用するご相談も、引き続き受け付けています。課題解決型のプランとの違いや適した契約方式は、個別にご案内します。</dd></div></dl></div></section>
-  <ContactCTA title={'まずは、お店のことを。\n課題と費用を、一緒に整理します。'} />
+  <section class="section detail-price-questions"><div class="container"><p class="eyebrow">料金の気になること</p><h2 class="section-heading">相談する前に、<br />知っておきたいこと。</h2><dl class="detail-terms-list"><div><dt>はじめに制作費を払う必要はありますか？</dt><dd>{site.pricing.initialFee}支払いの時期や、例外的に費用がかかる場合の扱いは、ご契約前に確認します。</dd></div><div><dt>目標に届かなかったり、途中で変更が必要になったら？</dt><dd>合意した条件に届かない場合や、達成の判断が難しい場合、中断・期間延長が必要な場合の対応と費用は、着手前に確認します。</dd></div><div><dt>追加でお願いしたいことが出てきたら？</dt><dd>{site.pricing.extra}</dd></div><div><dt>お店専用アプリの月額プランも相談できますか？</dt><dd>はい。お店専用アプリを月額制で導入・運用するご相談も受け付けています。成功報酬型との違いや、お店に合う契約の形を、個別にご案内します。</dd></div></dl></div></section>
+  <ContactCTA title={'費用のことも、気軽にどうぞ。\nお店に合う進め方を考えましょう。'} />
 </BaseLayout>

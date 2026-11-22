@@ -1,0 +1,7 @@
+---
+import { Image } from 'astro:assets';
+import neighborhood from '../assets/neighborhood-together.png';
+interface Props { eager?: boolean; }
+const { eager = false } = Astro.props;
+---
+<Image src={neighborhood} alt="" width={1000} format="webp" quality={82} sizes="(max-width: 760px) 100vw, 55vw" loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} />
