@@ -24,3 +24,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run verify
+      - name: Check Cloudflare Pages Functions builder compatibility
+        run: npx --yes wrangler@3.114.17 pages functions build functions --outdir /tmp/oneight-pages-functions
+        env:
+          WRANGLER_SEND_METRICS: 'false'

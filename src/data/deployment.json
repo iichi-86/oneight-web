@@ -1,7 +1,3 @@
 {
-  "siteUrl": "https://oneight.jp",
-  "contact": {
-    "enabled": true,
-    "productionBranch": "feat/oneight-official-site"
-  }
+  "siteUrl": "https://oneight.jp"
 }

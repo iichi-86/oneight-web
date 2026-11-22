@@ -35,12 +35,12 @@
 
 所有者が登録したと報告した7件は `NODE_VERSION`、`RESEND_API_KEY`、`PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY`、`CONTACT_ALLOWED_ORIGIN`、`CONTACT_FROM_EMAIL`、`CONTACT_TO_EMAIL` です。値はこの文書へ記載しません。`PUBLIC_CONTACT_ENABLED`・`CONTACT_ENABLED` を追加で手入力する必要はありません。
 
-`src/data/deployment.json` の `contact.enabled=true` と `contact.productionBranch=feat/oneight-official-site` を承認済みの公開設定として使用します。フラグが**未設定の場合にだけ**、共有判定 `src/data/contact-release.ts` が次の条件で有効化します。
+`src/data/contact-release.ts` に定義した有効化状態・公式origin・本番ブランチ `feat/oneight-official-site` を承認済みの公開設定として使用します。Pages内蔵Wrangler 3系との互換性のため、FunctionsからJSONのimport属性を参照しません。フラグが**未設定の場合にだけ**、同ファイルの共有判定が次の条件で有効化します。
 
 - 画面：公式origin `https://oneight.jp`、`CF_PAGES=1`、`CF_PAGES_BRANCH` が本番ブランチと一致するビルド。公開Turnstileキーも必要です。
 - API：許可originとリクエストoriginが、ともに公式originと一致。APIキー・送信元・送信先・Turnstile secret key等の必須設定が不足する場合は、従来どおり503で停止します。
 
-明示的な `false`・空文字・未知の値は停止します。ローカル用 `.env.example` の停止設定はそのまま使用できます。本番ブランチを変更したら、`contact.productionBranch` も更新してください。
+明示的な `false`・空文字・未知の値は停止します。ローカル用 `.env.example` の停止設定はそのまま使用できます。本番ブランチを変更したら、`src/data/contact-release.ts` の本番ブランチ設定も更新してください。公式ドメイン変更時は、同ファイルの公式originと、canonical用の `src/data/deployment.json` の両方を一致させます。
 
 運用停止時はProductionの `PUBLIC_CONTACT_ENABLED=false` と `CONTACT_ENABLED=false` を設定し、再ビルド・再デプロイします。再開時に承認済みリリース判定へ戻す場合は、両上書き変数を削除して未設定に戻し、再ビルド・再デプロイしてください。空文字への変更では停止が続きます。
 

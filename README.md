@@ -24,7 +24,9 @@ npm run verify
 
 Astro・TypeScriptの静的解析、お問い合わせ処理のテスト、本番ビルド、生成物の検査を順に実行します。生成物の検査では、主要6ページと404、内部リンク・画像参照、ページ固有のtitle・description・h1、OGP・favicon・robots・sitemap、公開URLと検索登録、CSPでのスクリプト実行許可を確認します。
 
-今回のフォーム有効化変更は `npm run verify` とGitHub Actionsに成功し、テスト20件と本番条件のローカルビルドで有効化表示を確認しました。WranglerによるFunctionsコンパイルも成功しています。Cloudflareのビルドログによる原因調査と、公開反映・実キーによるTurnstile・実メール到達の確認が残っています。
+フォーム有効化変更（`7c1cf4e`）は、Pages内蔵Wrangler 3.114.17でJSONのimport属性を解析できず、公開ビルドが失敗しました。公開設定をTypeScriptへ移してimport属性を除去した後、`npm run verify`（テスト20件）と同じWrangler 3.114.17によるFunctionsコンパイルは成功しました。修正のpush・再デプロイ、実キーによるTurnstile・実メール到達の確認が残っています。詳しくは [検証記録](docs/validation.md) を参照してください。
+
+互換修正のCIには、`npm run verify` に加えてWrangler 3.114.17でFunctionsをコンパイルする検査を追加しました。Pagesと同じ世代で構文互換性を確認するための検査で、デプロイは行いません。追加後のCI実行結果はpush後に確認します。
 
 個別に実行する場合は次のとおりです。
 
@@ -51,8 +53,8 @@ npm run preview
 | `/404.html` | 存在しないページの案内 |
 
 - `src/data/site.ts`：ブランド情報、提供予定価格、未確定条件、FAQ、公開状態の参照元。
-- `src/data/deployment.json`：公式公開URLの既定値（`https://oneight.jp`）、承認済みのフォーム公開状態、本番ブランチ。
-- `src/data/contact-release.ts`：ビルド・実行時のフォーム有効化判定。
+- `src/data/deployment.json`：canonical・OGP等に使う公式公開URLの既定値（`https://oneight.jp`）。
+- `src/data/contact-release.ts`：承認済みのフォーム公開状態・公式origin・本番ブランチと、ビルド・実行時の有効化判定。
 - `src/pages/`：各ページの文章と構成。`robots.txt.ts` と `sitemap.xml.ts` もここにあります。
 - `src/layouts/`・`src/components/`・`src/styles/`：共通レイアウト、ロゴ、画面イメージ、デザイン。
 - `public/`：favicon、OG画像などの静的ファイル。
@@ -90,6 +92,6 @@ npm run preview
 
 環境変数の変更後は再ビルド・再デプロイが必要です。追加のホスティングサービスは使用せず、所有者の既存Cloudflare Pagesへの自動デプロイを利用します。所有者からProduction変数7件の登録とResendのドメインVerifiedを報告いただき、関連DNS3件の公開応答も確認しています。実キーの値・有効性、実行時バインディング、実メール到達は未検証です。
 
-フォームは、両有効化フラグが未設定の場合、`deployment.json` の承認済み設定に従います。画面側はCloudflare Pagesの本番ブランチ `feat/oneight-official-site` と公式originが一致するビルド、API側は許可origin・リクエストoriginが公式originに一致する場合に限って有効化します。必須キーが不足するAPIは503を返します。`PUBLIC_CONTACT_ENABLED`・`CONTACT_ENABLED` の追加手入力は不要です。停止する場合は両方を `false` にして再ビルド・再デプロイしてください。本番ブランチ変更時は `deployment.json` の `contact.productionBranch` も更新します。詳細は [お問い合わせの設定](docs/contact-setup.md) を参照してください。
+フォームは、両有効化フラグが未設定の場合、`src/data/contact-release.ts` の承認済み設定に従います。画面側はCloudflare Pagesの本番ブランチ `feat/oneight-official-site` と公式originが一致するビルド、API側は許可origin・リクエストoriginが公式originに一致する場合に限って有効化します。必須キーが不足するAPIは503を返します。`PUBLIC_CONTACT_ENABLED`・`CONTACT_ENABLED` の追加手入力は不要です。停止する場合は両方を `false` にして再ビルド・再デプロイしてください。本番ブランチ変更時は同TSファイルの本番ブランチ設定も更新します。詳細は [お問い合わせの設定](docs/contact-setup.md) を参照してください。
 
 企画・表現の判断は [デザインとコンテンツ](docs/design-and-content.md)、残る確認事項は [公開前チェックリスト](docs/launch-checklist.md) にまとめています。

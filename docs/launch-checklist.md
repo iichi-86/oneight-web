@@ -33,7 +33,7 @@
 - [ ] Previewでは `PUBLIC_ALLOW_INDEXING=false` とし、本番の検索登録は承認後のみ `true` にする。
 - [ ] 検索登録前にcanonical・OGP・sitemapが同じ正式URLを指すことを確認する。
 - [ ] [お問い合わせの設定](contact-setup.md) を完了し、Pages Functionsに必要な設定値がそろっている。
-- [ ] 承認済みの `deployment.json` の公開状態と本番ブランチが、Pagesのビルド環境・公式originに一致する。両有効化フラグを未設定にする場合は共有判定を使用する。
+- [ ] 承認済みの `src/data/contact-release.ts` の公開状態・公式origin・本番ブランチが、Pagesのビルド環境に一致する。両有効化フラグを未設定にする場合は共有判定を使用する。
 - [ ] 送信APIキー・Turnstile secret keyはサーバー側の秘密情報に設定する。`PUBLIC_` 変数やGitへ入れない。
 - [ ] 送信有効化前に、本番ホストでTurnstileが動き、所有者の受信先へメールが届くことを確認する。
 - [ ] 無効時は受付準備中と表示し、送信できたように見せていない。
@@ -59,6 +59,6 @@
 - [ ] DNS変更が必要なら、対象レコードと影響を提示して承認後に実施する。
 - [ ] 更新担当、秘密情報の保管・更新方法、受信対応、障害連絡先、ロールバック方法を記録する。
 - [ ] 問い合わせの保持期限と削除担当、外部サービスの課金・利用状況の確認方法を決める。
-- [ ] 停止時は `PUBLIC_CONTACT_ENABLED=false` と `CONTACT_ENABLED=false` を設定して再ビルド・再デプロイする。本番ブランチ変更時は `contact.productionBranch` も更新する。
+- [ ] 停止時は `PUBLIC_CONTACT_ENABLED=false` と `CONTACT_ENABLED=false` を設定して再ビルド・再デプロイする。本番ブランチ変更時は `src/data/contact-release.ts` の本番ブランチ設定も更新する。
 
 実績・お知らせ・実際のデモ・アクセス計測は、初回公開後に必要性と管理負担を確認して検討します。計測ツール追加時は、同意やプライバシーポリシーの更新要否も確認してください。
