@@ -1,6 +1,6 @@
 # お問い合わせ受付の設定
 
-フォームとCloudflare Pages Function `/api/contact` を実装済みです。所有者がCloudflare Pagesを公開し、独自ドメイン `https://oneight.jp` のHTTPS表示を確認しています。所有者からProduction変数7件の登録とResendの送信ドメインVerifiedを報告いただき、関連DNS3件の公開応答も確認しています。所有者の指示に基づくフォーム有効化リリースは準備中で、今回のデプロイ・実メール到達は未確認です。秘密情報の値や有効性は確認していません。
+フォームとCloudflare Pages Function `/api/contact` を実装済みです。所有者がCloudflare Pagesを公開し、独自ドメイン `https://oneight.jp` のHTTPS表示を確認しています。所有者からProduction変数7件の登録とResendの送信ドメインVerifiedを報告いただき、関連DNS3件の公開応答も確認しています。所有者の指示に基づくフォーム有効化変更はpush済みですが、Cloudflareのビルド失敗で公開反映が止まっています。実メール到達、秘密情報の値や有効性は未確認です。
 
 ## 採用する最小構成
 

@@ -1,6 +1,6 @@
 # 検証記録
 
-制作中の検証と、その後の所有者による公開作業の確認をまとめています。初期実装時は外部設定を行わず、その後、所有者がCloudflare Pagesの公開、独自ドメインの取得・接続、Production変数の登録とResendの送信ドメイン認証を進めました。所有者の指示に基づくフォーム有効化リリースは、ローカルの静的解析・テスト・本番条件での生成物確認まで完了しています。今回の変更のpush・デプロイと実メール到達は未確認です。
+制作中の検証と、その後の所有者による公開作業の確認をまとめています。初期実装時は外部設定を行わず、その後、所有者がCloudflare Pagesの公開、独自ドメインの取得・接続、Production変数の登録とResendの送信ドメイン認証を進めました。所有者の指示に基づくフォーム有効化変更をpushし、ローカル検証とGitHub Actionsは成功しています。Cloudflareのビルド失敗で公開反映が止まっており、実メール到達も未確認です。
 
 ## 確認済み
 
@@ -9,13 +9,15 @@
 | 今回の `npm run verify` | 成功。静的解析、API・公開判定テスト、7ページのビルド、内部参照・SEO・CSPの検査を完了 |
 | Astroの静的解析 | 18ファイル、エラー0・警告0・ヒント0 |
 | Pages FunctionsのTypeScript解析 | 成功（`tsc --project tsconfig.functions.json --noEmit`） |
-| GitHub Actions（初期実装時） | `npm ci`・`npm run verify` 成功。今回の変更のpush後の結果は未確認 |
+| GitHub Actions（今回の変更） | コミット `7c1cf4e` の `npm ci`・`npm run verify` 成功（run `44994270481`） |
+| Cloudflare Pages（今回の変更） | 同コミットのcheck-runがBuild failed。デプロイ `e285435b-a26b-44d4-992e-8db66def87d1` の管理画面ログによる原因確認が必要。公開ブラウザではまだ受付準備中 |
 | 問い合わせAPI・公開判定の自動テスト | 20件成功、失敗0。外部APIはモックで検証 |
 | 初期設定でのAstroビルド | 主要6ページ・404の計7ページを生成 |
 | 生成物の検査 | ページ・内部リンク・画像参照・アンカー・SEO・初期noindex設定を確認、成功 |
 | CSPの検査 | 現在の生成物で成功。生成物の一時コピーからインラインscriptのハッシュ、Turnstileの許可先をそれぞれ削除すると検査が失敗することも確認 |
 | Cloudflare Pages Functions互換性 | 今回のコードをWrangler 4.165.0の `pages functions build functions` でコンパイル成功。デプロイ・公開API実行ではない |
 | フォームの本番条件ビルド | `CF_PAGES=1` と本番ブランチ、検証用の公開site keyでローカルビルド。`data-enabled=true`、Turnstile要素、準備中表示なしをassert。実キーによるTurnstile検証は未実施 |
+| 通常のローカルビルド | `data-enabled=false`、受付準備中表示、Turnstile要素なしをassert |
 | プライバシーページの生成物 | 公開窓口のmailtoリンクと、確認用placeholderが残っていないことをローカル生成物でassert |
 | 公開URL設定ありのSEO分岐 | 一時出力にて6ページのcanonical・OGP・sitemap・robots、404 noindexのNode assertions成功。テスト用originは本番へ未設定 |
 | 本番依存関係の既知脆弱性検査 | npm audit --omit=dev：検出0件（検査時点の情報） |
@@ -34,7 +36,7 @@
 
 ## 今後の更新・受付開始前に必要な確認
 
-- 今回の変更をpush・デプロイし、公開サイトでフォームの有効化と表示を確認する。ローカル検証を公開環境の確認済みとは扱わない。
+- Cloudflareのビルドログで原因を確認して公開処理を修復し、公開サイトでフォームの有効化と表示を確認する。ローカル検証を公開環境の確認済みとは扱わない。
 - ソースの公式URL既定値は `src/data/deployment.json` の `https://oneight.jp` を使用。公開反映後のcanonical・OGP・robots・sitemapを確認する。検索登録は `PUBLIC_ALLOW_INDEXING=false` を維持。
 - Pages上での `_headers` 適用、404のHTTPステータス、Functionsの実行。
 - 承認済みホストと実キーでのTurnstile確認、メール受付・受信箱への到達・返信先の確認。
