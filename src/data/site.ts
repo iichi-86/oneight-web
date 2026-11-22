@@ -1,4 +1,5 @@
 import deployment from "./deployment.json";
+import { contactBuildEnabled } from "./contact-release";
 
 // 料金・未確定条件・公開状態はここでまとめて管理します。
 const origin = new URL(import.meta.env.PUBLIC_SITE_URL || deployment.siteUrl)
@@ -13,7 +14,12 @@ export const site = {
   origin,
   allowIndexing: import.meta.env.PUBLIC_ALLOW_INDEXING === "true" && !!origin,
   contact: {
-    enabled: import.meta.env.PUBLIC_CONTACT_ENABLED === "true",
+    enabled: contactBuildEnabled(
+      import.meta.env.PUBLIC_CONTACT_ENABLED,
+      origin,
+      import.meta.env.CF_PAGES,
+      import.meta.env.CF_PAGES_BRANCH,
+    ),
     turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "",
   },
   pricing: {

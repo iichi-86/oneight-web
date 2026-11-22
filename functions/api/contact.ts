@@ -1,3 +1,5 @@
+import { contactRuntimeEnabled } from '../../src/data/contact-release.ts';
+
 /** Cloudflare Pages Function. No secrets or inquiry contents are logged. */
 export interface ContactEnv {
   CONTACT_ENABLED?: string;
@@ -118,8 +120,9 @@ export async function handleContact(
     result.headers.set("Allow", "POST");
     return result;
   }
+  const origin = new URL(request.url).origin;
   if (
-    env.CONTACT_ENABLED !== "true" ||
+    !contactRuntimeEnabled(env.CONTACT_ENABLED, env.CONTACT_ALLOWED_ORIGIN, origin) ||
     !env.CONTACT_ALLOWED_ORIGIN ||
     !env.RESEND_API_KEY ||
     !env.TURNSTILE_SECRET_KEY ||
@@ -131,7 +134,6 @@ export async function handleContact(
       "現在、お問い合わせフォームの受付準備中です。入力内容は送信されていません。",
     );
   }
-  const origin = new URL(request.url).origin;
   // Both values are required. Forwarded headers and user-supplied form origins are never trusted.
   if (
     origin !== env.CONTACT_ALLOWED_ORIGIN ||

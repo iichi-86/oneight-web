@@ -1,6 +1,6 @@
 # お問い合わせ受付の設定
 
-フォームとCloudflare Pages Function `/api/contact` を実装済みです。所有者がCloudflare Pagesを公開し、独自ドメイン `https://oneight.jp` のHTTPS表示を確認しています。ResendのSecret登録も所有者の報告・画面で確認しました。送信ドメイン認証、Turnstile、プライバシー情報の確定と実メール送信の確認は未完了のため、画面は「受付準備中」、送信は無効のままです。Secretの登録だけでは送信成功を確認したことにはなりません。
+フォームとCloudflare Pages Function `/api/contact` を実装済みです。所有者がCloudflare Pagesを公開し、独自ドメイン `https://oneight.jp` のHTTPS表示を確認しています。所有者からProduction変数7件の登録とResendの送信ドメインVerifiedを報告いただき、関連DNS3件の公開応答も確認しています。所有者の指示に基づくフォーム有効化リリースは準備中で、今回のデプロイ・実メール到達は未確認です。秘密情報の値や有効性は確認していません。
 
 ## 採用する最小構成
 
@@ -11,18 +11,18 @@
 ## 受付開始前に承認・設定すること
 
 1. 既存のCloudflare Pagesと正式ドメイン `oneight.jp` を使用します。Turnstile・Resend・受付用メールサービスの利用条件と料金、送信ドメイン認証の設定を確認します。追加のDNS変更、外部契約・課金、秘密情報の設定は所有者の確認済み範囲で行います。
-2. Resendで送信ドメインを検証します。送信元・送信先には実在するメールアドレスを設定します。`CONTACT_FROM_EMAIL` は検証済みドメインのメールアドレスそのものを指定します（表示名付き形式は未対応）。
+2. Resendの送信ドメインVerifiedは所有者の報告で確認済みです。`CONTACT_FROM_EMAIL` は検証済みドメインのメールアドレスそのものを使用します（表示名付き形式は未対応）。送信元・送信先の実際の設定値と到達は、実メールで確認します。
 3. Turnstileで許可ホストを正式ドメインに制限し、サイトキーと秘密キーを発行します。テスト用キーを本番に流用しないでください。検証時にhostnameおよびaction=`contact`も照合します。
 4. Pages Functionsの**実行時**に、下表の非公開変数を設定します。PreviewとProductionで分離します。Cloudflareのビルド用変数だけを設定しても実行時に引き継がれない場合があるため、Functionsの実際のバインディングを確認してください。
-5. 正式な事業者情報、別経路の連絡窓口、保存期間、外部サービスの利用条件・処理地域等を確認し、`src/pages/privacy.astro`の確認用表示を確定します。フォーム以外の個人情報照会窓口が必要です。
-6. 受付用ビルド変数を設定して再ビルドし、承認された検証環境で有効なTurnstileと実メールの受信・返信先・失敗時表示を確認します。その後、所有者が本番での受付開始を承認します。
+5. `src/pages/privacy.astro` に運営者・フォーム以外の連絡窓口・保存と削除の方針・利用サービスを反映しています。運営やサービスの構成が変わった際も、実際の取り扱いに合わせて更新します。
+6. 所有者のフォーム有効化指示に基づき、既存の本番ブランチへ反映してPagesの自動デプロイを実行します。公開反映後にTurnstile、実メールの受信・返信先・失敗時表示を確認します。設定済みの報告と、実際の送信確認を区別して記録します。
 
 | 変数 | 設定場所 | 内容 |
 | --- | --- | --- |
-| `PUBLIC_CONTACT_ENABLED` | Astroビルド | 全設定確認後に `true`。未設定・falseなら送信不可 |
+| `PUBLIC_CONTACT_ENABLED` | Astroビルド | 任意の上書き。未設定なら下記の承認済みリリース判定。`true`以外の明示値は停止 |
 | `PUBLIC_TURNSTILE_SITE_KEY` | Astroビルド | Turnstileの公開サイトキー |
 | `PUBLIC_SITE_URL` | Astroビルド | 任意の上書き。未設定時は `src/data/deployment.json` の `https://oneight.jp` を使用 |
-| `CONTACT_ENABLED` | Functions実行時 | 受信許可時に `true` |
+| `CONTACT_ENABLED` | Functions実行時 | 任意の上書き。未設定なら下記の本番origin判定。`true`以外の明示値は停止 |
 | `CONTACT_ALLOWED_ORIGIN` | Functions実行時 | 本番では `https://oneight.jp`。実際のリクエストoriginと完全一致させる |
 | `RESEND_API_KEY` | Functions実行時の秘密変数 | 送信専用・必要最小権限のAPIキー |
 | `CONTACT_FROM_EMAIL` | Functions実行時 | 認証済み送信元メールアドレス |
@@ -30,6 +30,19 @@
 | `TURNSTILE_SECRET_KEY` | Functions実行時の秘密変数 | Turnstileの秘密キー |
 
 本番だけでなく、プレビューでフォームを有効にする場合も、そのプレビューのoriginを実行時設定に指定し、Turnstileの許可ホストも整合させます。未承認のプレビューで個人情報を取得しないでください。
+
+### 承認済みリリースと停止方法
+
+所有者が登録したと報告した7件は `NODE_VERSION`、`RESEND_API_KEY`、`PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY`、`CONTACT_ALLOWED_ORIGIN`、`CONTACT_FROM_EMAIL`、`CONTACT_TO_EMAIL` です。値はこの文書へ記載しません。`PUBLIC_CONTACT_ENABLED`・`CONTACT_ENABLED` を追加で手入力する必要はありません。
+
+`src/data/deployment.json` の `contact.enabled=true` と `contact.productionBranch=feat/oneight-official-site` を承認済みの公開設定として使用します。フラグが**未設定の場合にだけ**、共有判定 `src/data/contact-release.ts` が次の条件で有効化します。
+
+- 画面：公式origin `https://oneight.jp`、`CF_PAGES=1`、`CF_PAGES_BRANCH` が本番ブランチと一致するビルド。公開Turnstileキーも必要です。
+- API：許可originとリクエストoriginが、ともに公式originと一致。APIキー・送信元・送信先・Turnstile secret key等の必須設定が不足する場合は、従来どおり503で停止します。
+
+明示的な `false`・空文字・未知の値は停止します。ローカル用 `.env.example` の停止設定はそのまま使用できます。本番ブランチを変更したら、`contact.productionBranch` も更新してください。
+
+運用停止時はProductionの `PUBLIC_CONTACT_ENABLED=false` と `CONTACT_ENABLED=false` を設定し、再ビルド・再デプロイします。再開時に承認済みリリース判定へ戻す場合は、両上書き変数を削除して未設定に戻し、再ビルド・再デプロイしてください。空文字への変更では停止が続きます。
 
 ## セキュリティ・運用上の動作
 

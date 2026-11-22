@@ -2,7 +2,7 @@
 
 地域の個人店舗・小規模事業者向けWebアプリ制作・運用サービス「oneight（ワンエイト）」の公式サイトです。Astro・TypeScript・CSSで構成した静的サイトと、お問い合わせ用のCloudflare Pages Functionsを分離しています。顧客向けアプリや各店舗の顧客データは、このプロジェクトで管理しません。
 
-所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日にDNSの反映と、HTTPSでのトップページ表示（HTTP 200）を確認しています。サービス条件・法的表示には未確定の内容があり、検索登録とお問い合わせ送信は無効のままです。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
+所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日にDNSの反映と、HTTPSでのトップページ表示（HTTP 200）を確認しています。検索登録は無効のままです。所有者の「フォームを有効にしてください」という指示を受け、有効化リリースを準備しています。今回の変更のデプロイと実メール到達は未確認です。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
 
 ## ローカルで確認する
 
@@ -23,6 +23,8 @@ npm run verify
 ```
 
 Astro・TypeScriptの静的解析、お問い合わせ処理のテスト、本番ビルド、生成物の検査を順に実行します。生成物の検査では、主要6ページと404、内部リンク・画像参照、ページ固有のtitle・description・h1、OGP・favicon・robots・sitemap、公開URLと検索登録、CSPでのスクリプト実行許可を確認します。
+
+今回のフォーム有効化変更は `npm run verify` に成功し、テスト20件と本番条件のローカルビルドで有効化表示を確認しました。WranglerによるFunctionsコンパイルも成功しています。今回のpush・デプロイと、実キーによるTurnstile・実メール到達は未確認です。
 
 個別に実行する場合は次のとおりです。
 
@@ -49,7 +51,8 @@ npm run preview
 | `/404.html` | 存在しないページの案内 |
 
 - `src/data/site.ts`：ブランド情報、提供予定価格、未確定条件、FAQ、公開状態の参照元。
-- `src/data/deployment.json`：公式公開URLの既定値（`https://oneight.jp`）。
+- `src/data/deployment.json`：公式公開URLの既定値（`https://oneight.jp`）、承認済みのフォーム公開状態、本番ブランチ。
+- `src/data/contact-release.ts`：ビルド・実行時のフォーム有効化判定。
 - `src/pages/`：各ページの文章と構成。`robots.txt.ts` と `sitemap.xml.ts` もここにあります。
 - `src/layouts/`・`src/components/`・`src/styles/`：共通レイアウト、ロゴ、画面イメージ、デザイン。
 - `public/`：favicon、OG画像などの静的ファイル。
@@ -67,7 +70,7 @@ npm run preview
 | --- | --- |
 | `PUBLIC_SITE_URL` | 任意の上書き用HTTPS origin。未設定時は `src/data/deployment.json` の `https://oneight.jp` を使用します。パス・クエリ・認証情報を含めません。 |
 | `PUBLIC_ALLOW_INDEXING` | 初期値は`false`。内容・法的表示の確認と検索登録の承認後のみ`true`にします。 |
-| `PUBLIC_CONTACT_ENABLED` | 実際の送信先・サーバー設定・個人情報の取り扱いを確認後に有効化します。 |
+| `PUBLIC_CONTACT_ENABLED` | 任意の上書き。未設定時は承認済みの本番リリース設定を参照。明示的な`false`は停止、空文字・未知の値も停止します。 |
 | `PUBLIC_TURNSTILE_SITE_KEY` | ブラウザに表示してよいTurnstile site key。secret keyは入れません。 |
 
 公式公開URLは `https://oneight.jp` です。既定値または `PUBLIC_SITE_URL` の上書き値を主要ページのcanonical・OGPへ反映する構成です。コードの更新が公開済みサイトへ反映されたかは、再ビルド・再デプロイ後に確認してください。`PUBLIC_ALLOW_INDEXING=true` の場合にのみ検索登録を許可し、sitemapに主要ページを含めます。検索登録の抑止中はsitemapを空にし、404は常にnoindexでcanonical・og:urlを付けません。`noindex`やrobotsは閲覧制限ではないため、プレビューに秘密情報や個人情報を置かないでください。
@@ -85,6 +88,8 @@ npm run preview
 5. [お問い合わせの設定](docs/contact-setup.md) に従い、承認済みの外部サービスとPages Functionsの秘密情報を設定します。ルートの `functions/` がデプロイに含まれる構成を維持してください。`dist/` の静的ファイルだけを配信するホスティングでは送信APIは動きません。
 6. 承認された公開方法でデプロイし、全ページ、404、スマートフォン表示、フォームの成功・失敗、メール到達、canonical・robots・sitemapを確認します。独自ドメイン・DNSの設定は別途承認後に行います。
 
-環境変数の変更後は再ビルド・再デプロイが必要です。追加のホスティングサービスは使用せず、所有者の既存Cloudflare Pagesへの自動デプロイを利用します。Resendの秘密情報登録は所有者の報告・画面で確認していますが、送信ドメイン認証、Turnstile、プライバシー情報の確定と実メール到達の確認は未完了です。
+環境変数の変更後は再ビルド・再デプロイが必要です。追加のホスティングサービスは使用せず、所有者の既存Cloudflare Pagesへの自動デプロイを利用します。所有者からProduction変数7件の登録とResendのドメインVerifiedを報告いただき、関連DNS3件の公開応答も確認しています。実キーの値・有効性、実行時バインディング、実メール到達は未検証です。
+
+フォームは、両有効化フラグが未設定の場合、`deployment.json` の承認済み設定に従います。画面側はCloudflare Pagesの本番ブランチ `feat/oneight-official-site` と公式originが一致するビルド、API側は許可origin・リクエストoriginが公式originに一致する場合に限って有効化します。必須キーが不足するAPIは503を返します。`PUBLIC_CONTACT_ENABLED`・`CONTACT_ENABLED` の追加手入力は不要です。停止する場合は両方を `false` にして再ビルド・再デプロイしてください。本番ブランチ変更時は `deployment.json` の `contact.productionBranch` も更新します。詳細は [お問い合わせの設定](docs/contact-setup.md) を参照してください。
 
 企画・表現の判断は [デザインとコンテンツ](docs/design-and-content.md)、残る確認事項は [公開前チェックリスト](docs/launch-checklist.md) にまとめています。

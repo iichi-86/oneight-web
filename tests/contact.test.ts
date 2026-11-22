@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { handleContact } from '../functions/api/contact.ts';
+import { handleContact, type ContactEnv } from '../functions/api/contact.ts';
 
 const now = 1_800_000_000_000;
 const env = { CONTACT_ENABLED: 'true', CONTACT_ALLOWED_ORIGIN: 'https://oneight.test', RESEND_API_KEY: 'unit-test-secret', CONTACT_TO_EMAIL: 'owner@oneight.test', CONTACT_FROM_EMAIL: 'contact@oneight.test', TURNSTILE_SECRET_KEY: 'unit-test-challenge' };
@@ -84,4 +84,77 @@ test('non-POST requests are rejected', async () => {
   const response = await handleContact(new Request('https://oneight.test/api/contact'), env, forbiddenFetch, now);
   assert.equal(response.status, 405);
   assert.equal(response.headers.get('allow'), 'POST');
+});
+
+const releaseEnv: ContactEnv = {
+  ...env,
+  CONTACT_ENABLED: undefined,
+  CONTACT_ALLOWED_ORIGIN: 'https://oneight.jp',
+  CONTACT_FROM_EMAIL: 'contact@oneight.jp',
+};
+function releaseRequest(origin = 'https://oneight.jp', headerOrigin = origin, data: unknown = input): Request {
+  return new Request(`${origin}/api/contact`, {
+    method: 'POST',
+    headers: { origin: headerOrigin, 'content-type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+}
+
+test('approved production release sends through mocked providers without the runtime flag', async () => {
+  const calls: { url: string; init?: RequestInit }[] = [];
+  const response = await handleContact(releaseRequest(), releaseEnv, async (url, init) => {
+    calls.push({ url: String(url), init });
+    if (String(url) === 'https://challenges.cloudflare.com/turnstile/v0/siteverify') {
+      return Response.json({ success: true, hostname: 'oneight.jp', action: 'contact' });
+    }
+    assert.equal(String(url), 'https://api.resend.com/emails');
+    return Response.json({ id: 'mocked-production-receipt' });
+  }, now);
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).ok, true);
+  assert.equal(calls.length, 2);
+  assert.equal(JSON.parse(calls[1].init?.body as string).from, 'contact@oneight.jp');
+});
+
+test('production release still requires every runtime binding before any provider call', async () => {
+  const required: (keyof ContactEnv)[] = ['CONTACT_ALLOWED_ORIGIN', 'RESEND_API_KEY', 'TURNSTILE_SECRET_KEY', 'CONTACT_FROM_EMAIL', 'CONTACT_TO_EMAIL'];
+  let upstreamCalls = 0;
+  const fetcher: typeof fetch = async () => { upstreamCalls++; return Response.json({ id: 'must-not-be-used' }); };
+  for (const key of required) {
+    for (const value of [undefined, '']) {
+      const response = await handleContact(releaseRequest(), { ...releaseEnv, [key]: value }, fetcher, now);
+      assert.equal(response.status, 503, `${key}=${JSON.stringify(value)}`);
+    }
+  }
+  assert.equal(upstreamCalls, 0);
+});
+
+test('preview and local requests cannot activate the production fallback even with complete bindings', async () => {
+  let upstreamCalls = 0;
+  const fetcher: typeof fetch = async () => { upstreamCalls++; return Response.json({ id: 'must-not-be-used' }); };
+  for (const origin of ['https://preview.oneight-web.pages.dev', 'https://www.oneight.jp', 'http://localhost:8788']) {
+    assert.equal((await handleContact(releaseRequest(origin), releaseEnv, fetcher, now)).status, 503, origin);
+    assert.equal((await handleContact(releaseRequest(origin), { ...releaseEnv, CONTACT_ALLOWED_ORIGIN: origin }, fetcher, now)).status, 503, `${origin} with matching preview binding`);
+  }
+  assert.equal(upstreamCalls, 0);
+});
+
+test('runtime false, empty and unknown flags stop approved production without any provider call', async () => {
+  let upstreamCalls = 0;
+  const fetcher: typeof fetch = async () => { upstreamCalls++; return Response.json({ id: 'must-not-be-used' }); };
+  for (const CONTACT_ENABLED of ['false', '', '0', 'FALSE', 'unknown']) {
+    assert.equal((await handleContact(releaseRequest(), { ...releaseEnv, CONTACT_ENABLED }, fetcher, now)).status, 503, JSON.stringify(CONTACT_ENABLED));
+  }
+  assert.equal(upstreamCalls, 0);
+});
+
+test('production release fallback keeps Origin-header checks and field validation before upstream access', async () => {
+  let upstreamCalls = 0;
+  const fetcher: typeof fetch = async () => { upstreamCalls++; return Response.json({ id: 'must-not-be-used' }); };
+  for (const header of ['', 'null', 'https://attacker.test']) {
+    assert.equal((await handleContact(releaseRequest('https://oneight.jp', header), releaseEnv, fetcher, now)).status, 403);
+  }
+  const response = await handleContact(releaseRequest('https://oneight.jp', 'https://oneight.jp', {}), releaseEnv, fetcher, now);
+  assert.equal(response.status, 422);
+  assert.equal(upstreamCalls, 0);
 });
