@@ -69,7 +69,10 @@ function publicOrigin(value) {
   }
 }
 
-const origin = publicOrigin(env.PUBLIC_SITE_URL);
+const deployment = JSON.parse(
+  await readFile(path.join(root, "src/data/deployment.json"), "utf8"),
+);
+const origin = publicOrigin(env.PUBLIC_SITE_URL || deployment.siteUrl);
 const allowIndexing = env.PUBLIC_ALLOW_INDEXING === "true" && Boolean(origin);
 const baseOrigin = origin || "https://build-verification.invalid";
 
@@ -265,7 +268,10 @@ for (const { route, file } of pages) {
     )
     .map(({ attrs: a }) => a.href);
   const expectedUrl = origin && new URL(route, origin).href;
-  if (origin) {
+  if (route === "/404.html") {
+    if (canonical.length || metadata("og:url").length)
+      report(`${route}: 404ページにはcanonical・og:urlを設定しません。`);
+  } else if (origin) {
     if (canonical.length !== 1 || canonical[0] !== expectedUrl)
       report(`${route}: canonicalが公開URLと一致しません。`);
     if (

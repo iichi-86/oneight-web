@@ -1,4 +1,8 @@
+import deployment from "./deployment.json";
+
 // 料金・未確定条件・公開状態はここでまとめて管理します。
+const origin = new URL(import.meta.env.PUBLIC_SITE_URL || deployment.siteUrl)
+  .origin;
 const monthlyAmount = 20000;
 const monthlyLabel = new Intl.NumberFormat("ja-JP").format(monthlyAmount);
 export const site = {
@@ -6,12 +10,8 @@ export const site = {
   kana: "ワンエイト",
   description:
     "お店らしい会員サービスを、もっと身近に。oneightは地域の個人店舗・小規模事業者に向けた、専用Webアプリの制作・運用サービスを準備しています。",
-  origin: import.meta.env.PUBLIC_SITE_URL
-    ? new URL(import.meta.env.PUBLIC_SITE_URL).origin
-    : undefined,
-  allowIndexing:
-    import.meta.env.PUBLIC_ALLOW_INDEXING === "true" &&
-    !!import.meta.env.PUBLIC_SITE_URL,
+  origin,
+  allowIndexing: import.meta.env.PUBLIC_ALLOW_INDEXING === "true" && !!origin,
   contact: {
     enabled: import.meta.env.PUBLIC_CONTACT_ENABLED === "true",
     turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "",

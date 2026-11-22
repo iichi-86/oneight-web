@@ -1,12 +1,14 @@
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
+import deployment from "./src/data/deployment.json" with { type: "json" };
 
 const env = loadEnv(
   process.env.NODE_ENV || "production",
   process.cwd(),
   "PUBLIC_",
 );
-const candidate = process.env.PUBLIC_SITE_URL || env.PUBLIC_SITE_URL;
+const candidate =
+  process.env.PUBLIC_SITE_URL || env.PUBLIC_SITE_URL || deployment.siteUrl;
 let site;
 if (candidate) {
   const parsed = new URL(candidate);

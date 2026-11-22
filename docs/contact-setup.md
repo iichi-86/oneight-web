@@ -1,6 +1,6 @@
 # お問い合わせ受付の設定
 
-フォームとCloudflare Pages Function `/api/contact` を実装済みです。現在は未設定のため、画面に「受付準備中」を表示し、送信ボタンを無効化します。実メール送信の確認は未実施です。外部サービスの契約・課金・秘密情報の登録は、この制作では行っていません。
+フォームとCloudflare Pages Function `/api/contact` を実装済みです。所有者がCloudflare Pagesを公開し、独自ドメイン `https://oneight.jp` のHTTPS表示を確認しています。ResendのSecret登録も所有者の報告・画面で確認しました。送信ドメイン認証、Turnstile、プライバシー情報の確定と実メール送信の確認は未完了のため、画面は「受付準備中」、送信は無効のままです。Secretの登録だけでは送信成功を確認したことにはなりません。
 
 ## 採用する最小構成
 
@@ -8,22 +8,22 @@
 - Cloudflare Turnstileで自動送信を確認した後、ResendのHTTP APIで指定した運営者のメールアドレスへ転送します。返信先はフォームに入力されたアドレスです。自動返信メールは送りません。
 - 専用データベース、問い合わせ一覧管理画面、ログへの問い合わせ内容の出力は実装していません。Resendおよび受信用メールサービスに内容が処理・保存されるため、両者の保持設定とアクセス管理が必要です。
 
-## 公開前に承認・設定すること
+## 受付開始前に承認・設定すること
 
-1. Cloudflare Pages・Turnstile・Resendの利用と料金、正式ドメイン、受付用メールサービス、送信ドメイン認証の設定を承認・確認します。DNS変更や外部サービス契約を勝手に行わないでください。
+1. 既存のCloudflare Pagesと正式ドメイン `oneight.jp` を使用します。Turnstile・Resend・受付用メールサービスの利用条件と料金、送信ドメイン認証の設定を確認します。追加のDNS変更、外部契約・課金、秘密情報の設定は所有者の確認済み範囲で行います。
 2. Resendで送信ドメインを検証します。送信元・送信先には実在するメールアドレスを設定します。`CONTACT_FROM_EMAIL` は検証済みドメインのメールアドレスそのものを指定します（表示名付き形式は未対応）。
 3. Turnstileで許可ホストを正式ドメインに制限し、サイトキーと秘密キーを発行します。テスト用キーを本番に流用しないでください。検証時にhostnameおよびaction=`contact`も照合します。
 4. Pages Functionsの**実行時**に、下表の非公開変数を設定します。PreviewとProductionで分離します。Cloudflareのビルド用変数だけを設定しても実行時に引き継がれない場合があるため、Functionsの実際のバインディングを確認してください。
 5. 正式な事業者情報、別経路の連絡窓口、保存期間、外部サービスの利用条件・処理地域等を確認し、`src/pages/privacy.astro`の確認用表示を確定します。フォーム以外の個人情報照会窓口が必要です。
-6. 公開用ビルド変数を設定して再ビルドし、ステージングで有効なTurnstileと実メールの受信・返信先・失敗時表示を確認します。その後に本番公開を承認します。
+6. 受付用ビルド変数を設定して再ビルドし、承認された検証環境で有効なTurnstileと実メールの受信・返信先・失敗時表示を確認します。その後、所有者が本番での受付開始を承認します。
 
 | 変数 | 設定場所 | 内容 |
 | --- | --- | --- |
 | `PUBLIC_CONTACT_ENABLED` | Astroビルド | 全設定確認後に `true`。未設定・falseなら送信不可 |
 | `PUBLIC_TURNSTILE_SITE_KEY` | Astroビルド | Turnstileの公開サイトキー |
-| `PUBLIC_SITE_URL` | Astroビルド | 承認済みの正式HTTPS origin（末尾パスなし） |
+| `PUBLIC_SITE_URL` | Astroビルド | 任意の上書き。未設定時は `src/data/deployment.json` の `https://oneight.jp` を使用 |
 | `CONTACT_ENABLED` | Functions実行時 | 受信許可時に `true` |
-| `CONTACT_ALLOWED_ORIGIN` | Functions実行時 | 実際のサイトoriginと完全一致。例示値をそのまま使わない |
+| `CONTACT_ALLOWED_ORIGIN` | Functions実行時 | 本番では `https://oneight.jp`。実際のリクエストoriginと完全一致させる |
 | `RESEND_API_KEY` | Functions実行時の秘密変数 | 送信専用・必要最小権限のAPIキー |
 | `CONTACT_FROM_EMAIL` | Functions実行時 | 認証済み送信元メールアドレス |
 | `CONTACT_TO_EMAIL` | Functions実行時 | 問い合わせ受信用メールアドレス |

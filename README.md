@@ -2,7 +2,7 @@
 
 地域の個人店舗・小規模事業者向けWebアプリ制作・運用サービス「oneight（ワンエイト）」の公式サイトです。Astro・TypeScript・CSSで構成した静的サイトと、お問い合わせ用のCloudflare Pages Functionsを分離しています。顧客向けアプリや各店舗の顧客データは、このプロジェクトで管理しません。
 
-現在は公開前の制作段階です。サービスの機能・提供範囲・料金・税区分・契約条件には未確定の内容があります。本番公開、DNS変更、新規外部サービスの契約・課金、秘密情報の設定は、所有者の確認後に行ってください。このリポジトリを用意しただけでは、公開やメールの送信設定は完了しません。
+所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日にDNSの反映と、HTTPSでのトップページ表示（HTTP 200）を確認しています。サービス条件・法的表示には未確定の内容があり、検索登録とお問い合わせ送信は無効のままです。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
 
 ## ローカルで確認する
 
@@ -49,6 +49,7 @@ npm run preview
 | `/404.html` | 存在しないページの案内 |
 
 - `src/data/site.ts`：ブランド情報、提供予定価格、未確定条件、FAQ、公開状態の参照元。
+- `src/data/deployment.json`：公式公開URLの既定値（`https://oneight.jp`）。
 - `src/pages/`：各ページの文章と構成。`robots.txt.ts` と `sitemap.xml.ts` もここにあります。
 - `src/layouts/`・`src/components/`・`src/styles/`：共通レイアウト、ロゴ、画面イメージ、デザイン。
 - `public/`：favicon、OG画像などの静的ファイル。
@@ -64,26 +65,26 @@ npm run preview
 
 | 設定 | 用途 |
 | --- | --- |
-| `PUBLIC_SITE_URL` | 決定した公開先のHTTPS origin。パス・クエリ・認証情報を含めません。未設定ならcanonical・絶対URLの生成を保留します。 |
-| `PUBLIC_ALLOW_INDEXING` | 初期値は`false`。内容・公開先・法的表示の確認と本番公開の承認後のみ`true`にします。 |
+| `PUBLIC_SITE_URL` | 任意の上書き用HTTPS origin。未設定時は `src/data/deployment.json` の `https://oneight.jp` を使用します。パス・クエリ・認証情報を含めません。 |
+| `PUBLIC_ALLOW_INDEXING` | 初期値は`false`。内容・法的表示の確認と検索登録の承認後のみ`true`にします。 |
 | `PUBLIC_CONTACT_ENABLED` | 実際の送信先・サーバー設定・個人情報の取り扱いを確認後に有効化します。 |
 | `PUBLIC_TURNSTILE_SITE_KEY` | ブラウザに表示してよいTurnstile site key。secret keyは入れません。 |
 
-公開URLが決まるまでは仮のドメインを埋め込まないでください。`PUBLIC_SITE_URL` はcanonical・OGPへ反映します。検索登録は、公開URLがあり、かつ `PUBLIC_ALLOW_INDEXING=true` の場合にのみ許可し、sitemapに主要ページを含めます。公開前のsitemapは空にします。404は常にnoindexです。`noindex`やrobotsは閲覧制限ではないため、プレビューに秘密情報や個人情報を置かないでください。
+公式公開URLは `https://oneight.jp` です。既定値または `PUBLIC_SITE_URL` の上書き値を主要ページのcanonical・OGPへ反映する構成です。コードの更新が公開済みサイトへ反映されたかは、再ビルド・再デプロイ後に確認してください。`PUBLIC_ALLOW_INDEXING=true` の場合にのみ検索登録を許可し、sitemapに主要ページを含めます。検索登録の抑止中はsitemapを空にし、404は常にnoindexでcanonical・og:urlを付けません。`noindex`やrobotsは閲覧制限ではないため、プレビューに秘密情報や個人情報を置かないでください。
 
 `PUBLIC_` で始まる値はブラウザへ公開される前提です。メール送信用APIキーやTurnstile secret keyは、承認後にCloudflare Pages Functionsの秘密情報として設定し、Git・HTML・フロントエンドには入れません。
 
-## Cloudflare Pagesへの公開準備
+## Cloudflare Pagesの構成・更新
 
-**以下は承認後に実施する手順です。このプロジェクト作成時にはデプロイしていません。**
+初期実装ではデプロイを行わず、その後、所有者がCloudflare Pagesの公開と独自ドメイン設定を実施しました。既存のPagesプロジェクトを使用し、重複して作成しないでください。以下は構成の確認と今後の更新手順です。
 
 1. [公開前チェックリスト](docs/launch-checklist.md) を確認し、事業情報・料金条件・プライバシーポリシー・送信先・公開URLを確定します。
-2. 所有者がGitHubの対象リポジトリとCloudflareアカウントを選び、Git連携による自動公開の開始を承認します。Pagesプロジェクト作成や対象ブランチへのpushでデプロイが始まる場合があります。
-3. Cloudflare PagesのGit連携で対象リポジトリを選び、フレームワークをAstro、ビルドコマンドを `npm run build`、出力ディレクトリを `dist`、ルートをこのプロジェクトに設定します。Node.jsは24（`NODE_VERSION=24`）に指定します。
+2. 所有者が接続したGitHubリポジトリ・本番ブランチ・Cloudflareアカウントを使用します。対象ブランチへのpushは既存の自動デプロイを開始するため、承認された変更だけを反映します。
+3. 既存PagesプロジェクトのフレームワークをAstro、ビルドコマンドを `npm run build`、出力ディレクトリを `dist`、ルートをこのプロジェクトとして確認します。Node.jsは24（`NODE_VERSION=24`）を使用します。
 4. ProductionとPreviewの環境変数を分けます。Previewは `PUBLIC_ALLOW_INDEXING=false`、お問い合わせ送信は無効にしておきます。本番の公開URL・検索登録・送信有効化は、承認済みの値を設定します。
 5. [お問い合わせの設定](docs/contact-setup.md) に従い、承認済みの外部サービスとPages Functionsの秘密情報を設定します。ルートの `functions/` がデプロイに含まれる構成を維持してください。`dist/` の静的ファイルだけを配信するホスティングでは送信APIは動きません。
 6. 承認された公開方法でデプロイし、全ページ、404、スマートフォン表示、フォームの成功・失敗、メール到達、canonical・robots・sitemapを確認します。独自ドメイン・DNSの設定は別途承認後に行います。
 
-Git連携後は、本番ブランチへのpushが本番更新になることがあります。公開承認が済むまでは、その接続と自動デプロイを開始しないでください。環境変数の変更後は再ビルド・再デプロイが必要です。
+環境変数の変更後は再ビルド・再デプロイが必要です。追加のホスティングサービスは使用せず、所有者の既存Cloudflare Pagesへの自動デプロイを利用します。Resendの秘密情報登録は所有者の報告・画面で確認していますが、送信ドメイン認証、Turnstile、プライバシー情報の確定と実メール到達の確認は未完了です。
 
 企画・表現の判断は [デザインとコンテンツ](docs/design-and-content.md)、残る確認事項は [公開前チェックリスト](docs/launch-checklist.md) にまとめています。

@@ -1,6 +1,6 @@
 # 検証記録
 
-制作中に確認した結果と、外部設定後に必要な確認をまとめています。公開・契約・秘密情報の設定・実メール送信は行っていません。
+制作中の検証と、その後の所有者による公開作業の確認をまとめています。初期実装時は外部設定を行わず、その後、所有者がCloudflare Pagesの公開、独自ドメインの取得・接続、ResendのSecret登録を進めました。実メール送信は未確認です。
 
 ## 確認済み
 
@@ -13,10 +13,13 @@
 | 初期設定でのAstroビルド | 主要6ページ・404の計7ページを生成 |
 | 生成物の検査 | ページ・内部リンク・画像参照・アンカー・SEO・初期noindex設定を確認、成功 |
 | CSPの検査 | 現在の生成物で成功。生成物の一時コピーからインラインscriptのハッシュ、Turnstileの許可先をそれぞれ削除すると検査が失敗することも確認 |
-| Cloudflare Pages Functions互換性 | Wrangler 4.165.0 のローカルbuildでWorkerコンパイル成功。デプロイは未実施 |
+| Cloudflare Pages Functions互換性 | Wrangler 4.165.0 のローカルbuildでWorkerコンパイル成功。公開環境での送信API実行は未確認 |
 | 公開URL設定ありのSEO分岐 | 一時出力にて6ページのcanonical・OGP・sitemap・robots、404 noindexのNode assertions成功。テスト用originは本番へ未設定 |
 | 本番依存関係の既知脆弱性検査 | npm audit --omit=dev：検出0件（検査時点の情報） |
 | 初回の生成物サイズ | `dist/` 全体で約268 KB。計測時点の概算 |
+| 独自ドメインの公開DNS（2026年11月22日） | Google・Cloudflare双方でNSが `joaquin.ns.cloudflare.com` と `riya.ns.cloudflare.com` に一致し、A・AAAAの応答も確認 |
+| 独自ドメインのHTTPS（2026年11月22日） | `https://oneight.jp` がHTTP 200を返し、oneightのトップページであることを確認 |
+| ResendのSecret登録 | 所有者の操作報告・画面で確認。キーの有効性、実行時の読み込み、メール到達は未検証 |
 
 `npm run verify` で静的解析・APIテスト・ビルド・生成物検査をまとめて再実行できます。生成物の検査にはCSPも含め、ビルドされたインラインスクリプトのハッシュ、自サイトの外部スクリプト参照、Turnstileの許可先を確認します。
 
@@ -24,9 +27,9 @@
 
 デスクトップ・スマートフォンの目視・操作確認は未実施です。管理環境の sites-preview が「relay could not open browser port 4173: timed out waiting for relay readiness」で停止し、ブラウザへの中継を開始できませんでした。残存した開発サーバーを片付け、ブラウザの起動確認後に再試行しましたが同じ環境エラーが続きました。別の配信経路で迂回せず、この検証は未完了として残しています。コード確認で見つかった小画面の価格文字サイズと折り返しは修正済みですが、実機確認の代替ではありません。確認対象は、トップページの最初の画面、ページ間の導線、料金表示、メニュー、フォームの受付準備中表示、キーボード操作、横はみ出し、動きを減らす設定です。
 
-## 外部設定・公開前に必要な確認
+## 今後の更新・受付開始前に必要な確認
 
-- 実際の公開URLを設定したcanonical・OGP・robots・sitemapの整合。
+- ソースの公式URL既定値は `src/data/deployment.json` の `https://oneight.jp` を使用する構成へ更新。変更後のビルド・公開サイトのcanonical・OGP・robots・sitemapの整合は再確認が必要。検索登録は `PUBLIC_ALLOW_INDEXING=false` を維持。
 - Pages上での `_headers` 適用、404のHTTPステータス、Functionsの実行。
 - 承認済みホストと実キーでのTurnstile確認、メール受付・受信箱への到達・返信先の確認。
 - メール事業者やCloudflareの障害時、送信失敗時の利用者向け表示。
