@@ -2,7 +2,7 @@
 
 所有者の確認と引き継ぎ用です。未記入の項目を実施・承認済みと扱わないでください。本番公開、DNS変更、新規外部サービスの契約・課金、秘密情報の設定は、所有者が具体的な内容を確認してから実施します。
 
-現在、公式ドメインのDNS・HTTPS、修正 `536e65fa` のCI・Pagesデプロイ成功、公開フォームの有効化・必須エラー・Turnstile Success表示を確認済みです。Production変数7件とResend Verifiedは所有者から報告いただき、関連DNS3件も公開応答を確認しています。実メール送信、API側のSiteverify・Resend受付・受信箱到達、モバイル表示は未検証です。以下の複合項目は、一部だけ確認できた場合も未完了のまま残します。
+現在、公式ドメインのDNS・HTTPS、修正 `536e65fa` のCI・Pagesデプロイ成功、公開フォームの有効化・必須エラー・Turnstile Success表示を確認済みです。実フォーム送信のGmail到達とProductionの `PUBLIC_ALLOW_INDEXING=true` 保存は所有者から報告済みです。エージェントは実送信・メールボックス閲覧を行っていません。検索設定の再デプロイ・公開確認、Search Consoleの所有権確認・登録依頼、プロバイダログ・返信先・モバイル表示は未確認です。複合項目は一部だけ確認できた場合も未完了として残します。
 
 ## 1. 公開に必要な判断
 
@@ -32,11 +32,14 @@
 - [ ] 公式URLの既定値 `https://oneight.jp` を確認する。`PUBLIC_SITE_URL` で上書きする場合はHTTPS originを指定し、仮ドメイン・パス・クエリ・認証情報を入れない。
 - [ ] Previewでは `PUBLIC_ALLOW_INDEXING=false` とし、本番の検索登録は承認後のみ `true` にする。
 - [ ] 検索登録前にcanonical・OGP・sitemapが同じ正式URLを指すことを確認する。
+- [ ] Productionの検索許可設定を再デプロイし、公開ページのindex許可、robots、sitemapを確認する。設定保存は本人報告済み。
+- [ ] Google Search Consoleで所有権確認、sitemap送信、インデックス登録依頼を行う。
 - [ ] [お問い合わせの設定](contact-setup.md) を完了し、Pages Functionsに必要な設定値がそろっている。
 - [ ] 承認済みの `src/data/contact-release.ts` の公開状態・公式origin・本番ブランチが、Pagesのビルド環境に一致する。両有効化フラグを未設定にする場合は共有判定を使用する。
 - [ ] 送信APIキー・Turnstile secret keyはサーバー側の秘密情報に設定する。`PUBLIC_` 変数やGitへ入れない。
 - [x] 公開フォームの有効化・送信ボタン・Turnstile Success表示を確認する（`536e65fa`）。
-- [ ] 本番の送信APIでSiteverify・Resend受付が成功し、所有者の受信先へメールが届くことを確認する。
+- [x] 所有者が実フォームを送信し、Gmailへの到達を確認したとの報告を記録する。
+- [ ] 返信先を確認する。Siteverify・Resendのプロバイダログはエージェント未確認。
 - [ ] 無効時は受付準備中と表示し、送信できたように見せていない。
 - [x] 公開フォームの空入力で必須エラーを表示し、問い合わせAPIへ送信しないことを確認する。
 - [ ] スパム検証失敗・外部API障害時の公開画面の表示を確認する。
