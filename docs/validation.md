@@ -6,14 +6,15 @@
 
 現在の改訂は `feat/oneight-problem-solving` で準備しています。本番ブランチへの反映は未実施です。
 
-- 課題発見から開発・運用改善までの方針、条件達成時の固定報酬、税込月額3プラン、実家の和菓子屋を起点にする想いを反映しました。実績・効果・法人格は創作していません。
-- `npm run verify` が成功。Astro18ファイルで指摘0、Functions型検査、既存の20テスト、7ページの生成、内部参照・SEO・CSPを確認しました。
-- ソースコミット `452fe8f` の [GitHub Actions](https://github.com/iichi-86/oneight-web/actions/runs/45010884908) とCloudflare Pagesが成功。CIにはPagesと同世代のWrangler 3.114.17によるFunctions互換検査も含みます。
-- 環境内の `sites-preview start /workspace/oneight-content` はrelay readinessエラーで失敗。statusは停止中でした。別サーバーやネットワーク迂回は行わず、既存のCloudflare Pagesのブランチプレビューを使用しました。
-- [確認版](https://feat-oneight-problem-solving.oneight-web.pages.dev/)（デプロイ `da4e3613-183c-4a40-8149-338054beff14`）を幅1180pxのブラウザで確認。トップ、サービス、料金、事業紹介、相談ページへナビゲーションでき、税込の固定報酬・月額3プランと事業説明が表示されました。確認したページに横方向のはみ出しはありませんでした。
-- トップのFAQ「月額料金は、いつからかかりますか？」を開き、解決後の継続契約から開始する説明が展開されることを確認しました。サービスページの画像読み込みエラーはありませんでした。
+- 課題発見から開発・運用改善までの方針、条件達成時の固定報酬、税込月額3プラン、実家の和菓子屋を起点にする想いを反映しました。追加の表現訂正を受け、成功報酬と制作費先払い原則不要を冒頭へ移し、お店のイラスト・多色の配色・自然な会話の説明へ変更しました。完全ノーリスクやAI未使用とは表示していません。実績・効果・法人格も創作していません。
+- `npm run verify` が成功。最終編集後の `npm run check` はAstro20ファイルで指摘0、Functions型検査成功。ビルド・内部参照・SEO・CSPも再確認しました。
+- ソースコミット `18ba4c9` の [GitHub Actions](https://github.com/iichi-86/oneight-web/actions/runs/45018315481) とCloudflare Pagesが成功。CIの `npm run verify` に既存20テスト、Pagesと同世代のWrangler 3.114.17によるFunctions互換検査を含みます。
+- 環境内の `sites-preview start /workspace/oneight-content` は初回relay readinessエラー、今回はport 4173使用中で失敗。statusは停止中でした。別サーバーやネットワーク迂回は行わず、既存のCloudflare Pagesのブランチプレビューを使用しました。
+- [確認版](https://feat-oneight-problem-solving.oneight-web.pages.dev/)（デプロイ `56929336-40ec-40af-a034-f5c6abcb3827`、固定URL `https://56929336.oneight-web.pages.dev`）を幅1180pxのブラウザで確認。トップ、サービス、料金、事業紹介、相談ページへナビゲーションできました。トップの成功報酬表示・イラスト・本文のSVG、料金3プラン、サービスと事業紹介の新しい表示を確認。トップ・料金・事業紹介・相談ページに横方向のはみ出しはありませんでした。
+- トップのFAQ「成功報酬はいくらですか？」を開き、税込3万〜20万円程度と達成条件・固定報酬の説明が展開されることを確認しました。トップの画像読み込みエラーはありませんでした。
+- ヒーローの生成イラストはAstro Imageにより元の約3MBから約262KBのWebPへ変換されました。実機の表示速度スコアは測定していません。
 - Previewの `noindex, nofollow` と相談フォームの `data-enabled=false`・送信ボタン無効・Turnstileなしを確認。メール実送信は行っていません。本番ブランチ・本番環境変数は変更していません。
-- 画面証跡は `/workspace/shared/oneight-revision/home-desktop.jpg` と `pricing-desktop.jpg`。スマートフォン実機・モバイル幅の描画、支援技術、表示速度の実測は未検証です。レスポンシブCSSと生成物の検査は行っていますが、実機検証の代替とは扱いません。
+- 最新の画面証跡は `/workspace/shared/oneight-friendly/home-desktop.jpg` と `pricing-desktop.jpg`。スマートフォン実機・モバイル幅の描画、支援技術、表示速度の実測は未検証です。レスポンシブCSSと生成物の検査は行っていますが、実機検証の代替とは扱いません。
 - メール送信処理・本番のキー・検索許可・DNSは変更していません。公開中のサイトの実送信到達、Googleへの登録操作は所有者の報告で確認しています。
 
 ## 既存公開サイトの検証記録
