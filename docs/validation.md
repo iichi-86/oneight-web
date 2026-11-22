@@ -1,6 +1,6 @@
 # 検証記録
 
-制作中の検証と、所有者による外部設定後の確認をまとめています。互換修正 `536e65fa` はGitHub ActionsとPagesデプロイに成功し、公式ドメインでフォーム有効化とTurnstile Success表示を確認しました。その後、所有者が実フォーム送信のGmail到達を報告しています。エージェントは実送信・メールボックス閲覧を行っておらず、プロバイダログ・返信先は未確認です。検索許可設定も `ad8096a` の再デプロイで反映し、公開ページの検索許可・robots・sitemapを確認済みです。Search Consoleでの所有権確認と登録依頼はこれからです。
+制作中の検証と、所有者による外部設定後の確認をまとめています。互換修正 `536e65fa` はGitHub ActionsとPagesデプロイに成功し、公式ドメインでフォーム有効化とTurnstile Success表示を確認しました。その後、所有者が実フォーム送信のGmail到達を報告しています。エージェントは実送信・メールボックス閲覧を行っておらず、プロバイダログ・返信先は未確認です。検索許可設定も `ad8096a` の再デプロイで反映し、公開ページの検索許可・robots・sitemapを確認済みです。その後、Search Consoleの所有権確認・サイトマップ送信・インデックス登録依頼が完了したと所有者から報告されています。検索結果への掲載は未確認です。
 
 ## 事業モデル改訂の確認版
 
@@ -8,7 +8,12 @@
 
 - 課題発見から開発・運用改善までの方針、条件達成時の固定報酬、税込月額3プラン、実家の和菓子屋を起点にする想いを反映しました。実績・効果・法人格は創作していません。
 - `npm run verify` が成功。Astro18ファイルで指摘0、Functions型検査、既存の20テスト、7ページの生成、内部参照・SEO・CSPを確認しました。
-- 環境内の `sites-preview start /workspace/oneight-content` はrelay readinessエラーで失敗。statusは停止中でした。別サーバーやネットワーク迂回は行っていません。確認用Cloudflareブランチの画面検証はこれからです。
+- ソースコミット `452fe8f` の [GitHub Actions](https://github.com/iichi-86/oneight-web/actions/runs/45010884908) とCloudflare Pagesが成功。CIにはPagesと同世代のWrangler 3.114.17によるFunctions互換検査も含みます。
+- 環境内の `sites-preview start /workspace/oneight-content` はrelay readinessエラーで失敗。statusは停止中でした。別サーバーやネットワーク迂回は行わず、既存のCloudflare Pagesのブランチプレビューを使用しました。
+- [確認版](https://feat-oneight-problem-solving.oneight-web.pages.dev/)（デプロイ `da4e3613-183c-4a40-8149-338054beff14`）を幅1180pxのブラウザで確認。トップ、サービス、料金、事業紹介、相談ページへナビゲーションでき、税込の固定報酬・月額3プランと事業説明が表示されました。確認したページに横方向のはみ出しはありませんでした。
+- トップのFAQ「月額料金は、いつからかかりますか？」を開き、解決後の継続契約から開始する説明が展開されることを確認しました。サービスページの画像読み込みエラーはありませんでした。
+- Previewの `noindex, nofollow` と相談フォームの `data-enabled=false`・送信ボタン無効・Turnstileなしを確認。メール実送信は行っていません。本番ブランチ・本番環境変数は変更していません。
+- 画面証跡は `/workspace/shared/oneight-revision/home-desktop.jpg` と `pricing-desktop.jpg`。スマートフォン実機・モバイル幅の描画、支援技術、表示速度の実測は未検証です。レスポンシブCSSと生成物の検査は行っていますが、実機検証の代替とは扱いません。
 - メール送信処理・本番のキー・検索許可・DNSは変更していません。公開中のサイトの実送信到達、Googleへの登録操作は所有者の報告で確認しています。
 
 ## 既存公開サイトの検証記録
@@ -46,7 +51,7 @@
 | 検索許可設定 | 所有者のProduction設定を反映した `ad8096a` がCIとCloudflare Pagesで成功。デプロイ `8028b8cd-4147-4b94-889c-d2576d241ad5` |
 | 検索許可の公開確認 | トップ・お問い合わせページの `index, follow` と公式canonical、フォーム有効化を確認。robotsは `Allow: /`・`Disallow: /api/`・正式sitemap URL、sitemapは主要6ページを掲載。Googleでの掲載確認とは別 |
 | 検索許可設定のローカル生成物 | `PUBLIC_ALLOW_INDEXING=true` とPages本番条件・ローカル検証用公開site keyでビルド成功。同設定の `verify-build.mjs` が「検索登録: 許可」で成功し、主要6ページ・404・内部参照・SEO・CSPを確認。コード変更なしのためAPIテスト20件は再実行せず、直前CIの成功結果を参照 |
-| Google Search Console | 所有権確認、sitemap送信、インデックス登録依頼は未実施 |
+| Google Search Console | 所有者から所有権確認・sitemap送信・インデックス登録依頼の完了報告。検索結果への掲載は未確認 |
 
 `npm run verify` で静的解析・APIテスト・ビルド・生成物検査をまとめて再実行できます。生成物の検査にはCSPも含め、ビルドされたインラインスクリプトのハッシュ、自サイトの外部スクリプト参照、Turnstileの許可先を確認します。
 
@@ -63,7 +68,7 @@
 ## 引き続き必要な確認
 
 - 本番の検索許可は公開反映確認済み。Previewの検索許可はfalseを維持する。
-- Google Search Consoleの所有権確認、sitemap送信、インデックス登録依頼を進める。検索結果への反映は別途確認する。
+- 所有者報告で完了したGoogle Search Consoleの登録依頼について、検索結果への反映を別途確認する。
 - Pages上での `_headers` 適用、404のHTTPステータス、Functionsの実行。
 - 実メールの返信先を確認する。Gmail到達は本人報告済みで、プロバイダログはエージェント未確認。
 - メール事業者やCloudflareの障害時、送信失敗時の利用者向け表示。
