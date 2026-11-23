@@ -74,6 +74,23 @@ test('only returns success after provider acceptance and preserves idempotency k
   assert.equal(mail.reply_to, input.email);
   assert.match(mail.text, /相談ベーカリー/);
 });
+test('new customer industries are accepted and delivered with their Japanese labels', async () => {
+  const expectedIndustries = [
+    ['restaurant', '飲食店'],
+    ['hair_salon', '美容院'],
+    ['retail', '小売店'],
+    ['nail_salon', 'ネイルサロン'],
+    ['yoga', 'ヨガ教室'],
+  ];
+  for (const [industry, label] of expectedIndustries) {
+    const calls: { url: string; init?: RequestInit }[] = [];
+    const response = await handleContact(request({ ...input, industry }), env, provider(calls), now);
+    assert.equal(response.status, 200, industry);
+    assert.equal(calls.length, 2, industry);
+    const mail = JSON.parse(calls[1].init?.body as string);
+    assert.ok(mail.text.includes(`\n業種：${label}\n`), `${industry} must be labeled ${label} in the inquiry`);
+  }
+});
 test('upstream failures and timeouts never become success or leak provider details', async () => {
   for (const mode of ['provider-error', 'empty-receipt']) assert.equal((await handleContact(request(), env, provider([], mode), now)).status, 502);
   const response = await handleContact(request(), env, async () => { throw new Error('provider secret'); }, now);

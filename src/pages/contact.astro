@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
+import { industryOptions } from '../data/industries';
 import '../styles/contact.css';
 const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
 ---
@@ -32,7 +33,7 @@ const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
           <p class="field-error" id="error-name"></p>
         </div>
         <div class="contact-field">
-          <label for="contact-shop">店舗名 <span class="required-badge">必須</span></label>
+          <label for="contact-shop">店舗名・教室名 <span class="required-badge">必須</span></label>
           <input id="contact-shop" name="shop" type="text" autocomplete="organization" maxlength="150" required aria-describedby="shop-hint error-shop" />
           <p class="field-hint" id="shop-hint">開業前の場合は「開業準備中」とご入力ください。</p>
           <p class="field-error" id="error-shop"></p>
@@ -43,9 +44,9 @@ const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
           <p class="field-error" id="error-email"></p>
         </div>
         <div class="contact-field">
-          <label for="contact-industry">店舗の業種 <span class="required-badge">必須</span></label>
+          <label for="contact-industry">お店・教室の業種 <span class="required-badge">必須</span></label>
           <div class="contact-select"><select id="contact-industry" name="industry" required aria-describedby="error-industry">
-            <option value="">選択してください</option><option value="bakery">ベーカリー</option><option value="cafe">カフェ・コーヒースタンド</option><option value="sweets">和菓子・洋菓子</option><option value="beauty">美容・ネイル等のサロン</option><option value="pet">トリミングサロン</option><option value="other">その他</option>
+            <option value="">選択してください</option>{industryOptions.map(industry => <option value={industry.value}>{industry.label}</option>)}
           </select></div>
           <p class="field-error" id="error-industry"></p>
         </div>
@@ -130,7 +131,7 @@ const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
       const content = { name: String(values.get('name') || '').trim(), shop: String(values.get('shop') || '').trim(), email: String(values.get('email') || '').trim(), industry: String(values.get('industry') || ''), message: String(values.get('message') || '').trim(), consent: values.get('consent') === 'on' };
       const errors: Record<string, string> = {};
       if (!content.name) errors.name = 'お名前を入力してください。';
-      if (!content.shop) errors.shop = '店舗名を入力してください。';
+      if (!content.shop) errors.shop = '店舗名・教室名を入力してください。';
       if (!content.email || !form.querySelector<HTMLInputElement>('[name="email"]')!.validity.valid) errors.email = '有効なメールアドレスを入力してください。';
       if (!content.industry) errors.industry = '業種を選んでください。';
       if (content.message.length < 20 || content.message.length > 4000) errors.message = '相談内容を20〜4,000文字で入力してください。';

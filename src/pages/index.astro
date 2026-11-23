@@ -4,6 +4,7 @@ import NeighborhoodIllustration from '../components/NeighborhoodIllustration.ast
 import ShopSketch from '../components/ShopSketch.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import ServicePricingCards from '../components/ServicePricingCards.astro';
+import TargetAudience from '../components/TargetAudience.astro';
 import { site, faqs } from '../data/site';
 import '../styles/home.css';
 const shopQuestions = [
@@ -16,7 +17,7 @@ const shopQuestions = [
   <section class="welcome welcome--two-services" aria-labelledby="hero-title">
     <div class="container welcome-grid">
       <div class="welcome-copy">
-        <p class="welcome-kicker">地域の個人店の、ちいさな相談相手。</p>
+        <p class="welcome-kicker">地域のお店・教室の、ちいさな相談相手。</p>
         <p class="upfront-note">Web・アプリ制作と、課題の相談</p>
         <h1 id="hero-title">お店に合うもの、<br /><span>一緒につくろう。</span></h1>
         <p class="welcome-description">作りたいものがある方も、<br />何を変えたらいいか迷っている方も。<br />二つのサービスで、お店の仕事をお手伝いします。</p>
@@ -31,6 +32,8 @@ const shopQuestions = [
     </div>
     <div class="container start-promise"><span><i aria-hidden="true"></i>無料ヒアリングから</span><span><i aria-hidden="true"></i>作りたいもの・困りごとを相談</span><span><i aria-hidden="true"></i>費用と対応範囲を先に確認</span></div>
   </section>
+
+  <TargetAudience />
 
   <section class="section two-services" id="services" aria-labelledby="services-title"><div class="container">
     <div class="everyday-heading"><p class="eyebrow">お店に合わせた、2つのお手伝い</p><h2 id="services-title">作りたいものからでも、<br />困りごとからでも。</h2><p class="two-services-intro">Webサイトやアプリを作りたい方には、制作と運用のサービスを。<br />お店の課題から考えたい方には、課題に合う製品を制作・提供するコンサルをご用意しています。</p></div>

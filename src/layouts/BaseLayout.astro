@@ -3,7 +3,7 @@ import '../styles/global.css';
 import { site, navigation } from '../data/site';
 interface Props { title: string; description?: string; noindex?: boolean; }
 const { title, description = site.description, noindex = false } = Astro.props;
-const fullTitle = title === site.name || title === 'oneight' ? 'ONE EIGHT（ワンエイト）｜地域の個人店の課題解決・Webアプリ開発' : `${title}｜ONE EIGHT（ワンエイト）`;
+const fullTitle = title === site.name || title === 'oneight' ? 'ONE EIGHT（ワンエイト）｜地域のお店・教室のWeb開発と製品づくり' : `${title}｜ONE EIGHT（ワンエイト）`;
 const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofollow';
 ---
@@ -44,7 +44,7 @@ const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofo
     <main id="main"><slot /></main>
     <footer class="site-footer">
       <div class="container footer-top">
-        <div><a href="/" class="wordmark" aria-label="ONE EIGHT トップページ">oneight<span class="wordmark-dot" aria-hidden="true"></span></a><p class="footer-description">地域の個人店の、ちいさな相談相手。<br />お店の困りごとを、一緒に考えます。</p></div>
+        <div><a href="/" class="wordmark" aria-label="ONE EIGHT トップページ">oneight<span class="wordmark-dot" aria-hidden="true"></span></a><p class="footer-description">地域のお店・教室の、ちいさな相談相手。<br />日々の困りごとを、一緒に考えます。</p></div>
         <nav class="footer-links" aria-label="フッターナビゲーション">
           {navigation.map(item => <a href={item.href}>{item.label}</a>)}
           <a href="/contact/">お問い合わせ</a>

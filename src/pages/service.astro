@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NeighborhoodIllustration from '../components/NeighborhoodIllustration.astro';
+import TargetAudience from '../components/TargetAudience.astro';
 import '../styles/details.css';
 
 const solutions = [
@@ -19,13 +20,13 @@ const flow = [
 ];
 ---
 
-<BaseLayout title="サービス｜Webサイト・アプリ開発と、お店のコンサル" description="ONE EIGHTは、地域のお店に向けたWebサイト・アプリ開発と、課題に合わせた製品の制作・提供を行っています。コンサルでは無料ヒアリングで課題を聞き、製品内容と費用を確認して制作。料金は製品の提供時にお支払いいただきます。">
+<BaseLayout title="サービス｜Webサイト・アプリ開発と、お店・教室のコンサル" description="ONE EIGHTは、地域のお店・教室に向けたWebサイト・アプリ開発と、課題に合わせた製品の制作・提供を行っています。コンサルでは無料ヒアリングで課題を聞き、製品内容と費用を確認して制作。料金は製品の提供時にお支払いいただきます。">
   <section class="page-hero detail-service-hero friendly-service-hero">
     <div class="container detail-hero-grid">
       <div>
         <p class="eyebrow">Webサイト・アプリ開発とコンサルティング</p>
         <h1>お店の相談、<br />形にします。</h1>
-        <p class="page-lead">お店のホームページやアプリを作りたい。<br />毎日の作業を、もう少し楽にしたい。<br />二つの支援から、お店に合う進め方をご案内します。</p>
+        <p class="page-lead">お店や教室のホームページ、アプリを作りたい。<br />毎日の作業を、もう少し楽にしたい。<br />二つの支援から、状況に合う進め方をご案内します。</p>
         <p class="detail-hero-note friendly-success-note"><strong>ヒアリングは無料です。</strong><br />作りたいものがある方も、困りごとから話したい方もどうぞ。</p>
         <a class="button button--primary" href="/contact/">無料ヒアリングを申し込む</a>
       </div>
@@ -35,6 +36,8 @@ const flow = [
       </div>
     </div>
   </section>
+
+  <TargetAudience />
 
   <section class="section detail-intro friendly-success-explanation">
     <div class="container detail-editorial-grid">

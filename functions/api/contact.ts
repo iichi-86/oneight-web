@@ -1,4 +1,5 @@
 import { contactRuntimeEnabled } from '../../src/data/contact-release.ts';
+import { industryLabels } from '../../src/data/industries.ts';
 
 /** Cloudflare Pages Function. No secrets or inquiry contents are logged. */
 export interface ContactEnv {
@@ -16,26 +17,11 @@ interface Context {
 }
 type Fetch = typeof fetch;
 const MAX_BYTES = 16_384;
-const industries = new Set([
-  "bakery",
-  "cafe",
-  "sweets",
-  "beauty",
-  "pet",
-  "other",
-]);
+const industries = new Set(Object.keys(industryLabels));
 const emailPattern =
   /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/;
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const industryLabels: Record<string, string> = {
-  bakery: "ベーカリー",
-  cafe: "カフェ・コーヒースタンド",
-  sweets: "和菓子・洋菓子",
-  beauty: "美容・ネイル等のサロン",
-  pet: "トリミングサロン",
-  other: "その他",
-};
 
 function json(
   status: number,
@@ -166,7 +152,7 @@ export async function handleContact(
   if (!shortText(data.name, 100))
     errors.name = "お名前を100文字以内で入力してください。";
   if (!shortText(data.shop, 150))
-    errors.shop = "店舗名を150文字以内で入力してください。";
+    errors.shop = "店舗名・教室名を150文字以内で入力してください。";
   if (!validEmail(data.email))
     errors.email = "有効なメールアドレスを入力してください。";
   if (typeof data.industry !== "string" || !industries.has(data.industry))
@@ -251,7 +237,7 @@ export async function handleContact(
           to: [env.CONTACT_TO_EMAIL],
           reply_to: data.email,
           subject: "【oneight】Webサイトからのご相談",
-          text: `お名前：${(data.name as string).trim()}\n店舗名：${(data.shop as string).trim()}\nメール：${data.email}\n業種：${industryLabels[data.industry as string]}\n\n相談内容：\n${(data.message as string).trim()}\n\n個人情報の取り扱いへの同意：あり`,
+          text: `お名前：${(data.name as string).trim()}\n店舗名・教室名：${(data.shop as string).trim()}\nメール：${data.email}\n業種：${industryLabels[data.industry as string]}\n\n相談内容：\n${(data.message as string).trim()}\n\n個人情報の取り扱いへの同意：あり`,
         }),
       },
       10_000,

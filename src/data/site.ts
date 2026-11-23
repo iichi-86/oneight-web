@@ -13,7 +13,7 @@ const refundAmount = consultingFee * refundPercent / 100;
 export const site = {
   name: "ONE EIGHT",
   kana: "ワンエイト",
-  description: "ONE EIGHTは地域のお店のWebサイト・アプリ制作と、お店の課題に合う製品を制作・提供するコンサルを行います。制作は初期14,800円、初月の月額0円、2か月目から月額20,000円。コンサルはヒアリング無料、製品の提供時に100,000円です。すべて税込。",
+  description: "ONE EIGHTは飲食店・美容院・小売店・ネイルサロン・ヨガ教室などに向け、Webサイト・アプリ開発と、課題に合う製品を制作・提供するコンサルを行います。開発は初期14,800円、2か月目から月額20,000円。コンサルは製品提供時に100,000円。税込、ヒアリング無料です。",
   origin,
   allowIndexing: import.meta.env.PUBLIC_ALLOW_INDEXING === "true" && !!origin,
   contact: {
