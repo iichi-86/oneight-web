@@ -1,34 +1,117 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
+import ServicePricingCards from '../components/ServicePricingCards.astro';
 import { site } from '../data/site';
 import '../styles/details.css';
-const agreements = [
-  { title: 'どんな状態を「解決」にする？', text: 'まずは、お店の困りごとを伺います。何ができたら解決とするか、どのデータで確かめるか、お店にお願いする準備も含めて、一緒に整理します。' },
-  { title: '報酬はいくら？いつまで取り組む？', text: '課題の難しさや、解決することで生まれる価値、開発に必要な作業をもとに、固定報酬額と実施期間をご相談します。どちらも、始める前に合意します。' },
-  { title: '途中で変更があったら？', text: '条件に届かない場合や、中断・延長する場合の対応と費用も、着手前に確認します。外部サービスの利用料や、新たな課題が出てきたときの進め方も、あらかじめ整理します。' },
-];
-const supportLabels: Record<string, string> = {
-  light: '基本の維持',
-  standard: '使い方も一緒に',
-  premium: '分析・改善まで',
-};
+const { development, consulting } = site.pricing;
 ---
-<BaseLayout title="料金｜成功報酬ではじめるお店の課題解決" description="ONE EIGHTはヒアリング・ご提案無料、制作費の先払いは原則不要。事前に決めた条件達成時の成功報酬は固定3万〜20万円程度です。解決後の継続契約は月額5,000円・10,000円・20,000円。すべて税込でご案内します。">
-  <section class="page-hero detail-pricing-hero friendly-pricing-hero"><div class="container"><p class="eyebrow">はじめやすい料金のしくみ</p><h1>まずは無料でご相談。<br />解決できたら、成功報酬。</h1><p class="page-lead">{site.pricing.consultation}{site.pricing.initialFee}<br />「何ができたら解決か」と報酬額を、始める前に一緒に決めます。</p></div></section>
+<BaseLayout title="料金｜Webサイト・アプリ開発と課題解決のコンサル" description={`Webサイト・アプリ開発は初期${development.initialLabel}円、初月の月額0円、2か月目から月額${development.monthlyLabel}円。課題解決のコンサルはヒアリング無料、解決策の検討に進む時点で${consulting.feeLabel}円。納品日から2週間以内は70％返金可。すべて税込。`}>
+  <section class="page-hero detail-pricing-hero friendly-pricing-hero">
+    <div class="container">
+      <p class="eyebrow">料金のご案内</p>
+      <h1>お店に合わせて選べる、<br />ふたつのはじめ方。</h1>
+      <p class="page-lead">Webサイト・アプリ開発は、まず1か月お試し。<br />お店の課題から考えたい方には、製品づくりにつながるコンサルをご用意しています。</p>
+      <p class="detail-hero-note">{site.pricing.tax} {site.pricing.hearing}</p>
+    </div>
+  </section>
 
-  <section class="section detail-price-section"><div class="container detail-price-layout">
-    <div class="detail-price-context"><p class="eyebrow">成功報酬について</p><h2 class="section-heading">成功報酬は固定額。<br />売上の歩合ではありません。</h2><p>お店の困りごとに合わせて、取り組む内容と金額をご提案します。<br />まずは、気になっていることを聞かせてください。</p><p>{site.pricing.conditions}</p><p class="muted">成功報酬をお支払いいただくのは、事前に合意した達成条件を満たした時点です。条件に届かない場合や、途中で予定が変わった場合の扱いも、始める前に確認します。</p></div>
-    <div class="detail-price-card"><div class="detail-price-card-top"><h3>条件達成時の成功報酬</h3><p>税込・目安</p></div><p class="detail-price-amount"><strong>{site.pricing.projectMinimum / 10000}〜{site.pricing.projectMaximum / 10000}</strong><span class="detail-price-yen">万円程度</span></p><p class="detail-price-tax">{site.pricing.tax}課題に合わせて個別にお見積もりします。</p><div class="detail-price-initial"><span>お支払いのタイミング</span><p>{site.pricing.settlement}</p></div><p class="detail-price-conditions">{site.pricing.payment}</p><a class="button button--primary" href="/contact/">無料で相談してみる</a></div>
-  </div></section>
+  <section class="section detail-price-section" aria-labelledby="pricing-choice-title">
+    <div class="container">
+      <div class="detail-section-intro">
+        <div><p class="eyebrow">やりたいことに合わせて</p><h2 id="pricing-choice-title" class="section-heading">つくりたいものから。<br />お店の困りごとから。</h2></div>
+        <p>ふたつのサービスでは、お支払いのタイミングと、その後の費用が異なります。違いを確認して、お店に合う進め方を選びましょう。</p>
+      </div>
+      <ServicePricingCards />
+    </div>
+  </section>
 
-  <section class="section maintenance-section" aria-labelledby="maintenance-title"><div class="container"><div class="detail-section-intro"><div><p class="eyebrow">そのあとのサポート</p><h2 id="maintenance-title" class="section-heading">解決したあとも、<br />使い方に合わせてお手伝い。</h2></div><p>{site.pricing.monthlyStart}<br />「まずは維持だけ」「使い方も相談したい」など、必要なお手伝いに合わせて選べます。</p></div>
-    <div class="maintenance-plans">{site.pricing.plans.map(plan => <article class="maintenance-plan"><p class="eyebrow">{supportLabels[plan.id] || '使い続けるための支援'}</p><h3>{plan.name}</h3><p class="maintenance-summary">{plan.summary}</p><p class="maintenance-amount"><span>月額</span><strong>{plan.monthlyLabel}</strong><span>円</span></p><p class="maintenance-tax">税込</p><ul>{plan.services.map(service => <li>{service}</li>)}</ul><a class="button button--outline" href="/contact/">このプランを相談する</a></article>)}</div>
-    <div class="pricing-scope-note"><p><strong>対応範囲は、ご契約前に具体化します。</strong><br />{site.pricing.contract}</p><p>{site.pricing.extra}</p></div>
-  </div></section>
+  <section id="development" class="section pricing-explainer pricing-explainer--development" aria-labelledby="development-detail-title">
+    <div class="container">
+      <div class="detail-section-intro">
+        <div><p class="eyebrow">Webサイト・アプリ開発</p><h2 id="development-detail-title" class="section-heading">まずは1か月、<br />お店で使ってみましょう。</h2></div>
+        <p>お店のWebサイトやアプリをつくりたい方へ。初月と2か月目以降で、次の料金をご案内しています。</p>
+      </div>
+      <ol class="price-path">
+        <li>
+          <p class="eyebrow">初月のお支払い</p>
+          <h3>初期費用のみで、1か月お試し</h3>
+          <p class="price-path-amount"><strong>{development.initialLabel}</strong><span>円（税込）</span></p>
+          <p>初月はこの初期費用のみ。<strong>初月の月額料金は{development.firstMonthMonthlyAmount}円</strong>です。</p>
+        </li>
+        <li>
+          <p class="eyebrow">2か月目からのお支払い</p>
+          <h3>月額料金で使い続ける</h3>
+          <p class="price-path-amount"><span>月額</span><strong>{development.monthlyLabel}</strong><span>円（税込）</span></p>
+          <p>お試し期間の次、<strong>2か月目から月額料金がかかります。</strong>初月の月額0円と、2か月目以降の料金を分けてご確認ください。</p>
+        </li>
+      </ol>
+      <div class="pricing-scope-note">
+        <p><strong>つくる内容と、お試し後の進め方を先に確認します。</strong><br />{development.scope}</p>
+        <p>自動更新の有無、解約の期限、返金の有無・条件なども、ご契約前にご案内します。</p>
+      </div>
+    </div>
+  </section>
 
-  <section class="section"><div class="container"><div class="detail-section-intro"><div><p class="eyebrow">始める前に、一緒に確認</p><h2 class="section-heading">「どこまで？」「いくら？」<br />最初に決めておきましょう。</h2></div><p>お店とONE EIGHTで、同じゴールを見ながら進めるために。<br />内容も費用も、納得いただいてから取り組みます。</p></div><div class="detail-principles">{agreements.map(item => <article><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
+  <section id="consulting" class="section pricing-explainer pricing-explainer--consulting" aria-labelledby="consulting-detail-title">
+    <div class="container">
+      <div class="detail-section-intro">
+        <div><p class="eyebrow">課題解決のコンサル</p><h2 id="consulting-detail-title" class="section-heading">困りごとを聞いて、<br />役立つ製品を考えます。</h2></div>
+        <p>{consulting.offering}</p>
+      </div>
+      <ol class="price-path">
+        <li>
+          <p class="eyebrow">はじめに</p>
+          <h3>ヒアリングは無料</h3>
+          <p>「どの作業に時間がかかる？」「何が使いづらい？」など、日々のお話から聞かせてください。</p>
+        </li>
+        <li>
+          <p class="eyebrow">解決策の検討に進むとき</p>
+          <h3>この時点から、有料の支援です</h3>
+          <p class="price-path-amount"><strong>{consulting.feeLabel}</strong><span>円（税込）</span></p>
+          <p>{consulting.paymentTiming}</p>
+        </li>
+        <li>
+          <p class="eyebrow">そのあと</p>
+          <h3>製品の制作・提供へ</h3>
+          <p>確認した範囲に沿って、製品をつくり、提供につなげます。対応する内容は、有料の検討へ進む前に一緒に確認します。</p>
+        </li>
+      </ol>
+      <div class="pricing-scope-note">
+        <p><strong>お支払いは、解決策の検討に進む時点です。</strong><br />{consulting.scope}</p>
+      </div>
 
-  <section class="section detail-price-questions"><div class="container"><p class="eyebrow">料金の気になること</p><h2 class="section-heading">相談する前に、<br />知っておきたいこと。</h2><dl class="detail-terms-list"><div><dt>はじめに制作費を払う必要はありますか？</dt><dd>{site.pricing.initialFee}支払いの時期や、例外的に費用がかかる場合の扱いは、ご契約前に確認します。</dd></div><div><dt>目標に届かなかったり、途中で変更が必要になったら？</dt><dd>合意した条件に届かない場合や、達成の判断が難しい場合、中断・期間延長が必要な場合の対応と費用は、着手前に確認します。</dd></div><div><dt>追加でお願いしたいことが出てきたら？</dt><dd>{site.pricing.extra}</dd></div><div><dt>お店専用アプリの月額プランも相談できますか？</dt><dd>はい。お店専用アプリを月額制で導入・運用するご相談も受け付けています。成功報酬型との違いや、お店に合う契約の形を、個別にご案内します。</dd></div></dl></div></section>
-  <ContactCTA title={'費用のことも、気軽にどうぞ。\nお店に合う進め方を考えましょう。'} />
+      <div class="pricing-refund" aria-labelledby="consulting-refund-title">
+        <p class="eyebrow">製品を受け取ったあとも確認できます</p>
+        <h3 id="consulting-refund-title">納品日から2週間以内、<br />コンサル料金の{consulting.refund.percent}％を返金できます。</h3>
+        <p>{consulting.refund.summary}</p>
+        <dl class="fee-breakdown">
+          <div><dt>お支払いいただくコンサル料金</dt><dd>{consulting.feeLabel}円（税込）</dd></div>
+          <div><dt>返金できる金額（{consulting.refund.percent}％）</dt><dd>{consulting.refund.amountLabel}円</dd></div>
+          <div><dt>返金対象外の金額</dt><dd>{consulting.refund.retainedLabel}円</dd></div>
+        </dl>
+        <p><strong>返金期間は、{consulting.refund.periodLabel}です。</strong><br />{consulting.refund.conditions}</p>
+      </div>
+
+      <div class="pricing-scope-note">
+        <p><strong>コンサルの製品には、別途維持費がかかる場合があります。</strong><br />{consulting.maintenance}</p>
+        <p>Webサイト・アプリ開発の月額{development.monthlyLabel}円とは別のご案内です。維持費が発生する前に、金額と対応する内容をご案内します。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section detail-price-questions" aria-labelledby="pricing-questions-title">
+    <div class="container">
+      <p class="eyebrow">料金の気になること</p>
+      <h2 id="pricing-questions-title" class="section-heading">始める前に、<br />知っておきたいこと。</h2>
+      <dl class="detail-terms-list">
+        <div><dt>どちらのサービスを選べばいいですか？</dt><dd>Webサイトやアプリをつくりたい方は「{development.name}」、困りごとから相談して役立つ製品を考えたい方は「{consulting.name}」をご覧ください。迷ったら、無料ヒアリングでお店のお話を聞かせてください。</dd></div>
+        <div><dt>Webサイト・アプリ開発のお試しは無料ですか？</dt><dd>初月は初期費用{development.initialLabel}円（税込）がかかります。初月の月額料金は0円で、2か月目から月額{development.monthlyLabel}円（税込）です。お試しの開始日、継続・解約や返金の条件は、ご契約前にご案内します。</dd></div>
+        <div><dt>コンサルは、どこから有料ですか？</dt><dd>{consulting.paymentTiming} {consulting.scope}</dd></div>
+        <div><dt>コンサルの返金について、ほかに確認することは？</dt><dd>{consulting.refund.summary} 残りの{consulting.refund.retainedLabel}円は返金対象外です。{consulting.refund.conditions} Webサイト・アプリ開発のお試しとは別の制度です。</dd></div>
+        <div><dt>コンサルの維持費はいくらですか？</dt><dd>{consulting.maintenance} Webサイト・アプリ開発の月額料金を、そのまま適用するものではありません。</dd></div>
+      </dl>
+    </div>
+  </section>
+  <ContactCTA title={'どちらにするか迷ったら、\nまずはお店のお話から。'} />
 </BaseLayout>

@@ -4,7 +4,7 @@ import { site } from '../data/site';
 import '../styles/contact.css';
 const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
 ---
-<BaseLayout title="お店の課題を無料相談" description="地域の個人店の困りごとや、専用Webサイト・アプリ・業務システムについてONE EIGHTへご相談ください。ヒアリング・ご提案は無料です。">
+<BaseLayout title="お店の課題を無料ヒアリング" description="Webサイト・アプリ開発や、製品づくりにつながる課題解決のコンサルについてONE EIGHTへご相談ください。ヒアリングは無料です。検討・制作に進む前に、内容と費用を確認します。">
   <section class="page-hero container contact-heading">
     <p class="eyebrow">無料相談・お問い合わせ</p>
     <h1>お店の話、<br />聞かせてください。</h1>
@@ -18,9 +18,9 @@ const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
       <ul class="contact-benefits">
         <li>お店の課題と解決方法を整理したい</li>
         <li>専用Web・アプリや業務の仕組みを相談したい</li>
-        <li>固定報酬や継続支援の料金を知りたい</li>
+        <li>2つのサービスの料金・維持費を知りたい</li>
       </ul>
-      <p class="contact-small">ヒアリング・ご提案は無料です。<br />取り組む範囲・達成条件・報酬額・実施期間は、着手前に確認します。</p>
+      <p class="contact-small">ヒアリングは無料です。<br />検討・制作に進む前に、サービス内容と費用を確認します。</p>
     </aside>
     <div class="contact-panel">
       {!accepting && <div class="contact-notice" role="status"><strong>お問い合わせの受付準備中です。</strong><p>フォームの内容をご確認いただけます。現在は送信できません。受付開始後に、あらためてご相談ください。</p></div>}

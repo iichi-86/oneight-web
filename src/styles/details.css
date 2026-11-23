@@ -1105,3 +1105,36 @@
   .friendly-about-hero.detail-about-hero { padding-bottom: 40px !important; }
   .detail-price-section { padding-top: 45px; }
 }
+
+/* Two services with separate payment milestones. */
+.pricing-explainer { scroll-margin-top: 16px; }
+.pricing-explainer--development { background: #f1f7f3; }
+.pricing-explainer--consulting { background: #fff9f1; }
+.price-path { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; padding: 0; margin: 32px 0 0; list-style: none; }
+.pricing-explainer--development .price-path { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.price-path > li { background: #fff; border: 1px solid #d4dbd2; border-top: 4px solid #a8cdb7; padding: 27px 25px; border-radius: 4px 13px 5px 13px; min-width: 0; }
+.pricing-explainer--consulting .price-path > li { border-top-color: #ec9d8f; }
+.price-path > li h3 { font-size: 1.125rem; margin-bottom: 18px; }
+.price-path > li .eyebrow { font-size: 0.875rem; letter-spacing: 0; margin-bottom: 13px; }
+.price-path > li > p:not(.eyebrow) { font-size: 1rem; }
+.price-path-amount { display: flex; flex-wrap: wrap; gap: 7px; align-items: baseline; margin-bottom: 20px; }
+.price-path-amount strong { font-size: 2.3rem; color: var(--blue); line-height: 1.4; letter-spacing: -0.04em; }
+.price-path-amount > span { font-size: 0.875rem; }
+.pricing-refund { background: #fff; padding: 36px; border: 1px solid #ddc9be; border-radius: 15px 5px 15px 5px; margin-top: 45px; }
+.pricing-refund > h3 { font-size: clamp(1.4rem,2.5vw,1.9rem); line-height: 1.8; }
+.pricing-refund > p:not(.eyebrow) { margin-top: 20px; }
+.fee-breakdown { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin: 25px 0; }
+.fee-breakdown > div { background: #f4f6fa; padding: 20px; border-radius: 4px 10px 4px 10px; }
+.fee-breakdown > div:nth-child(2) { background: #edf5ee; }
+.fee-breakdown > div:nth-child(3) { background: #fff0e9; }
+.fee-breakdown dt { font-size: 0.875rem; margin-bottom: 9px; }
+.fee-breakdown dd { font-size: 1.3rem; font-weight: 700; margin: 0; }
+.fee-breakdown > div:nth-child(3) dd { color: #984f40; }
+@media (max-width: 760px) {
+  .price-path,.pricing-explainer--development .price-path { grid-template-columns: 1fr; gap: 18px; }
+  .price-path > li { padding: 24px 22px; }
+  .pricing-refund { padding: 25px 20px; margin-top: 30px; }
+  .fee-breakdown { grid-template-columns: 1fr; gap: 10px; }
+  .fee-breakdown > div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; padding: 15px; }
+  .fee-breakdown dt { margin: 0; }
+}

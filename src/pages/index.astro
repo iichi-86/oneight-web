@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import NeighborhoodIllustration from '../components/NeighborhoodIllustration.astro';
 import ShopSketch from '../components/ShopSketch.astro';
 import ContactCTA from '../components/ContactCTA.astro';
+import ServicePricingCards from '../components/ServicePricingCards.astro';
 import { site, faqs } from '../data/site';
 import '../styles/home.css';
 const shopQuestions = [
@@ -12,15 +13,15 @@ const shopQuestions = [
 ];
 ---
 <BaseLayout title={site.name}>
-  <section class="welcome" aria-labelledby="hero-title">
+  <section class="welcome welcome--two-services" aria-labelledby="hero-title">
     <div class="container welcome-grid">
       <div class="welcome-copy">
         <p class="welcome-kicker">地域の個人店の、ちいさな相談相手。</p>
-        <p class="upfront-note">制作費の先払いは<span>原則不要</span></p>
-        <h1 id="hero-title">解決したら、<br /><span>成功報酬。</span></h1>
-        <p class="welcome-description">Webやアプリで、困りごとの解決をお手伝い。<br />先に決めたゴールを達成した時に、<br class="desktop-break" />固定の報酬をいただく仕組みです。</p>
-        <a href="/contact/" class="button button--primary">まずは無料で相談する</a>
-        <p class="welcome-small">相談・ご提案は無料。金額と条件を決めてから始めます。</p>
+        <p class="upfront-note">Web・アプリ制作と、課題の相談</p>
+        <h1 id="hero-title">お店に合うもの、<br /><span>一緒につくろう。</span></h1>
+        <p class="welcome-description">作りたいものがある方も、<br />何を変えたらいいか迷っている方も。<br />二つのサービスで、お店の仕事をお手伝いします。</p>
+        <a href="#services" class="button button--primary">2つのサービス・料金を見る</a>
+        <p class="welcome-small">まずは無料ヒアリングから。内容と費用を確認して進めます。</p>
       </div>
       <figure class="welcome-art">
         <p class="art-handnote">お店の人と、同じテーブルで。</p>
@@ -28,15 +29,14 @@ const shopQuestions = [
         <figcaption>お店と一緒に考える、支援のイメージです。</figcaption>
       </figure>
     </div>
-    <div class="container start-promise"><span><i aria-hidden="true"></i>相談・ご提案は無料</span><span><i aria-hidden="true"></i>制作費の先払いは原則不要</span><span><i aria-hidden="true"></i>成功報酬は事前に決める固定額</span></div>
+    <div class="container start-promise"><span><i aria-hidden="true"></i>無料ヒアリングから</span><span><i aria-hidden="true"></i>作りたいもの・困りごとを相談</span><span><i aria-hidden="true"></i>費用と対応範囲を先に確認</span></div>
   </section>
 
-  <section class="section small-start" aria-labelledby="start-title">
-    <div class="container small-start-grid">
-      <div class="small-start-heading"><p class="eyebrow">最初の費用負担を抑えて</p><h2 id="start-title">「頼んでみたい。<br />でも、費用が心配。」<br /><span>その気持ちから考えました。</span></h2><div class="start-flower"><ShopSketch kind="flower" /></div></div>
-      <div class="small-start-copy"><p>お店のために何か変えたくても、<br />役に立つかわからないものに、先にお金を払うのは不安。</p><p>だからONE EIGHTは、<strong>決めた課題が解決した時に、成功報酬をいただく形</strong>にしました。制作費の先払いは原則不要です。</p><p>「どうなったら解決か」「いくらで取り組むか」を、お店の方と一緒に決めてから始めます。</p><p class="plain-note">外部サービスの利用料や、条件未達・中断・延長時の扱いも、始める前に確認します。</p><a href="/pricing/" class="text-link">報酬の仕組みを詳しく見る</a></div>
-    </div>
-  </section>
+  <section class="section two-services" id="services" aria-labelledby="services-title"><div class="container">
+    <div class="everyday-heading"><p class="eyebrow">お店に合わせた、2つのお手伝い</p><h2 id="services-title">作りたいものからでも、<br />困りごとからでも。</h2><p class="two-services-intro">Webサイトやアプリを作りたい方には、制作と運用のサービスを。<br />お店の課題から考えたい方には、製品づくりにつながるコンサルをご用意しています。</p></div>
+    <ServicePricingCards />
+    <p class="section-note">{site.pricing.tax} それぞれの制作・対応範囲や、お試し・返金の条件は、料金ページでご確認ください。</p>
+  </div></section>
 
   <section class="section shop-questions" aria-labelledby="questions-title">
     <div class="container"><div class="everyday-heading"><p class="eyebrow">こんなこと、ありませんか？</p><h2 id="questions-title">いつもの仕事の中に、<br />お手伝いできることがあるかもしれません。</h2></div>
@@ -49,15 +49,10 @@ const shopQuestions = [
   <section class="section shop-process" aria-labelledby="process-title"><div class="container process-layout">
     <div class="process-intro"><p class="eyebrow">ご相談からの進め方</p><h2 id="process-title">いつもの仕事の話から<br />始めましょう。</h2><p>何を作るか、決まっていなくても大丈夫。<br />困っている場面を、そのまま聞かせてください。</p><ShopSketch kind="notebook" /></div>
     <ol class="process-notes">
-      <li><span>まずは、お話を聞く</span><h3>どこで困っていますか？</h3><p>予約の確認、毎日の集計、お客様への連絡。お店のやり方を聞きながら、困りごとの原因と解決方法を考えます。ここまでのヒアリング・ご提案は無料です。</p></li>
-      <li><span>ゴールと料金を決める</span><h3>「ここまでできたら」を約束。</h3><p>達成条件、確かめ方、固定の成功報酬額、取り組む期間を一緒に決めます。お店にお願いする準備や、追加の費用も確認します。</p></li>
-      <li><span>つくって、使って、確かめる</span><h3>使い始めてからも、一緒に。</h3><p>必要なWebサイトやアプリ、業務の仕組みを制作。お店で使いながら直し、合意したゴールに届いたことを一緒に確認して、成功報酬をいただきます。</p></li>
+      <li><span>まずは、お話を聞く</span><h3>どこで困っていますか？</h3><p>予約の確認、毎日の集計、お客様への連絡。お店のやり方や、困っている場面を伺います。まずは無料ヒアリングで、状況を聞かせてください。</p></li>
+      <li><span>サービスと費用を確認する</span><h3>どんなお手伝いが必要か、一緒に。</h3><p>選ぶサービスと、検討・制作する内容、費用を確認します。コンサルは、解決策の検討に進む時点から有料です。納得いただいてから次へ進みます。</p></li>
+      <li><span>つくって、使ってみる</span><h3>お店の仕事に取り入れてみましょう。</h3><p>事前に確認した内容に沿って、サイトやアプリ、得意な製品を形にします。使い始めたあとの対応や、製品の改良・改善も、サービスごとの範囲を決めて進めます。</p></li>
     </ol>
-  </div></section>
-
-  <section class="section reward-section" aria-labelledby="reward-title"><div class="container reward-layout">
-    <div><p class="eyebrow">料金のこと</p><h2 id="reward-title">成功報酬は、<br />先に決める固定額です。</h2><p class="reward-intro">売上の何％、という方式ではありません。<br />課題の内容と必要な制作を確認して、お見積もりします。</p><a class="text-link" href="/pricing/">料金と月額プランの詳細</a></div>
-    <div class="reward-paper"><div class="paper-tab" aria-hidden="true"></div><p>課題解決時の成功報酬</p><p class="reward-price"><strong>3<span>〜</span>20</strong>万円程度<span class="reward-tax">税込</span></p><p class="reward-condition">事前に合意した達成条件を満たした時に発生します。</p><div class="after-support"><h3>解決したあとも、使い続けるために。</h3><p>必要な方には、月額の保守・運用支援をご用意しています。</p><div class="support-prices">{site.pricing.plans.map(plan => <p><span>{plan.name}</span><strong>{plan.monthlyLabel}<small>円／月</small></strong></p>)}</div><p class="support-small">すべて税込。原則、課題解決後の継続契約から開始。<br />大規模な追加開発・新たな課題は別途お見積もりします。</p></div></div>
   </div></section>
 
   <section class="section our-letter"><div class="container letter-layout"><div class="letter-art"><ShopSketch kind="shop" /><p>はじめまして、ワンエイトです。</p></div><div class="letter-copy"><p class="eyebrow">この仕事を始める理由</p><h2>実家は、和菓子屋です。</h2><p>個人店といっても、困っていることはそれぞれ違う。<br />実家の仕事を身近に見て、そのことを学んできました。</p><p>私たちは大学生です。お店のお話を聞く時間と柔軟さを大切に、AIや共通の仕組みも使って、制作の手間と費用を抑えます。</p><p>お店の方の「これ、助かるな」を、一つずつ増やしたい。<br />そんな気持ちで、ONE EIGHTを始めています。</p><a class="text-link" href="/about/">私たちのことをもう少し</a></div></div></section>

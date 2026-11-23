@@ -3,17 +3,17 @@ import { contactBuildEnabled } from "./contact-release";
 
 const origin = new URL(import.meta.env.PUBLIC_SITE_URL || deployment.siteUrl).origin;
 const formatYen = (value: number) => new Intl.NumberFormat("ja-JP").format(value);
-const maintenancePlans = [
-  { id: "light", name: "ライト", monthlyAmount: 5000, summary: "基本保守・システム維持", services: ["基本保守", "システムの維持"] },
-  { id: "standard", name: "スタンダード", monthlyAmount: 10000, summary: "保守・運用支援・軽微な修正", services: ["基本保守", "運用のサポート", "軽微な修正"] },
-  { id: "premium", name: "プレミアム", monthlyAmount: 20000, summary: "分析と改善を、継続的に", services: ["基本保守・運用支援", "データ分析", "継続的な改善提案"] },
-].map(plan => ({ ...plan, monthlyLabel: formatYen(plan.monthlyAmount) }));
+const developmentInitial = 14800;
+const developmentMonthly = 20000;
+const consultingFee = 100000;
+const refundPercent = 70;
+const refundAmount = consultingFee * refundPercent / 100;
 
-// 料金と提供条件は各ページで共通の情報を参照します。
+// 確認済みの料金・返金条件をページ間で共通化します。すべて税込です。
 export const site = {
   name: "ONE EIGHT",
   kana: "ワンエイト",
-  description: "お店の困りごとを、成功報酬で解決へ。ONE EIGHTは地域の個人店のWebサイト・アプリ・業務システムを制作し、一緒に運用します。相談・ご提案は無料、制作費の先払いは原則不要。事前に合意した条件を達成した時に固定報酬をいただきます。",
+  description: "ONE EIGHTは地域のお店のWebサイト・アプリ制作と、製品づくりにつながる課題解決のコンサルを行います。制作は初期14,800円、初月の月額0円、2か月目から月額20,000円。コンサルはヒアリング無料、解決策の検討に進む時点で100,000円です。すべて税込。",
   origin,
   allowIndexing: import.meta.env.PUBLIC_ALLOW_INDEXING === "true" && !!origin,
   contact: {
@@ -21,19 +21,40 @@ export const site = {
     turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "",
   },
   pricing: {
-    projectRangeLabel: "3万〜20万円程度",
-    projectMinimum: 30000,
-    projectMaximum: 200000,
     tax: "表示金額はすべて税込です。",
-    consultation: "ヒアリング・ご提案は無料です。",
-    initialFee: "制作費の先払いは原則不要です。",
-    settlement: "事前に合意した課題解決の達成条件を満たした時点で、固定報酬をお支払いいただきます。",
-    conditions: "課題の難易度・経済的価値・開発工数に応じて、達成条件・固定報酬額・実施期間を着手前に合意します。",
-    monthlyStart: "月額料金は原則として、課題解決後の継続契約から発生します。",
-    contract: "保守・運用支援・軽微な修正の具体的な対応範囲、契約期間、解約条件は、ご契約前に確認します。",
-    payment: "支払方法・支払期限、条件未達・中断・期間延長が生じた場合の扱いも、着手前に確認します。",
-    extra: "大規模な追加開発や、新たな課題の解決は別途お見積もりします。外部サービス利用料などの負担も、事前に確認します。",
-    plans: maintenancePlans,
+    hearing: "ヒアリングは無料です。",
+    development: {
+      name: "Webサイト・アプリ開発",
+      initialAmount: developmentInitial,
+      initialLabel: formatYen(developmentInitial),
+      monthlyAmount: developmentMonthly,
+      monthlyLabel: formatYen(developmentMonthly),
+      trialMonths: 1,
+      firstMonthMonthlyAmount: 0,
+      firstMonth: "初月は初期費用14,800円のみ。初月の月額料金は0円です。",
+      monthlyStart: "まず1か月お試し。2か月目から月額20,000円です。",
+      scope: "制作する内容と月額料金に含まれる対応範囲、お試しの開始日・継続や解約の方法は、ご契約前に確認します。",
+    },
+    consulting: {
+      name: "課題解決のコンサル",
+      feeAmount: consultingFee,
+      feeLabel: formatYen(consultingFee),
+      paymentTiming: "無料ヒアリングの後、解決策の検討に進む時点で100,000円をお支払いいただきます。",
+      offering: "お店の困りごとを伺い、私たちの得意な製品をつくることで解決する方法を考え、提供につなげます。",
+      scope: "100,000円に含む検討・制作・導入の範囲を確認してから、有料の検討へ進みます。",
+      refund: {
+        periodDays: 14,
+        periodLabel: "製品の提供・納品日から2週間以内",
+        percent: refundPercent,
+        amount: refundAmount,
+        amountLabel: formatYen(refundAmount),
+        retainedAmount: consultingFee - refundAmount,
+        retainedLabel: formatYen(consultingFee - refundAmount),
+        summary: "製品の提供・納品日から2週間以内は、100,000円の70％（70,000円）を返金できます。",
+        conditions: "返金の申出方法・適用条件、維持費の扱い、返金後の製品利用については、ご契約前に確認します。",
+      },
+      maintenance: "製品によって別途維持費がかかります。製品の改良・改善に充てる費用で、金額・支払頻度・対応範囲は事前にご案内します。",
+    },
   },
 } as const;
 
@@ -45,28 +66,28 @@ export const navigation = [
 
 export const faqs = [
   {
-    question: "課題が整理できていなくても、相談できますか？",
-    answer: "はい。ヒアリング・ご提案は無料です。「手作業に時間がかかる」「お客様に情報が届かない」など、日々の困りごとからお聞かせください。課題を整理し、取り組む範囲と解決方法を一緒に考えます。",
+    question: "どちらのサービスを選べばいいですか？",
+    answer: "Webサイトやアプリを作りたい方は「Webサイト・アプリ開発」、お店の困りごとから相談し、解決に役立つ製品を考えたい方は「課題解決のコンサル」をご覧ください。迷っている場合は、無料ヒアリングでお店の状況を聞かせてください。",
   },
   {
-    question: "どんなものを開発できますか？",
-    answer: "店舗専用のWebサイト・Webアプリ・業務システムを、課題に応じて検討します。会員サービスや、お知らせ、予約・受注・情報管理などは相談例です。必要性と実現可能性を確認し、対応する機能を個別にご提案します。",
+    question: "Webサイト・アプリ開発の初月はいくらですか？",
+    answer: "初月は初期費用14,800円（税込）のみです。初月の月額料金は0円で、まず1か月お試しいただき、2か月目から月額20,000円（税込）がかかります。制作する内容や月額の対応範囲、継続・解約の方法は、ご契約前に確認します。",
   },
   {
-    question: "成功報酬はいくらですか？",
-    answer: "目安は税込3万〜20万円程度です。課題の内容や必要な制作を確認し、金額を先に決めます。合意した条件を達成した時にお支払いいただく固定報酬で、売上の何％という方式ではありません。制作費の先払いは原則不要です。",
+    question: "コンサルは、どこから有料になりますか？",
+    answer: "ヒアリングは無料です。その後、解決策の検討に進む時点で100,000円（税込）をお支払いいただきます。製品を提供した後や、成果が出た後に初めて料金が発生する方式ではありません。検討・制作・導入の範囲を先に確認してから進めます。",
   },
   {
-    question: "何をもって「解決」とするのですか？",
-    answer: "制作を始める前に、「どうなれば解決と言えるか」を一緒に決めます。確認するデータや測り方、取り組む期間、お店にお願いする準備も整理し、その条件に沿って結果を確かめます。",
+    question: "コンサルでは、何をしてくれますか？",
+    answer: "お店の困りごとを伺い、私たちの得意な製品をつくることで解決する方法を考え、提供につなげます。たとえば予約や受注、毎日の記録などが相談例です。対応できることや、料金に含む検討・制作・導入の範囲は、有料の検討に進む前に確認します。",
   },
   {
-    question: "月額料金は、いつからかかりますか？",
-    answer: "原則として、課題解決後の継続契約から発生します。税込月額5,000円・10,000円・20,000円の3プランをご用意し、必要な保守・運用支援の範囲に合わせてご相談します。大規模な追加開発や新たな課題は別途お見積もりします。",
+    question: "70％返金は、いつまで・いくらですか？",
+    answer: "コンサルの製品提供・納品日から2週間以内は、100,000円（税込）の70％にあたる70,000円を返金できます。残りの30,000円は返金対象外です。返金の申出方法や適用条件、維持費の扱い、返金後の製品利用は、ご契約前に確認します。Webサイト・アプリ開発のお試しとは別の制度です。",
   },
   {
-    question: "期間内に解決しなかったら、どうなりますか？",
-    answer: "条件を満たさない場合や、中断・延長が必要になった場合の対応と費用は、始める前に確認します。途中で新しい課題や追加の開発が必要になった時は、内容と費用をあらためてご相談します。",
+    question: "コンサルにも月額20,000円がかかりますか？",
+    answer: "月額20,000円はWebサイト・アプリ開発の料金です。コンサルでは、製品によって別途維持費がかかります。維持費は製品の改良・改善に充て、金額・支払頻度・対応範囲を事前にご案内します。",
   },
   {
     question: "AIは、どのように活用しますか？",

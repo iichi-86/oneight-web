@@ -2,9 +2,9 @@
 
 地域の個人店の課題発見から、専用Webサイト・アプリ・業務システムの開発、運用・改善まで支援する「ONE EIGHT（ワンエイト）」の公式サイトです。確認済みの事業モデルは [事業モデル](docs/business-model.md) を参照してください。Astro・TypeScript・CSSで構成した静的サイトと、お問い合わせ用のCloudflare Pages Functionsを分離しています。顧客向けアプリや各店舗の顧客データは、このプロジェクトで管理しません。
 
-この改訂では、条件達成時の固定報酬3万〜20万円程度と、解決後の月額5,000円・10,000円・20,000円を分けて説明しています。すべて税込です。既存ロゴ・配色を引き継ぎ、架空の実績や無制限の対応範囲は追加していません。確認用ブランチ `feat/oneight-problem-solving` から、本番ブランチ `feat/oneight-official-site` への反映は所有者の確認後に行います。
+この改訂では、Webサイト・アプリ開発と、製品づくりにつながる課題解決のコンサルを分けて説明します。開発は初期14,800円、初月の月額0円、2か月目から月額20,000円。コンサルはヒアリング無料、解決策の検討に進む時点で100,000円、製品の提供・納品日から2週間以内は70％（70,000円）返金可です。コンサルの製品維持費は改良・改善に充て、金額等は個別に案内します。すべて税込で、旧成功報酬と月額3プランは撤去しました。
 
-改訂の [確認用プレビュー](https://feat-oneight-problem-solving.oneight-web.pages.dev/) と [Draft PR #2](https://github.com/iichi-86/oneight-web/pull/2) を用意しました。所有者の表現訂正を反映し、成功報酬を最優先に、かわいいお店のイラストと青・コーラル・黄色・ミントの配色、自然な日本語へ再改訂しました。ソースコミット `18ba4c9` はGitHub Actions・Cloudflare Pagesともに成功し、デスクトップで主要ページ、料金3プラン、FAQ、Previewのnoindex・送信停止を確認しています。モバイル実機の表示は未検証です。
+かわいいイラスト、多色の配色、自然な日本語を保ち、[確認用プレビュー](https://feat-oneight-problem-solving.oneight-web.pages.dev/) と [Draft PR #2](https://github.com/iichi-86/oneight-web/pull/2) で内容を確認する構成です。本番ブランチ `feat/oneight-official-site` への反映は所有者の確認後に行います。最新の検証範囲は [検証記録](docs/validation.md) を参照してください。
 
 所有者がCloudflare Pagesで公開し、取得した独自ドメイン [oneight.jp](https://oneight.jp) を接続しました。2026年11月22日、フォーム有効化の修正 `536e65fa` のデプロイ成功と、[公開フォーム](https://oneight.jp/contact/) の有効化表示・必須入力エラー・TurnstileのSuccess表示を実ブラウザで確認しました。その後、所有者が自分で実フォームを送信し、Gmailへの到達を確認したと報告しています。Productionの `PUBLIC_ALLOW_INDEXING=true` を反映した再デプロイも成功し、公開サイトの検索許可設定を確認しました。その後、Google Search Consoleの所有権確認・サイトマップ送信・掲載リクエストも完了したと所有者から報告されています。今後の公開更新、DNS変更、新規契約・課金、秘密情報の設定も、所有者の確認済み範囲で行ってください。
 
