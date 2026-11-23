@@ -9,19 +9,16 @@ const { development, consulting } = site.pricing;
 <BaseLayout title="料金｜Webサイト・アプリ開発と課題解決のコンサル" description={`Webサイト・アプリ開発は初期${development.initialLabel}円、初月の月額0円、2か月目から月額${development.monthlyLabel}円。課題解決のコンサルはヒアリング無料、解決策の検討に進む時点で${consulting.feeLabel}円。納品日から2週間以内は70％返金可。すべて税込。`}>
   <section class="page-hero detail-pricing-hero friendly-pricing-hero">
     <div class="container">
-      <p class="eyebrow">料金のご案内</p>
-      <h1>お店に合わせて選べる、<br />ふたつのはじめ方。</h1>
-      <p class="page-lead">Webサイト・アプリ開発は、まず1か月お試し。<br />お店の課題から考えたい方には、製品づくりにつながるコンサルをご用意しています。</p>
+      <p class="eyebrow">Webサイト・アプリ開発／課題解決のコンサル</p>
+      <h1>料金のご案内</h1>
+      <p class="page-lead">どちらも、まずは無料ヒアリングから。<br />検討・制作に進む前に、内容と費用を確認します。</p>
       <p class="detail-hero-note">{site.pricing.tax} {site.pricing.hearing}</p>
     </div>
   </section>
 
   <section class="section detail-price-section" aria-labelledby="pricing-choice-title">
     <div class="container">
-      <div class="detail-section-intro">
-        <div><p class="eyebrow">やりたいことに合わせて</p><h2 id="pricing-choice-title" class="section-heading">つくりたいものから。<br />お店の困りごとから。</h2></div>
-        <p>ふたつのサービスでは、お支払いのタイミングと、その後の費用が異なります。違いを確認して、お店に合う進め方を選びましょう。</p>
-      </div>
+      <h2 id="pricing-choice-title" class="pricing-comparison-title">2つのサービスの料金</h2>
       <ServicePricingCards />
     </div>
   </section>
