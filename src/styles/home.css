@@ -157,3 +157,10 @@
   .two-services-intro br { display: none; }
   #services { scroll-margin-top: 16px; }
 }
+
+.welcome-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 23px; }
+.welcome-actions .text-link { font-size: 0.9375rem; }
+@media (max-width: 760px) {
+  .welcome-actions { gap: 17px; }
+  .welcome-actions .text-link { margin-inline: auto; }
+}

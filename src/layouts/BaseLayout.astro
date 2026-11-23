@@ -37,7 +37,7 @@ const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofo
         <button class="menu-button" aria-expanded="false" aria-controls="site-navigation" type="button">メニュー<span class="menu-lines" aria-hidden="true"></span></button>
         <nav id="site-navigation" class="site-nav" aria-label="メインナビゲーション">
           {navigation.map(item => <a class="nav-link" href={item.href} aria-current={Astro.url.pathname === item.href ? 'page' : undefined}>{item.label}</a>)}
-          <a class="button button--primary header-contact" href="/contact/" aria-current={Astro.url.pathname === '/contact/' ? 'page' : undefined}>無料相談・お問い合わせ</a>
+          <a class="button button--primary header-contact" href="/contact/" aria-current={Astro.url.pathname === '/contact/' ? 'page' : undefined}>無料でひとこと相談</a>
         </nav>
       </div>
     </header>

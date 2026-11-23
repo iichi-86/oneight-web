@@ -51,10 +51,9 @@ function validEmail(value: unknown): value is string {
   );
 }
 
-function shortText(value: unknown, max: number): value is string {
-  return (
+function optionalShortText(value: unknown, max: number): boolean {
+  return value === undefined || (
     typeof value === "string" &&
-    value.trim().length > 0 &&
     value.trim().length <= max &&
     !/[\u0000-\u001f\u007f]/.test(value)
   );
@@ -149,21 +148,21 @@ export async function handleContact(
     return json(400, "入力内容を確認してください。");
   const data = input as Record<string, unknown>;
   const errors: Record<string, string> = {};
-  if (!shortText(data.name, 100))
+  if (!optionalShortText(data.name, 100))
     errors.name = "お名前を100文字以内で入力してください。";
-  if (!shortText(data.shop, 150))
+  if (!optionalShortText(data.shop, 150))
     errors.shop = "店舗名・教室名を150文字以内で入力してください。";
   if (!validEmail(data.email))
     errors.email = "有効なメールアドレスを入力してください。";
-  if (typeof data.industry !== "string" || !industries.has(data.industry))
-    errors.industry = "業種を選んでください。";
+  if (data.industry !== undefined && (typeof data.industry !== "string" || (data.industry !== "" && !industries.has(data.industry))))
+    errors.industry = "業種を選択肢から選んでください。";
   if (
     typeof data.message !== "string" ||
-    data.message.trim().length < 20 ||
+    data.message.trim().length < 1 ||
     data.message.length > 4000 ||
     /[\u0000\u000b\u000c]/.test(data.message)
   )
-    errors.message = "相談内容を20〜4,000文字で入力してください。";
+    errors.message = "相談内容を1〜4,000文字で入力してください。";
   if (data.consent !== true)
     errors.consent = "個人情報の取り扱いへの同意が必要です。";
   if (Object.keys(errors).length)
@@ -237,7 +236,7 @@ export async function handleContact(
           to: [env.CONTACT_TO_EMAIL],
           reply_to: data.email,
           subject: "【oneight】Webサイトからのご相談",
-          text: `お名前：${(data.name as string).trim()}\n店舗名・教室名：${(data.shop as string).trim()}\nメール：${data.email}\n業種：${industryLabels[data.industry as string]}\n\n相談内容：\n${(data.message as string).trim()}\n\n個人情報の取り扱いへの同意：あり`,
+          text: `お名前：${typeof data.name === 'string' && data.name.trim() ? data.name.trim() : '未入力'}\n店舗名・教室名：${typeof data.shop === 'string' && data.shop.trim() ? data.shop.trim() : '未入力'}\nメール：${data.email}\n業種：${typeof data.industry === 'string' && data.industry ? industryLabels[data.industry] : '未入力'}\n\n相談内容：\n${(data.message as string).trim()}\n\n個人情報の取り扱いへの同意：あり`,
         }),
       },
       10_000,
