@@ -1,18 +1,20 @@
 ---
 import '../styles/global.css';
+import '../styles/refresh.css';
 import { site, navigation } from '../data/site';
 interface Props { title: string; description?: string; noindex?: boolean; }
 const { title, description = site.description, noindex = false } = Astro.props;
 const fullTitle = title === site.name || title === 'oneight' ? 'ONE EIGHT（ワンエイト）｜地域のお店・教室のWeb開発と製品づくり' : `${title}｜ONE EIGHT（ワンエイト）`;
 const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofollow';
+const showQuickContact = !noindex && !['/contact/', '/privacy/'].includes(Astro.url.pathname);
 ---
 <!doctype html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#284bc8" />
+    <meta name="theme-color" content="#172028" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
@@ -29,7 +31,7 @@ const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofo
     <meta name="twitter:card" content="summary_large_image" />
     {Astro.site && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, alternateName: ['ワンエイト', 'oneight'], url: Astro.site.href, inLanguage: 'ja' })} />}
   </head>
-  <body>
+  <body class:list={['site-refresh', { 'has-quick-contact': showQuickContact }]}>
     <a class="skip-link" href="#main">本文へ移動</a>
     <header class="site-header">
       <div class="header-inner">
@@ -42,6 +44,7 @@ const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofo
       </div>
     </header>
     <main id="main"><slot /></main>
+    {showQuickContact && <aside class="quick-contact" aria-label="無料相談へのショートカット"><a href="/contact/"><span>ヒアリング無料</span><strong>ひとこと相談する</strong></a></aside>}
     <footer class="site-footer">
       <div class="container footer-top">
         <div><a href="/" class="wordmark" aria-label="ONE EIGHT トップページ">oneight<span class="wordmark-dot" aria-hidden="true"></span></a><p class="footer-description">地域のお店・教室の、ちいさな相談相手。<br />日々の困りごとを、一緒に考えます。</p></div>

@@ -4,20 +4,89 @@ import ShopSketch from '../components/ShopSketch.astro';
 import '../styles/details.css';
 
 const commitments = [
-  { label: 'まずは、聞くこと', title: 'いつもの仕事を教えてください。', text: 'どんな作業に時間がかかるのか、何が気になるのか。普段の言葉で聞かせてください。「これができたら助かる」を一緒に探すところから始めます。' },
-  { label: '作るときの工夫', title: 'AIも使って、手間を減らします。', text: '制作にはAIや共通の仕組みを活用して、費用と時間の無駄を抑えます。使う方に合わせて必要な部分を調整し、小さく作って、実際の仕事で確かめていきます。' },
-  { label: '使い始めるために', title: '「どう使う？」も一緒に考えます。', text: '作ったものを、いつもの仕事に取り入れられるように。使う方と一緒に操作を確認します。コンサルで提供する製品の維持費は、製品に応じて設定し、改良・改善に充てます。' },
+  { label: '課題整理', title: '現場の仕事を理解する。', text: '受付方法や情報の管理、今使っている道具を確認します。誰が、どこで、何に手間をかけているのか。実際の仕事の流れから、必要な仕組みを整理します。' },
+  { label: '設計・制作', title: '必要な範囲を定めてつくる。', text: '制作する内容と範囲、費用を事前に合意します。AIや共通で使える仕組みを活用して制作の手間を抑え、お店・教室ごとに必要な部分を調整します。' },
+  { label: '導入・運用', title: '使い方と、その後を考える。', text: '使う方と操作を確認し、仕事に取り入れる方法を考えます。コンサルで提供する製品は、製品に応じた維持費を改良・改善に充てます。対応範囲と費用は契約前にご案内します。' },
 ];
 ---
 
-<BaseLayout title="ONE EIGHTについて｜実家の和菓子屋から、地域のお店・教室へ" description="ONE EIGHT（ワンエイト）は、実家が和菓子屋の大学生が取り組む事業です。地域のお店・教室に向けたWebサイト・アプリ開発と、課題を解決するための製品の制作・提供に取り組みます。">
-  <section class="page-hero detail-about-hero friendly-about-hero"><div class="container about-postcard"><div><p class="eyebrow">はじめまして、ONE EIGHTです</p><h1>実家は、<br />和菓子屋です。</h1><p class="page-lead">大学生が始めた、地域のお店・教室のための事業です。<br />それぞれの困りごとを、AIや技術で一緒に解決したいと思っています。</p></div><div class="about-postcard-art" aria-hidden="true"><ShopSketch kind="shop" /><p>いつもの仕事を、聞くところから。</p></div></div></section>
+<BaseLayout title="ONE EIGHTについて｜地域の仕事を、技術で前へ" description="ONE EIGHT（ワンエイト）は、地域のお店・教室に向けたWebサイト・アプリ開発と、課題に合わせた製品の制作・提供に取り組む事業です。実家が和菓子屋の大学生が、現場の仕事を起点に必要な仕組みを考えます。">
+  <section class="page-hero detail-about-hero friendly-about-hero refresh-about-hero">
+    <div class="container about-postcard refresh-about-hero-grid">
+      <div>
+        <p class="eyebrow">ABOUT ONE EIGHT</p>
+        <h1>地域の仕事を、<br />技術で前へ。</h1>
+        <p class="page-lead">地域のお店・教室に向けた、Webサイト・アプリ開発。<br />そして、日々の課題に合わせた製品の制作・提供。<br />現場の仕事を理解し、使える仕組みを形にします。</p>
+        <div class="refresh-about-hero-actions">
+          <a class="button button--primary" href="/contact/">無料でひとこと相談する</a>
+          <a class="detail-text-link" href="/service/">サービスを見る</a>
+        </div>
+      </div>
+      <div class="about-postcard-art refresh-about-art" aria-hidden="true"><ShopSketch kind="shop" /></div>
+    </div>
+  </section>
 
-  <section class="section detail-about-intro friendly-about-story"><div class="container detail-editorial-grid"><div><p class="eyebrow">始めようと思った理由</p><h2 class="section-heading">お店や教室ごとに、<br />困りごとは違う。</h2></div><div class="detail-body-copy"><p>実家が和菓子屋であることから、個人店にはそれぞれに違う課題があると、身近に学んできました。お店の規模も、仕事の進め方も、お客様との関係も違います。</p><p>だから、地域のお店や教室を営む方の話を聞きたいと思っています。たとえば予約の確認や毎日の集計、営業日やレッスンのお知らせ。どんな場面で困っているのかがわかれば、その場所に合う方法を考えられます。</p><p>お店や教室の情報を届けるWebサイト、アプリを作る。コンサルでは、日々の課題を解決するための製品を作ってお届けする。話を聞き、使えるものを形にするのが、ONE EIGHTのやりたいことです。</p></div></div></section>
+  <section class="section detail-about-intro friendly-about-story refresh-about-story">
+    <div class="container detail-editorial-grid">
+      <div><p class="eyebrow">原点</p><h2 class="section-heading">出発点は、<br />実家の和菓子屋。</h2></div>
+      <div class="detail-body-copy">
+        <p>実家は和菓子屋です。身近にお店がある環境で、個人店にはそれぞれ異なる課題があると学んできました。この経験を出発点に、大学生としてONE EIGHTを立ち上げています。</p>
+        <p>同じ予約管理でも、受付方法や使う人が違えば、必要な仕組みは変わります。お店や教室の規模、仕事の進め方、お客様との関係を踏まえて、その現場に合う方法を考えます。</p>
+        <p>話を聞き、課題を整理し、実際の仕事で使えるものを届ける。ONE EIGHTが目指すのは、地域の事業者にとって技術を身近な道具にすることです。</p>
+      </div>
+    </div>
+  </section>
 
-  <section class="section detail-commitments"><div class="container"><p class="eyebrow">お店や教室の皆さんと進めるために</p><h2 class="section-heading">こんなふうに取り組みます。</h2><div class="detail-commitment-list">{commitments.map((commitment) => <article><p class="eyebrow">{commitment.label}</p><h3>{commitment.title}</h3><p>{commitment.text}</p></article>)}</div></div></section>
+  <section class="section refresh-about-services">
+    <div class="container">
+      <div class="detail-section-intro"><div><p class="eyebrow">事業内容</p><h2 class="section-heading">つくりたいものからも、<br />解決したい課題からも。</h2></div><p>二つのサービスから、ご相談内容に合う進め方をご案内します。</p></div>
+      <div class="detail-feature-grid refresh-about-services-grid">
+        <article class="detail-feature refresh-about-service">
+          <div class="detail-feature-copy">
+            <p class="eyebrow">Webサイト・アプリ開発</p>
+            <h3>Webサイト・アプリ開発</h3>
+            <p>ホームページや会員アプリなど、お店・教室専用のサイトやアプリを制作します。載せたい情報や必要な機能を整理し、運営する方と利用する方の使いやすさを考えます。</p>
+          </div>
+        </article>
+        <article class="detail-feature refresh-about-service">
+          <div class="detail-feature-copy">
+            <p class="eyebrow">課題解決の製品づくり</p>
+            <h3>課題に合わせた製品の制作・提供</h3>
+            <p>無料ヒアリングで課題を伺い、解決に役立つ製品を制作・提供するコンサルティングです。制作する内容と範囲、費用を事前に合意し、料金は製品の提供時にお支払いいただきます。</p>
+          </div>
+        </article>
+      </div>
+      <p class="detail-section-note"><a class="detail-text-link" href="/service/">サービスの内容と進め方を見る</a></p>
+    </div>
+  </section>
 
-  <section class="section detail-about-status friendly-about-next"><div class="container detail-editorial-grid"><div><p class="eyebrow">これからのこと</p><h2 class="section-heading">まずは小さな困りごとを、<br />一つずつ。</h2></div><div class="detail-body-copy"><p>まだ、事業を立ち上げている段階です。これから実家の和菓子屋や、ご協力いただけるお店で実践しながら、現場で役立つ仕組みを確かめていきたいと思っています。</p><p>大学生ならではの柔軟さを活かして、それぞれの状況を学びながら取り組みます。対応できることや進め方は、最初にきちんとお伝えします。</p><p>Webサイト・アプリ開発も、お店や教室の課題に合わせて製品を作るコンサルも、まずは無料ヒアリングへ。課題と製品の内容、制作する範囲や費用を確認して進めます。コンサルの料金は、製品の提供時にお支払いいただきます。料金や試用・返金については、<a class="detail-text-link" href="/pricing/">料金ページ</a>にまとめています。</p><div class="detail-brand-info"><p><span>名前</span><strong>ONE EIGHT <small>（ワンエイト）</small></strong></p><p><span>できること</span><strong>Webサイト・アプリ開発／課題に合わせた製品の制作・提供</strong></p></div></div></div></section>
+  <section class="section detail-commitments refresh-about-approach">
+    <div class="container">
+      <p class="eyebrow">取り組み方</p>
+      <h2 class="section-heading">課題の整理から、<br />使い始めるところまで。</h2>
+      <div class="detail-commitment-list">{commitments.map((commitment) => <article><p class="eyebrow">{commitment.label}</p><h3>{commitment.title}</h3><p>{commitment.text}</p></article>)}</div>
+    </div>
+  </section>
 
-  <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">ちょっと話してみませんか</p><h2>お店や教室の話、聞かせてください。</h2><p>専門的なことは、わからなくて大丈夫です。<br />いつもの仕事で気になっていることからどうぞ。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">無料でひとこと相談する</a><a class="detail-text-link" href="/service/">進め方を見てみる</a></div></div></section>
+  <section class="section detail-about-status friendly-about-next refresh-about-status">
+    <div class="container detail-editorial-grid">
+      <div><p class="eyebrow">現在の取り組み</p><h2 class="section-heading">現場で確かめ、<br />支援の形を育てる。</h2></div>
+      <div class="detail-body-copy">
+        <p>ONE EIGHTは、現在、事業立ち上げの段階にあります。今後は実家の和菓子屋や、ご協力いただけるお店での実践を通じて、現場で役立つ仕組みを確かめていく予定です。</p>
+        <p>無料ヒアリングで状況を伺い、対応できる内容をご案内します。制作・提供の範囲や費用、維持・運用の条件は、ご契約前に確認いただける形でお伝えします。料金や試用・返金の条件は、<a class="detail-text-link" href="/pricing/">料金ページ</a>をご覧ください。</p>
+        <div class="detail-brand-info refresh-about-profile">
+          <p><span>事業名</span><strong>ONE EIGHT <small>（ワンエイト）</small></strong></p>
+          <p><span>対象</span><strong>地域のお店・教室</strong></p>
+          <p><span>事業内容</span><strong>Webサイト・アプリ開発／課題に合わせた製品の制作・提供</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-bottom-cta refresh-about-cta">
+    <div class="container">
+      <div><p class="eyebrow">CONTACT</p><h2>お店・教室の課題を、<br />無料ヒアリングから。</h2><p>作りたいサイトやアプリ、日々の業務で困っていることをお聞かせください。<br />専門知識は必要ありません。</p></div>
+      <div class="detail-cta-actions"><a class="button button--primary" href="/contact/">無料でひとこと相談する</a><a class="detail-text-link" href="/pricing/">料金・契約条件を見る</a></div>
+    </div>
+  </section>
 </BaseLayout>
