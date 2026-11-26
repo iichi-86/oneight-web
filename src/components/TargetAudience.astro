@@ -1,7 +1,8 @@
 ---
-import { primaryIndustries } from '../data/industries';
+import { primaryCustomerMessage, primaryIndustries } from '../data/industries';
 ---
 <section class="target-audience" aria-labelledby="target-audience-title">
+  <p class="container audience-primary">{primaryCustomerMessage}</p>
   <div class="container audience-inner">
     <h2 id="target-audience-title">こんなお店・教室の方へ</h2>
     <div><ul>{primaryIndustries.map(industry => <li>{industry.label}</li>)}</ul><p>など、地域のお店や教室ごとの困りごとを伺います。</p></div>
@@ -18,6 +19,7 @@ import { primaryIndustries } from '../data/industries';
   li:nth-child(4) { background: #eeeafa; color: #625082; }
   li:nth-child(5) { background: #e7eff9; color: #36577a; }
   p { color: var(--muted); font-size: 0.875rem; margin-top: 9px; }
+  .audience-primary { color: var(--ink); font-size: clamp(1rem,1.7vw,1.25rem); font-weight: 700; margin-top: 0; margin-bottom: 22px; border-left: 4px solid var(--yellow); padding-left: 14px; }
   @media (max-width: 760px) {
     .target-audience { padding-block: 25px; }
     .audience-inner { grid-template-columns: 1fr; gap: 15px; }

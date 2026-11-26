@@ -1,3 +1,5 @@
+export const primaryCustomerMessage = '主な対象は、地域の小さな小売店です。';
+
 export const primaryIndustries = [
   { value: 'restaurant', label: '飲食店' },
   { value: 'hair_salon', label: '美容院' },

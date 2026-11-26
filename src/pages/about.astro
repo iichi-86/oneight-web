@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ShopSketch from '../components/ShopSketch.astro';
+import { primaryCustomerMessage } from '../data/industries';
 import '../styles/details.css';
 
 const commitments = [
@@ -17,6 +18,7 @@ const commitments = [
         <p class="eyebrow">ABOUT ONE EIGHT</p>
         <h1>地域の仕事を、<br />技術で前へ。</h1>
         <p class="page-lead">地域のお店・教室に向けた、Webサイト・アプリ開発。<br />そして、日々の課題に合わせた製品の制作・提供。<br />現場の仕事を理解し、使える仕組みを形にします。</p>
+        <p class="detail-hero-note"><strong>{primaryCustomerMessage}</strong></p>
         <div class="refresh-about-hero-actions">
           <a class="button button--primary" href="/contact/">無料でひとこと相談する</a>
           <a class="detail-text-link" href="/service/">サービスを見る</a>
