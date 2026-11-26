@@ -44,7 +44,7 @@ const showQuickContact = !noindex && !['/contact/', '/privacy/'].includes(Astro.
       </div>
     </header>
     <main id="main"><slot /></main>
-    {showQuickContact && <aside class="quick-contact" aria-label="無料相談へのショートカット"><a href="/contact/"><span>ヒアリング無料</span><strong>ひとこと相談する</strong></a></aside>}
+    {showQuickContact && <aside class="quick-contact" aria-label="無料相談へのショートカット"><a href="/contact/" aria-label="無料でひとこと相談する"><span>ヒアリング無料</span><strong>ひとこと相談する</strong></a></aside>}
     <footer class="site-footer">
       <div class="container footer-top">
         <div><a href="/" class="wordmark" aria-label="ONE EIGHT トップページ">oneight<span class="wordmark-dot" aria-hidden="true"></span></a><p class="footer-description">地域のお店・教室の、ちいさな相談相手。<br />日々の困りごとを、一緒に考えます。</p></div>
