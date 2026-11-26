@@ -14,6 +14,7 @@
 .hero-zero-trial strong { color: #e4f35b; }
 .hero-zero-monthly { font-size: 1rem; color: #edf1e6; margin-top: 6px; }
 .hero-zero-monthly strong { margin-left: 8px; font-size: 1.0625rem; }
+.hero-start-terms { font-size: .9375rem; color: #e4f35b; font-weight: 600; line-height: 1.8; margin-top: 9px; }
 .hero-plan-note { font-size: .875rem; color: #c5ced0; margin-top: 7px; }
 .development-hero .hero-introduction--zero { font-size: 1rem; font-weight: 400; color: #cbd5d7; margin-top: 18px; }
 .hero-zero-heading ~ .hero-main-actions { margin-top: 25px; }

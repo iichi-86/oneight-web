@@ -32,6 +32,7 @@ export const site = {
       trialMonths: 1,
       firstMonthMonthlyAmount: 0,
       firstMonth: "初期費用・初月の月額料金ともに0円です。",
+      noSpecialTerms: "特別な条件や契約はありません。",
       monthlyStart: "まず1か月お試し。2か月目から月額20,000円です。",
       scope: "制作する内容と月額料金に含まれる対応範囲、お試しの開始日・継続や解約の方法は、ご契約前に確認します。",
     },
@@ -72,6 +73,10 @@ export const faqs = [
   {
     question: "Webサイト・アプリ開発の初月はいくらですか？",
     answer: `初期費用${formatYen(developmentInitial)}円、初月の月額料金も0円です。まず1か月お試しいただき、2か月目から月額${formatYen(developmentMonthly)}円（税込）がかかります。制作する内容や月額の対応範囲、継続・解約の方法は、ご契約前に確認します。`,
+  },
+  {
+    question: "0円で始めるために、特別な条件や契約はありますか？",
+    answer: `Webサイト・アプリ開発を0円で始めるための、特別な条件や契約はありません。初期費用${formatYen(developmentInitial)}円・初月の月額0円でお試しいただけます。2か月目から月額${formatYen(developmentMonthly)}円（税込）です。制作する内容や対応範囲、お試しの開始日・その後の進め方は、一緒に確認します。`,
   },
   {
     question: "コンサルの料金は、いつ支払いますか？",

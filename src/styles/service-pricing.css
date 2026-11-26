@@ -19,6 +19,7 @@
 .service-price-refund { background: #f2f4ef; border-left-color: #6f8468; }
 .service-price-trial strong,.service-price-refund strong { font-size: 1rem; }
 .service-price-trial p,.service-price-refund p { margin-top: 7px; font-size: .9375rem; line-height: 1.9; }
+.service-price-trial .service-price-start-terms { font-size: .9375rem; font-weight: 700; color: #334b27; }
 .service-price-recurring { margin: 23px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 7px; }
 .service-price-recurring > span { font-size: .9375rem; }
 .service-price-recurring strong { color: #263d31; font-size: 1.35rem; }
