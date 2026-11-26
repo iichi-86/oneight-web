@@ -1,7 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TargetAudience from '../components/TargetAudience.astro';
+import { site } from '../data/site';
 import '../styles/details.css';
+
+const { development } = site.pricing;
 
 const solutions = [
   { kind: 'news', label: '情報発信', title: '必要な情報が見つかるWebサイト', name: 'Webサイト・ホームページ', text: '営業時間、メニュー、サービス、アクセス。SNSや紙に分かれた情報を整理し、お客様が知りたいことにたどり着きやすい構成を考えます。更新する方の使い方も確認します。' },
@@ -14,19 +17,19 @@ const flow = [
   { title: 'ヒアリング', text: 'ヒアリングは無料です。つくりたいもの、現在の業務、困っている場面を伺います。要件が決まっていない段階からご相談いただけます。' },
   { title: '内容・費用の確認', text: '課題と目的を整理し、制作するもの、対応範囲、費用、進め方を確認します。内容に合意してから制作へ進みます。' },
   { title: '設計・制作', text: '実際に使う方の操作や仕事の流れに合わせて設計します。AIも活用して制作を進め、画面や使い方を確認します。' },
-  { title: '提供・利用確認', text: '制作したものをお届けし、利用方法を確認します。コンサルの料金は、製品の提供時にお支払いいただきます。' },
-  { title: '運用・改良', text: '継続利用に必要な内容を確認します。コンサル製品の維持費は製品に応じて設定し、改良・改善に充てます。保守や支援の範囲は契約前にご案内します。' },
+  { title: '公開・利用確認', text: '制作したサイトやアプリの利用方法を確認します。まずは1か月お試し。お試しの開始日や、その後の継続方法は事前にご案内します。' },
+  { title: '継続利用', text: `初月の月額料金は0円。2か月目から月額${development.monthlyLabel}円（税込）です。必要な場合のDBアップグレードは別途月額${development.databaseUpgradeMonthlyLabel}円（税込）。月額に含まれる対応範囲は事前に確認します。` },
 ];
 ---
 
-<BaseLayout title="サービス｜Webサイト・アプリ開発と課題解決の製品づくり" description="地域のお店・教室に向けたWebサイト・アプリ開発と、課題に合わせた製品の制作・提供。ONE EIGHTは、無料ヒアリングで目的と業務を整理し、内容・費用を確認して制作します。コンサル料金は製品の提供時にお支払いいただきます。">
+<BaseLayout title="サービス｜地域のお店のWebサイト・アプリ開発" description={`地域の小さな小売店を中心に、お店・教室のWebサイト・アプリを開発します。初期費用${development.initialLabel}円、初月の月額0円で1か月お試し。2か月目から月額${development.monthlyLabel}円（税込）、必要な場合のDBアップグレードは別途月額${development.databaseUpgradeMonthlyLabel}円（税込）です。`}>
   <section class="page-hero detail-service-hero refresh-service-hero">
     <div class="container detail-hero-grid">
       <div>
         <p class="eyebrow">サービス</p>
         <h1>お店の仕事を、<br />使える仕組みに。</h1>
-        <p class="page-lead">Webサイト・アプリの開発から、<br class="desktop-break" />日々の課題に応える製品づくりまで。<br />目的と業務を整理し、お店に合う形で制作します。</p>
-        <div class="refresh-hero-actions"><a class="button button--primary" href="/contact/">無料でひとこと相談する</a><a class="detail-text-link" href="#service-lines">2つのサービスを見る</a></div>
+        <p class="page-lead">地域の小さな小売店を中心に、<br />お店や教室専用のWebサイト・アプリを開発。<br />目的と業務を整理し、お店に合う形で制作します。</p>
+        <div class="refresh-hero-actions"><a class="button button--primary" href="/contact/">無料でひとこと相談する</a><a class="detail-text-link" href="#service-lines">サービスと料金を見る</a></div>
         <p class="detail-hero-note">つくるものが決まっていない段階でも、ご相談いただけます。</p>
       </div>
       <div class="refresh-product-board" role="img" aria-label="店舗管理画面と会員向けWebアプリの構成例。実際の導入画面や利用データではありません。">
@@ -47,10 +50,10 @@ const flow = [
 
   <section id="service-lines" class="section detail-intro refresh-service-overview">
     <div class="container">
-      <div class="detail-section-intro"><div><p class="eyebrow">目的に合わせて選ぶ</p><h2 class="section-heading">2つのサービスで、<br />制作と課題解決を支援。</h2></div><p>サイトやアプリをつくりたい方も、<br />業務の困りごとから相談したい方も。<br />ヒアリングで進め方を整理します。</p></div>
+      <div class="detail-section-intro"><div><p class="eyebrow">Webサイト・アプリ開発</p><h2 class="section-heading">Webサイト・アプリを、<br />お店に合う形で。</h2></div><p>発信する情報も、日々の業務も。<br />お店の目的に合うサイトやアプリを、<br />ヒアリングから一緒に考えます。</p></div>
       <div class="refresh-service-lines">
-        <article><p class="refresh-service-number">つくりたいものから</p><h3>Webサイト・アプリ開発</h3><p class="refresh-service-summary">情報を届ける。お客様とつながる。</p><p>ホームページや会員向けWebアプリなど、お店・教室専用のサイトやアプリを制作します。発信する内容と必要な機能を整理し、利用する方にも更新する方にも使いやすい構成を考えます。</p><a class="detail-text-link" href="/pricing/#development">開発の料金・お試しについて</a></article>
-        <article><p class="refresh-service-number">困りごとから</p><h3>課題解決の製品づくり<span>コンサルティング</span></h3><p class="refresh-service-summary">業務の課題に、使える製品を。</p><p>お店の課題を解決するための製品を、得意な技術で制作・提供します。無料ヒアリングで状況を伺い、製品の内容と費用を確認して制作。料金は製品の提供時にお支払いいただきます。</p><a class="detail-text-link" href="/pricing/#consulting">提供内容・料金・返金条件について</a></article>
+        <article><p class="eyebrow">開発内容</p><h3>お店専用のWebサイト・アプリ</h3><p class="refresh-service-summary">情報を届ける。お客様とつながる。</p><p>ホームページや会員向けWebアプリなど、お店・教室専用のサイトやアプリを制作します。発信する内容と必要な機能を整理し、利用する方にも更新する方にも使いやすい構成を考えます。</p><a class="detail-text-link" href="#features">ご相談いただける制作例を見る</a></article>
+        <article><p class="eyebrow">料金</p><h3>月額{development.monthlyLabel}円（税込）</h3><p class="refresh-service-summary">初期費用{development.initialLabel}円・初月の月額0円</p><p>まずは1か月お試し。2か月目から月額{development.monthlyLabel}円（税込）です。{development.noOtherContracts}</p><p>データベースのアップグレードが必要な場合は、追加で月額{development.databaseUpgradeMonthlyLabel}円（税込）がかかります。</p><a class="detail-text-link" href="/pricing/">料金・お試し・DB追加費用について</a></article>
       </div>
     </div>
   </section>
@@ -76,12 +79,12 @@ const flow = [
 
   <section class="section detail-approach refresh-service-approach">
     <div class="container"><div class="detail-section-intro"><div><p class="eyebrow">開発の考え方</p><h2 class="section-heading">現場で使えることを、<br />設計の基準に。</h2></div><p>画面をつくる前に、仕事の流れを理解する。<br />制作と利用の条件を共有して進めます。</p></div>
-      <div class="detail-principles"><article><h3>業務から要件を決める</h3><p>誰が、いつ、どの情報を使うか。現在の道具と作業を確認し、制作する範囲と必要な操作を整理します。</p></article><article><h3>AIと共通の仕組みを活用</h3><p>AIを制作の補助に使い、共通化できる仕組みも活用。制作の手間を抑えながら、お店ごとの使い方に合わせて調整します。</p></article><article><h3>利用・運用の条件を共有</h3><p>提供後の使い方や、必要な維持費も事前にご案内します。保守や運用支援の具体的な範囲は、契約前に確認します。</p></article></div>
+      <div class="detail-principles"><article><h3>業務から要件を決める</h3><p>誰が、いつ、どの情報を使うか。現在の道具と作業を確認し、制作する範囲と必要な操作を整理します。</p></article><article><h3>AIと共通の仕組みを活用</h3><p>AIを制作の補助に使い、共通化できる仕組みも活用。制作の手間を抑えながら、お店ごとの使い方に合わせて調整します。</p></article><article><h3>利用・運用の内容を共有</h3><p>月額料金に含まれる対応範囲と、使い方を事前にご案内します。DBアップグレードが必要な場合は、その内容と追加費用も確認します。</p></article></div>
     </div>
   </section>
 
   <section class="section detail-flow-section refresh-service-flow">
-    <div class="container"><p class="eyebrow">制作の流れ</p><h2 class="section-heading">相談から制作、<br />その後の利用まで。</h2><ol class="detail-flow">{flow.map((step) => <li><h3>{step.title}</h3><p>{step.text}</p></li>)}</ol><p class="detail-section-note">料金、お試し、返金、維持費の詳しい条件は、<a class="detail-text-link" href="/pricing/">料金ページ</a>をご覧ください。</p></div>
+    <div class="container"><p class="eyebrow">制作の流れ</p><h2 class="section-heading">相談から制作、<br />その後の利用まで。</h2><ol class="detail-flow">{flow.map((step) => <li><h3>{step.title}</h3><p>{step.text}</p></li>)}</ol><p class="detail-section-note">月額料金、1か月のお試し、DBアップグレードの詳しい案内は、<a class="detail-text-link" href="/pricing/">料金ページ</a>をご覧ください。</p></div>
   </section>
 
   <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">ヒアリングは無料です</p><h2>つくりたいものも、<br />解決したい課題も。</h2><p>現在の状況を伺い、取り組む内容と進め方を整理します。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">無料でひとこと相談する</a><a class="detail-text-link" href="/pricing/">料金・契約条件を見る</a></div></div></section>

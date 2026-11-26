@@ -20,8 +20,8 @@ const steps = [
   { title: 'お話を聞く', text: '作りたいもの、いつもの困りごと。無料ヒアリングで、お店の状況を伺います。' },
   { title: '内容と費用を決める', text: '何をつくり、どこまで支援するか。制作する内容・料金・条件を確認し、合意してから進めます。' },
   { title: 'つくって、確かめる', text: 'AIや共通の仕組みも活用し、実際の使い方を確認しながら制作します。' },
-  { title: 'お届けして、使い始める', text: '製品を提供し、使い方を一緒に確認します。コンサル料金は、この製品提供時のお支払いです。' },
-  { title: '運用し、改善する', text: '使って分かった課題も、一緒に確認。契約した支援内容と費用の範囲で運用・改善を続けます。' },
+  { title: 'お届けして、使い始める', text: 'できあがったWebサイトやアプリをお届けし、使い方を一緒に確認します。' },
+  { title: '運用し、改善する', text: '使って分かった課題も、一緒に確認。確認した支援内容と費用の範囲で運用・改善を続けます。' },
 ];
 ---
 <BaseLayout title={site.name}>
@@ -29,25 +29,24 @@ const steps = [
     <div class="container development-hero-grid">
       <div class="development-hero-copy">
         <p class="hero-service-label">地域のお店・教室のWebサイト・アプリ開発</p>
-        <h1 id="hero-title" class="hero-zero-heading"><span class="hero-zero-headline"><span class="hero-zero-label">初期費用</span><span class="hero-zero-amount">{development.initialLabel}<small>円</small></span></span><span class="hero-zero-tagline">お店の「始めたい」を、ここから。</span></h1>
-        <p class="hero-zero-trial">最初の1か月は、<strong>月額も{development.firstMonthMonthlyAmount}円。</strong></p>
-        <p class="hero-zero-monthly">2か月目から<strong>月額{development.monthlyLabel}円</strong>（税込）</p>
-        <p class="hero-start-terms">0円で始めるための、{development.noSpecialTerms}</p>
-        <p class="hero-plan-note">課題解決の製品づくり（コンサル）は別料金です。</p>
-        <p class="hero-introduction hero-introduction--zero">ONE EIGHTは、お店に合うWebサイトやアプリをつくり、運用・改善まで一緒に支えるチームです。</p>
+        <h1 id="hero-title" class="hero-simple-heading"><span class="hero-contract-promise">{development.noOtherContracts}</span><span class="hero-monthly-caption">2か月目から</span><span class="hero-monthly-price"><span>月額</span><strong>{development.monthlyLabel}</strong><small>円（税込）</small></span></h1>
+        <p class="hero-initial-price">初期費用<strong>{development.initialLabel}<small>円</small></strong></p>
+        <p class="hero-first-month">最初の1か月は、月額も{development.firstMonthMonthlyAmount}円。</p>
+        <p class="hero-upgrade-note">{development.databaseUpgrade}</p>
+        <p class="hero-introduction hero-introduction--plan">ONE EIGHTは、お店に合うWebサイトやアプリをつくり、運用・改善まで一緒に支えるチームです。</p>
         <div class="hero-main-actions"><a class="button button--primary" href="/contact/">無料でひとこと相談する</a><a class="hero-price-link" href="#services">サービス・料金を見る</a></div>
         <p class="hero-consult-note">「予約の管理が大変」だけでも大丈夫。ヒアリングは無料です。</p>
       </div>
       <ProductShowcase />
     </div>
-    <div class="container hero-support-strip"><span>Web・アプリ開発の初期費用0円</span><span>最初の1か月は月額も0円</span><span>運用・改善まで支援</span></div>
+    <div class="container hero-support-strip"><span>ほかの契約なし・月額1プラン</span><span>Web・アプリ開発の初期費用0円</span><span>運用・改善まで支援</span></div>
   </section>
   <TargetAudience />
   <ContactCTA title={'つくるものが決まっていなくても、\nご相談ください。'} />
   <section class="section home-pricing" id="services" aria-labelledby="services-title">
-    <div class="container"><div class="lp-heading"><p class="eyebrow">サービスと料金</p><h2 id="services-title">つくりたいものと、<br />必要な支援に合わせて。</h2><p>ヒアリングは無料です。制作をご依頼いただく場合は、<br class="desktop-break" />こちらの2つのサービスから、お店に合う方法を一緒に考えます。</p></div>
+    <div class="container"><div class="lp-heading"><p class="eyebrow">サービスと料金</p><h2 id="services-title">月額{development.monthlyLabel}円の、<br />シンプルな1プラン。</h2><p>{development.noOtherContracts} 初期費用は{development.initialLabel}円。<br class="desktop-break" />Webサイト・アプリの制作から、運用・改善まで一緒に考えます。</p></div>
       <ServicePricingCards />
-      <p class="section-note">{site.pricing.tax} 制作・対応範囲、お試し・返金の条件は、<a href="/pricing/">料金ページ</a>でご案内しています。</p>
+      <p class="section-note">{site.pricing.tax} 制作・対応範囲、お試しとデータベースのアップグレードは、<a href="/pricing/">料金ページ</a>でご案内しています。</p>
     </div>
   </section>
   <section class="section capability-section" aria-labelledby="capability-title"><div class="container">

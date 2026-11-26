@@ -4,7 +4,7 @@ import '../styles/refresh.css';
 import { site, navigation } from '../data/site';
 interface Props { title: string; description?: string; noindex?: boolean; }
 const { title, description = site.description, noindex = false } = Astro.props;
-const fullTitle = title === site.name || title === 'oneight' ? `ONE EIGHT（ワンエイト）｜初期費用${site.pricing.development.initialLabel}円のWebサイト・アプリ開発` : `${title}｜ONE EIGHT（ワンエイト）`;
+const fullTitle = title === site.name || title === 'oneight' ? `ONE EIGHT（ワンエイト）｜月額${site.pricing.development.monthlyLabel}円・初期費用${site.pricing.development.initialLabel}円のWebサイト・アプリ開発` : `${title}｜ONE EIGHT（ワンエイト）`;
 const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const robots = site.allowIndexing && !noindex ? 'index, follow' : 'noindex, nofollow';
 const showQuickContact = !noindex && !['/contact/', '/privacy/'].includes(Astro.url.pathname);

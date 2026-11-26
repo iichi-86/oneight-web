@@ -2,22 +2,24 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ShopSketch from '../components/ShopSketch.astro';
 import { primaryCustomerMessage } from '../data/industries';
+import { site } from '../data/site';
 import '../styles/details.css';
 
+const development = site.pricing.development;
 const commitments = [
   { label: '課題整理', title: '現場の仕事を理解する。', text: '受付方法や情報の管理、今使っている道具を確認します。誰が、どこで、何に手間をかけているのか。実際の仕事の流れから、必要な仕組みを整理します。' },
   { label: '設計・制作', title: '必要な範囲を定めてつくる。', text: '制作する内容と範囲、費用を事前に合意します。AIや共通で使える仕組みを活用して制作の手間を抑え、お店・教室ごとに必要な部分を調整します。' },
-  { label: '導入・運用', title: '使い方と、その後を考える。', text: '使う方と操作を確認し、仕事に取り入れる方法を考えます。コンサルで提供する製品は、製品に応じた維持費を改良・改善に充てます。対応範囲と費用は契約前にご案内します。' },
+  { label: '導入・運用', title: '使い方と、その後を考える。', text: '使う方と操作を確認し、仕事に取り入れる方法を考えます。公開後に必要な対応や、月額料金に含まれる支援の範囲も、ご契約前に確認します。' },
 ];
 ---
 
-<BaseLayout title="ONE EIGHTについて｜地域の仕事を、技術で前へ" description="ONE EIGHT（ワンエイト）は、地域のお店・教室に向けたWebサイト・アプリ開発と、課題に合わせた製品の制作・提供に取り組む事業です。実家が和菓子屋の大学生が、現場の仕事を起点に必要な仕組みを考えます。">
+<BaseLayout title="ONE EIGHTについて｜地域の仕事を、技術で前へ" description="ONE EIGHT（ワンエイト）は、地域のお店・教室に向けたWebサイト・アプリ開発に取り組む事業です。実家が和菓子屋の大学生が、現場の仕事を起点に必要な仕組みを考えます。">
   <section class="page-hero detail-about-hero friendly-about-hero refresh-about-hero">
     <div class="container about-postcard refresh-about-hero-grid">
       <div>
         <p class="eyebrow">ABOUT ONE EIGHT</p>
         <h1>地域の仕事を、<br />技術で前へ。</h1>
-        <p class="page-lead">地域のお店・教室に向けた、Webサイト・アプリ開発。<br />そして、日々の課題に合わせた製品の制作・提供。<br />現場の仕事を理解し、使える仕組みを形にします。</p>
+        <p class="page-lead">地域のお店・教室に向けた、Webサイト・アプリ開発。<br />現場の仕事を理解し、使える仕組みを形にします。</p>
         <p class="detail-hero-note"><strong>{primaryCustomerMessage}</strong></p>
         <div class="refresh-about-hero-actions">
           <a class="button button--primary" href="/contact/">無料でひとこと相談する</a>
@@ -41,24 +43,26 @@ const commitments = [
 
   <section class="section refresh-about-services">
     <div class="container">
-      <div class="detail-section-intro"><div><p class="eyebrow">事業内容</p><h2 class="section-heading">つくりたいものからも、<br />解決したい課題からも。</h2></div><p>二つのサービスから、ご相談内容に合う進め方をご案内します。</p></div>
+      <div class="detail-section-intro"><div><p class="eyebrow">事業内容</p><h2 class="section-heading">お店のためのWeb開発を、<br />わかりやすい料金で。</h2></div><p>ホームページや会員アプリなど、<br />必要な機能から開発内容を整理します。</p></div>
       <div class="detail-feature-grid refresh-about-services-grid">
         <article class="detail-feature refresh-about-service">
           <div class="detail-feature-copy">
-            <p class="eyebrow">Webサイト・アプリ開発</p>
+            <p class="eyebrow">サービス内容</p>
             <h3>Webサイト・アプリ開発</h3>
             <p>ホームページや会員アプリなど、お店・教室専用のサイトやアプリを制作します。載せたい情報や必要な機能を整理し、運営する方と利用する方の使いやすさを考えます。</p>
           </div>
         </article>
         <article class="detail-feature refresh-about-service">
           <div class="detail-feature-copy">
-            <p class="eyebrow">課題解決の製品づくり</p>
-            <h3>課題に合わせた製品の制作・提供</h3>
-            <p>無料ヒアリングで課題を伺い、解決に役立つ製品を制作・提供するコンサルティングです。制作する内容と範囲、費用を事前に合意し、料金は製品の提供時にお支払いいただきます。</p>
+            <p class="eyebrow">料金・お試し</p>
+            <h3>初期費用{development.initialLabel}円<br />月額{development.monthlyLabel}円</h3>
+            <p>初月の月額料金は0円。1か月お試しいただき、2か月目から月額{development.monthlyLabel}円です。表示金額はすべて税込です。</p>
+            <p>{development.noOtherContracts}</p>
+            <p>データベースのアップグレードが必要な場合は、別途月額{development.databaseUpgradeMonthlyLabel}円（税込）のオプションをご案内します。</p>
           </div>
         </article>
       </div>
-      <p class="detail-section-note"><a class="detail-text-link" href="/service/">サービスの内容と進め方を見る</a></p>
+      <p class="detail-section-note"><a class="detail-text-link" href="/pricing/">料金と1か月お試しの詳細を見る</a></p>
     </div>
   </section>
 
@@ -75,11 +79,11 @@ const commitments = [
       <div><p class="eyebrow">現在の取り組み</p><h2 class="section-heading">現場で確かめ、<br />支援の形を育てる。</h2></div>
       <div class="detail-body-copy">
         <p>ONE EIGHTは、現在、事業立ち上げの段階にあります。今後は実家の和菓子屋や、ご協力いただけるお店での実践を通じて、現場で役立つ仕組みを確かめていく予定です。</p>
-        <p>無料ヒアリングで状況を伺い、対応できる内容をご案内します。制作・提供の範囲や費用、維持・運用の条件は、ご契約前に確認いただける形でお伝えします。料金や試用・返金の条件は、<a class="detail-text-link" href="/pricing/">料金ページ</a>をご覧ください。</p>
+        <p>無料ヒアリングで状況を伺い、対応できる内容をご案内します。制作する範囲や費用、運用の条件は、ご契約前に確認いただける形でお伝えします。料金や1か月お試しの詳細は、<a class="detail-text-link" href="/pricing/">料金ページ</a>をご覧ください。</p>
         <div class="detail-brand-info refresh-about-profile">
           <p><span>事業名</span><strong>ONE EIGHT <small>（ワンエイト）</small></strong></p>
           <p><span>対象</span><strong>地域のお店・教室</strong></p>
-          <p><span>事業内容</span><strong>Webサイト・アプリ開発／課題に合わせた製品の制作・提供</strong></p>
+          <p><span>事業内容</span><strong>Webサイト・アプリ開発</strong></p>
         </div>
       </div>
     </div>

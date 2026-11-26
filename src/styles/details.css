@@ -1106,7 +1106,7 @@
   .detail-price-section { padding-top: 45px; }
 }
 
-/* Two services with separate payment milestones. */
+/* Monthly plan and trial payment milestones. */
 .pricing-explainer { scroll-margin-top: 16px; }
 .pricing-explainer--development { background: #f1f7f3; }
 .pricing-explainer--consulting { background: #fff9f1; }
@@ -1353,3 +1353,8 @@
 .site-refresh .refresh-product-board { min-height: 470px; padding-bottom: 115px; }
 .site-refresh .refresh-phone { bottom: 78px; }
 @media (max-width: 760px) { .site-refresh .refresh-product-board { min-height: 440px; } .site-refresh .refresh-phone { bottom: 78px; } }
+
+.pricing-database-note { margin-top: 30px; padding: 28px 30px; border: 1px solid #bac6ae; background: #f7f9ee; }
+.pricing-database-note h3 { font-size: 1.25rem; }
+.pricing-database-note > p:last-child { margin-top: 15px; line-height: 1.9; }
+@media (max-width: 760px) { .pricing-database-note { padding: 23px 20px; } }
