@@ -7,6 +7,7 @@ import ServicePricingCards from '../components/ServicePricingCards.astro';
 import TargetAudience from '../components/TargetAudience.astro';
 import { site, faqs } from '../data/site';
 import '../styles/home.css';
+const { development } = site.pricing;
 const capabilities = [
   { icon: 'web', title: 'お店のWebサイト', text: '営業時間・メニュー・お店の魅力を、見つけやすく。更新のしやすさも考えます。' },
   { icon: 'phone', title: '店舗専用のWebアプリ', text: '会員証やスタンプ、お知らせなど。お客様とのつながりに合う機能を検討します。' },
@@ -27,16 +28,18 @@ const steps = [
   <section class="development-hero" aria-labelledby="hero-title">
     <div class="container development-hero-grid">
       <div class="development-hero-copy">
-        <p class="hero-service-label">地域の個人店・教室のWeb・アプリ開発</p>
-        <h1 id="hero-title">お店の困りごとを、<br /><span>使える仕組みに。</span></h1>
-        <p class="hero-introduction">ONE EIGHTは、お店に合うWebサイトやアプリ、<br class="desktop-break" />日々の仕事に役立つ製品をつくるチームです。</p>
-        <p class="hero-introduction-sub">何に困っているかを聞くところから、制作、その後の運用・改善まで。お店の方と一緒に進めます。</p>
+        <p class="hero-service-label">地域のお店・教室のWebサイト・アプリ開発</p>
+        <h1 id="hero-title" class="hero-zero-heading"><span class="hero-zero-headline"><span class="hero-zero-label">初期費用</span><span class="hero-zero-amount">{development.initialLabel}<small>円</small></span></span><span class="hero-zero-tagline">お店の「始めたい」を、ここから。</span></h1>
+        <p class="hero-zero-trial">最初の1か月は、<strong>月額も{development.firstMonthMonthlyAmount}円。</strong></p>
+        <p class="hero-zero-monthly">2か月目から<strong>月額{development.monthlyLabel}円</strong>（税込）</p>
+        <p class="hero-plan-note">課題解決の製品づくり（コンサル）は別料金です。</p>
+        <p class="hero-introduction hero-introduction--zero">ONE EIGHTは、お店に合うWebサイトやアプリをつくり、運用・改善まで一緒に支えるチームです。</p>
         <div class="hero-main-actions"><a class="button button--primary" href="/contact/">無料でひとこと相談する</a><a class="hero-price-link" href="#services">サービス・料金を見る</a></div>
         <p class="hero-consult-note">「予約の管理が大変」だけでも大丈夫。ヒアリングは無料です。</p>
       </div>
       <ProductShowcase />
     </div>
-    <div class="container hero-support-strip"><span>お店ごとの課題から考える</span><span>AIを活用した制作</span><span>運用・改善まで支援</span></div>
+    <div class="container hero-support-strip"><span>Web・アプリ開発の初期費用0円</span><span>最初の1か月は月額も0円</span><span>運用・改善まで支援</span></div>
   </section>
   <TargetAudience />
   <ContactCTA title={'つくるものが決まっていなくても、\nご相談ください。'} />
