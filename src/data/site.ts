@@ -3,7 +3,7 @@ import { contactBuildEnabled } from "./contact-release";
 
 const origin = new URL(import.meta.env.PUBLIC_SITE_URL || deployment.siteUrl).origin;
 const formatYen = (value: number) => new Intl.NumberFormat("ja-JP").format(value);
-const developmentInitial = 14800;
+const developmentInitial = 0;
 const developmentMonthly = 20000;
 const consultingFee = 100000;
 const refundPercent = 70;
@@ -13,7 +13,7 @@ const refundAmount = consultingFee * refundPercent / 100;
 export const site = {
   name: "ONE EIGHT",
   kana: "ワンエイト",
-  description: "ONE EIGHTは飲食店・美容院・小売店・ネイルサロン・ヨガ教室などに向け、Webサイト・アプリ開発と、課題に合う製品を制作・提供するコンサルを行います。開発は初期14,800円、2か月目から月額20,000円。コンサルは製品提供時に100,000円。税込、ヒアリング無料です。",
+  description: `ONE EIGHTは飲食店・美容院・小売店・ネイルサロン・ヨガ教室などに向け、Webサイト・アプリ開発と、課題に合う製品を制作・提供するコンサルを行います。開発は初期費用${formatYen(developmentInitial)}円・初月の月額0円、2か月目から月額${formatYen(developmentMonthly)}円。コンサルは製品提供時に${formatYen(consultingFee)}円。税込、ヒアリング無料です。`,
   origin,
   allowIndexing: import.meta.env.PUBLIC_ALLOW_INDEXING === "true" && !!origin,
   contact: {
@@ -31,7 +31,7 @@ export const site = {
       monthlyLabel: formatYen(developmentMonthly),
       trialMonths: 1,
       firstMonthMonthlyAmount: 0,
-      firstMonth: "初月は初期費用14,800円のみ。初月の月額料金は0円です。",
+      firstMonth: "初期費用・初月の月額料金ともに0円です。",
       monthlyStart: "まず1か月お試し。2か月目から月額20,000円です。",
       scope: "制作する内容と月額料金に含まれる対応範囲、お試しの開始日・継続や解約の方法は、ご契約前に確認します。",
     },
@@ -71,7 +71,7 @@ export const faqs = [
   },
   {
     question: "Webサイト・アプリ開発の初月はいくらですか？",
-    answer: "初月は初期費用14,800円（税込）のみです。初月の月額料金は0円で、まず1か月お試しいただき、2か月目から月額20,000円（税込）がかかります。制作する内容や月額の対応範囲、継続・解約の方法は、ご契約前に確認します。",
+    answer: `初期費用${formatYen(developmentInitial)}円、初月の月額料金も0円です。まず1か月お試しいただき、2か月目から月額${formatYen(developmentMonthly)}円（税込）がかかります。制作する内容や月額の対応範囲、継続・解約の方法は、ご契約前に確認します。`,
   },
   {
     question: "コンサルの料金は、いつ支払いますか？",
