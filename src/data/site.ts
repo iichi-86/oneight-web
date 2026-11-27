@@ -9,9 +9,9 @@ const databaseUpgradeMonthly = 3000;
 
 // 確認済みの料金をページ間で共通化します。すべて税込です。
 export const site = {
-  name: "ONE EIGHT",
+  name: "ONEIGHT",
   kana: "オンエイト",
-  description: `ONE EIGHTは地域の小さな小売店を主な対象に、Webサイト・Webアプリを制作し、導入までサポートします。基本料金は初期費用${formatYen(developmentInitial)}円・初月の基本月額0円、2か月目から月額${formatYen(developmentMonthly)}円。DBアップグレードは別途月額${formatYen(databaseUpgradeMonthly)}円、運用中の追加カスタマイズは別料金、不具合修正は無料です。すべて税込です。`,
+  description: `ONEIGHTは地域の小さな小売店を主な対象に、Webサイト・Webアプリを制作し、導入までサポートします。基本料金は初期費用${formatYen(developmentInitial)}円・初月の基本月額0円、2か月目から月額${formatYen(developmentMonthly)}円。DBアップグレードは別途月額${formatYen(databaseUpgradeMonthly)}円、運用中の追加カスタマイズは別料金、不具合修正は無料です。すべて税込です。`,
   origin,
   allowIndexing: import.meta.env.PUBLIC_ALLOW_INDEXING === "true" && !!origin,
   contact: {
@@ -48,7 +48,7 @@ export const site = {
 export const navigation = [
   { href: "/service/", label: "サービス" },
   { href: "/pricing/", label: "料金" },
-  { href: "/about/", label: "ONE EIGHTについて" },
+  { href: "/about/", label: "ONEIGHTについて" },
 ] as const;
 
 export const faqs = [
