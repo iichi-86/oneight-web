@@ -12,6 +12,11 @@ const paths: Record<string, string> = {
   heart: 'M12 21 3 12C-3 5 6-1 12 6c6-7 15-1 9 6z',
   phone: 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z M10 18h4',
   flower: 'M12 7c-8-10-12 2-5 5-10 8 2 12 5 5 8 10 12-2 5-5 10-8-2-12-5-5z M10 12h4',
+  web: 'M3 4h18v16H3z M3 9h18 M7 6.5h.1 M10 6.5h.1 M7 13h4 M7 16h8',
+  calendar: 'M4 5h16v16H4z M8 3v4 M16 3v4 M4 10h16 M8 14h2 M14 14h2 M8 17h2',
+  chart: 'M4 3v17h17 M8 16v-4 M13 16V8 M18 16V5',
+  message: 'M3 4h18v13H9l-6 4z M7 8h10 M7 12h7',
+  tools: 'M14 3a5 5 0 0 0-5 6L3 15v6h6l6-6a5 5 0 0 0 6-5l-4 2-3-3 2-4z',
 };
 ---
 <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths[name] || paths.card} /></svg>

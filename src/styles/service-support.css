@@ -1,0 +1,72 @@
+.support-scope {
+  margin-top: 48px;
+  color: #202a31;
+}
+
+.support-scope-heading {
+  margin: 0 0 26px;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.6;
+  letter-spacing: -.035em;
+}
+
+.support-scope-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.support-scope-card {
+  min-width: 0;
+  padding: 25px 25px 28px;
+  border: 1px solid #dce1d8;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.support-scope-grid .support-scope-card .support-scope-illustration {
+  width: 100%;
+  height: 110px;
+  margin: 0 auto 21px;
+}
+
+.support-scope-card h3 {
+  margin: 0 0 13px;
+  color: #202a31;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.65;
+  letter-spacing: -.025em;
+}
+
+.support-scope-copy {
+  margin: 0;
+  color: #5b646a;
+  font-size: 1rem;
+  line-height: 1.95;
+}
+
+@media (max-width: 760px) {
+  .support-scope {
+    margin-top: 36px;
+  }
+
+  .support-scope-heading {
+    margin-bottom: 22px;
+    font-size: 1.5rem;
+  }
+
+  .support-scope-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .support-scope-card {
+    padding: 23px 24px 25px;
+  }
+
+  .support-scope-grid .support-scope-card .support-scope-illustration {
+    height: 110px;
+    margin-bottom: 18px;
+  }
+}

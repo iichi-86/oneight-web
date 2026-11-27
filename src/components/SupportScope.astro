@@ -1,0 +1,39 @@
+---
+import { site } from "../data/site";
+import ServiceIllustration from "./ServiceIllustration.astro";
+import "../styles/service-support.css";
+
+const development = site.pricing.development;
+const items = [
+  {
+    title: "導入後はお店で運用",
+    body: development.storeOperation,
+    variant: "handoff",
+  },
+  {
+    title: "追加カスタマイズは有料",
+    body: development.customization,
+    variant: "customize",
+  },
+  {
+    title: "不具合修正は無料",
+    body: development.defectRepair,
+    variant: "repair",
+  },
+];
+---
+
+<div class="support-scope">
+  <h2 class="support-scope-heading">導入後の対応について</h2>
+  <div class="support-scope-grid">
+    {items.map(({ title, body, variant }) => (
+      <article class="support-scope-card">
+        <ServiceIllustration variant={variant} class="support-scope-illustration" />
+        <div class="support-scope-copy">
+          <h3>{title}</h3>
+          <p>{body}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>

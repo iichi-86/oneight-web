@@ -26,10 +26,88 @@ test('rejects cross-origin, missing origin and mismatched runtime origin before 
   for (const origin of ['https://attacker.test', 'null', '']) assert.equal((await handleContact(request(input, { origin }), env, forbiddenFetch, now)).status, 403);
   assert.equal((await handleContact(request(), { ...env, CONTACT_ALLOWED_ORIGIN: 'https://other.test' }, forbiddenFetch, now)).status, 403);
 });
-test('validates every required field and rejects header injection', async () => {
-  const response = await handleContact(request({ ...input, name: 'A\r\nB', shop: '', email: 'x\r\nb@example.com', industry: 'invalid', message: '短い', consent: false }), env, forbiddenFetch, now);
+test('validates required fields and rejects invalid optional fields and header injection', async () => {
+  const response = await handleContact(request({ ...input, name: 'A\r\nB', shop: null, email: 'x\r\nb@example.com', industry: 'invalid', message: ' \n ', consent: false }), env, forbiddenFetch, now);
   assert.equal(response.status, 422);
   assert.deepEqual(Object.keys((await response.json()).errors).sort(), ['consent', 'email', 'industry', 'message', 'name', 'shop']);
+});
+
+const minimalInput = { email: input.email, message: '相談したい', consent: true, website: input.website, startedAt: input.startedAt, requestId: input.requestId, token: input.token };
+
+test('a short inquiry with only email, message and consent user fields reaches provider acceptance', async () => {
+  for (const optionalFields of [{}, { name: '', shop: '', industry: '' }, { name: '   ', shop: '　', industry: '' }]) {
+    const calls: { url: string; init?: RequestInit }[] = [];
+    const response = await handleContact(request({ ...minimalInput, ...optionalFields }), env, provider(calls), now);
+    assert.equal(response.status, 200);
+    assert.equal((await response.json()).ok, true);
+    assert.equal(calls.length, 2);
+    const mail = JSON.parse(calls[1].init?.body as string);
+    assert.equal(mail.reply_to, input.email);
+    assert.match(mail.text, /お名前：未入力\n店舗名・教室名：未入力\n/);
+    assert.match(mail.text, /業種：未入力\n/);
+    assert.match(mail.text, /相談内容：\n相談したい\n/);
+    assert.doesNotMatch(mail.text, /undefined|null/);
+  }
+});
+
+test('email, nonblank message and consent remain required before any upstream call', async () => {
+  let upstreamCalls = 0;
+  const fetcher: typeof fetch = async () => { upstreamCalls++; return Response.json({ id: 'must-not-be-used' }); };
+  for (const fields of [
+    { email: undefined }, { email: '' }, { email: 'invalid' },
+    { message: undefined }, { message: '' }, { message: ' \t\n　' }, { message: 'a'.repeat(4001) },
+    { consent: undefined }, { consent: false },
+  ]) {
+    const response = await handleContact(request({ ...minimalInput, ...fields }), env, fetcher, now);
+    assert.equal(response.status, 422, JSON.stringify(fields));
+  }
+  assert.equal(upstreamCalls, 0);
+});
+
+test('message length boundaries accept one character and 4000 Japanese characters', async () => {
+  for (const message of ['あ', 'あ'.repeat(4000)]) {
+    const calls: { url: string; init?: RequestInit }[] = [];
+    const response = await handleContact(request({ ...minimalInput, message }), env, provider(calls), now);
+    assert.equal(response.status, 200, `message length ${message.length}`);
+    assert.equal(calls.length, 2);
+    assert.ok(JSON.parse(calls[1].init?.body as string).text.includes(`相談内容：\n${message}\n`));
+  }
+});
+
+test('optional fields still reject wrong types, excess length, controls and unknown industries', async () => {
+  let upstreamCalls = 0;
+  const fetcher: typeof fetch = async () => { upstreamCalls++; return Response.json({ id: 'must-not-be-used' }); };
+  for (const field of ['name', 'shop', 'industry']) {
+    for (const value of [null, [], {}, 123, true]) {
+      const response = await handleContact(request({ ...minimalInput, [field]: value }), env, fetcher, now);
+      assert.equal(response.status, 422, `${field}=${JSON.stringify(value)}`);
+      assert.deepEqual(Object.keys((await response.json()).errors), [field]);
+    }
+  }
+  for (const [field, value] of [
+    ['name', 'a'.repeat(101)], ['shop', 'a'.repeat(151)],
+    ['name', '\n'], ['shop', '店舗\r\n名'], ['name', 'お名前\u0000'], ['shop', '店舗\u007f'],
+    ['industry', 'unknown'], ['industry', '__proto__'],
+  ]) {
+    const response = await handleContact(request({ ...minimalInput, [field]: value }), env, fetcher, now);
+    assert.equal(response.status, 422, `${field}=${JSON.stringify(value)}`);
+    assert.deepEqual(Object.keys((await response.json()).errors), [field]);
+  }
+  assert.equal(upstreamCalls, 0);
+});
+
+test('complete legacy inquiries still preserve optional details and all former industry labels', async () => {
+  for (const [industry, label] of [
+    ['bakery', 'ベーカリー'], ['cafe', 'カフェ・コーヒースタンド'], ['sweets', '和菓子・洋菓子'],
+    ['beauty', '美容・ネイル等のサロン'], ['pet', 'トリミングサロン'], ['other', 'その他'],
+  ]) {
+    const calls: { url: string; init?: RequestInit }[] = [];
+    const response = await handleContact(request({ ...input, industry }), env, provider(calls), now);
+    assert.equal(response.status, 200, industry);
+    const mail = JSON.parse(calls[1].init?.body as string);
+    assert.match(mail.text, /お名前：相談 太郎\n店舗名・教室名：相談ベーカリー\n/);
+    assert.ok(mail.text.includes(`\n業種：${label}\n`), industry);
+  }
 });
 test('rejects trailing newlines in submitted and runtime email addresses', async () => {
   const response = await handleContact(request({ ...input, email: 'owner@example.com\n' }), env, forbiddenFetch, now);
@@ -73,6 +151,23 @@ test('only returns success after provider acceptance and preserves idempotency k
   assert.deepEqual(mail.to, [env.CONTACT_TO_EMAIL]);
   assert.equal(mail.reply_to, input.email);
   assert.match(mail.text, /相談ベーカリー/);
+});
+test('new customer industries are accepted and delivered with their Japanese labels', async () => {
+  const expectedIndustries = [
+    ['restaurant', '飲食店'],
+    ['hair_salon', '美容院'],
+    ['retail', '小売店'],
+    ['nail_salon', 'ネイルサロン'],
+    ['yoga', 'ヨガ教室'],
+  ];
+  for (const [industry, label] of expectedIndustries) {
+    const calls: { url: string; init?: RequestInit }[] = [];
+    const response = await handleContact(request({ ...input, industry }), env, provider(calls), now);
+    assert.equal(response.status, 200, industry);
+    assert.equal(calls.length, 2, industry);
+    const mail = JSON.parse(calls[1].init?.body as string);
+    assert.ok(mail.text.includes(`\n業種：${label}\n`), `${industry} must be labeled ${label} in the inquiry`);
+  }
 });
 test('upstream failures and timeouts never become success or leak provider details', async () => {
   for (const mode of ['provider-error', 'empty-receipt']) assert.equal((await handleContact(request(), env, provider([], mode), now)).status, 502);

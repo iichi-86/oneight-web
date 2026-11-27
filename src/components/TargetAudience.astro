@@ -1,0 +1,29 @@
+---
+import { primaryCustomerMessage, primaryIndustries } from '../data/industries';
+---
+<section class="target-audience" aria-labelledby="target-audience-title">
+  <p class="container audience-primary">{primaryCustomerMessage}</p>
+  <div class="container audience-inner">
+    <h2 id="target-audience-title">こんなお店・教室の方へ</h2>
+    <div><ul>{primaryIndustries.map(industry => <li>{industry.label}</li>)}</ul><p>など、地域のお店や教室ごとの困りごとを伺います。</p></div>
+  </div>
+</section>
+<style>
+  .target-audience { background: #fff; border-bottom: 1px solid #dce4dd; padding-block: 34px; }
+  .audience-inner { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 35px; }
+  h2 { font-size: 1rem; line-height: 1.8; letter-spacing: 0; }
+  ul { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; margin: 0; padding: 0; }
+  li { padding: 5px 15px; background: #eaf3ec; border-radius: 999px; color: #355c49; font-size: 0.9375rem; font-weight: 600; }
+  li:nth-child(2) { background: #fbe7de; color: #874c3e; }
+  li:nth-child(3) { background: #fff1c6; color: #705623; }
+  li:nth-child(4) { background: #eeeafa; color: #625082; }
+  li:nth-child(5) { background: #e7eff9; color: #36577a; }
+  p { color: var(--muted); font-size: 0.875rem; margin-top: 9px; }
+  .audience-primary { color: var(--ink); font-size: clamp(1rem,1.7vw,1.25rem); font-weight: 700; margin-top: 0; margin-bottom: 22px; border-left: 4px solid var(--yellow); padding-left: 14px; }
+  @media (max-width: 760px) {
+    .target-audience { padding-block: 25px; }
+    .audience-inner { grid-template-columns: 1fr; gap: 15px; }
+    ul { gap: 8px; }
+    li { padding: 4px 12px; }
+  }
+</style>

@@ -1,83 +1,75 @@
 import deployment from "./deployment.json";
 import { contactBuildEnabled } from "./contact-release";
 
-// 料金・未確定条件・公開状態はここでまとめて管理します。
-const origin = new URL(import.meta.env.PUBLIC_SITE_URL || deployment.siteUrl)
-  .origin;
-const monthlyAmount = 20000;
-const monthlyLabel = new Intl.NumberFormat("ja-JP").format(monthlyAmount);
+const origin = new URL(import.meta.env.PUBLIC_SITE_URL || deployment.siteUrl).origin;
+const formatYen = (value: number) => new Intl.NumberFormat("ja-JP").format(value);
+const developmentInitial = 0;
+const developmentMonthly = 10000;
+const databaseUpgradeMonthly = 3000;
+
+// 確認済みの料金をページ間で共通化します。すべて税込です。
 export const site = {
-  name: "oneight",
-  kana: "ワンエイト",
-  description:
-    "お店らしい会員サービスを、もっと身近に。oneightは地域の個人店舗・小規模事業者に向けた、専用Webアプリの制作・運用サービスを準備しています。",
+  name: "ONEIGHT",
+  kana: "オンエイト",
+  description: `ONEIGHTは地域の小さな小売店を主な対象に、Webサイト・Webアプリを制作し、導入までサポートします。基本料金は初期費用${formatYen(developmentInitial)}円・初月の基本月額0円、2か月目から月額${formatYen(developmentMonthly)}円。DBアップグレードは別途月額${formatYen(databaseUpgradeMonthly)}円、運用中の追加カスタマイズは別料金、不具合修正は無料です。すべて税込です。`,
   origin,
   allowIndexing: import.meta.env.PUBLIC_ALLOW_INDEXING === "true" && !!origin,
   contact: {
-    enabled: contactBuildEnabled(
-      import.meta.env.PUBLIC_CONTACT_ENABLED,
-      origin,
-      import.meta.env.CF_PAGES,
-      import.meta.env.CF_PAGES_BRANCH,
-    ),
+    enabled: contactBuildEnabled(import.meta.env.PUBLIC_CONTACT_ENABLED, origin, import.meta.env.CF_PAGES, import.meta.env.CF_PAGES_BRANCH),
     turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "",
   },
   pricing: {
-    monthlyAmount,
-    monthlyLabel,
-    status: "提供予定価格",
-    initialFee: "標準プランで初期制作費0円を目指して準備中",
-    tax: "税込・税抜の区分は未確定です。",
-    conditions:
-      "料金・契約期間・提供機能は検討中です。正式な条件は、ご提案時に個別にご案内します。",
-    contract:
-      "最低利用期間、更新方法、解約手続きなどは検討中です。ご契約前に確認できる形でお伝えします。",
-    payment:
-      "お支払い方法や請求時期も含め、正式な条件はご提案時にご案内する予定です。",
-    extra:
-      "標準範囲を超える機能・外部サービス利用料などは、必要性を確認したうえで個別にご案内する予定です。",
+    tax: "表示金額はすべて税込です。",
+    hearing: "Webサイト・Webアプリの制作から導入まで。",
+    development: {
+      name: "Webサイト・アプリ開発",
+      initialAmount: developmentInitial,
+      initialLabel: formatYen(developmentInitial),
+      monthlyAmount: developmentMonthly,
+      monthlyLabel: formatYen(developmentMonthly),
+      trialMonths: 1,
+      firstMonthMonthlyAmount: 0,
+      firstMonth: "初期費用・初月の基本月額料金ともに0円です。",
+      priceMessage: "条件、追加費用なし。10000円のみ",
+      basePriceScope: "基本のWebサイト・Webアプリ制作と導入の料金です。",
+      storeOperation: "導入後の日々の運用は、店舗側で行っていただきます。",
+      customization: "運用中の追加カスタマイズは別途費用がかかります。内容を確認し、事前にお見積もりします。",
+      defectRepair: "制作したWebサイト・Webアプリに問題や不具合がある場合の修正は無料です。",
+      monthlyStart: `まず1か月お試し。2か月目から月額${formatYen(developmentMonthly)}円です。`,
+      scope: "制作する内容と導入までの対応範囲、お試しの開始日・継続や解約の方法は、利用前に確認します。",
+      databaseUpgradeMonthlyAmount: databaseUpgradeMonthly,
+      databaseUpgradeMonthlyLabel: formatYen(databaseUpgradeMonthly),
+      upgradedMonthlyLabel: formatYen(developmentMonthly + databaseUpgradeMonthly),
+      databaseUpgrade: `データベースのアップグレードは、別途月額${formatYen(databaseUpgradeMonthly)}円（税込）がかかります。`,
+    },
   },
 } as const;
 
 export const navigation = [
   { href: "/service/", label: "サービス" },
   { href: "/pricing/", label: "料金" },
-  { href: "/about/", label: "oneightについて" },
+  { href: "/about/", label: "ONEIGHTについて" },
 ] as const;
 
 export const faqs = [
   {
-    question: "専門知識がなくても相談できますか？",
-    answer:
-      "はい。まずは、お店のことや日々のお困りごとをお聞かせください。導入後の使い方や運用方法も含め、わかりやすいご案内を目指しています。具体的なサポート範囲はご提案時にお伝えします。",
+    question: `月額${formatYen(developmentMonthly)}円には、何が含まれますか？`,
+    answer: `${site.pricing.development.basePriceScope} 初期費用0円、2か月目から月額${formatYen(developmentMonthly)}円（税込）です。DBアップグレードは別途月額${formatYen(databaseUpgradeMonthly)}円（税込）、運用中の追加カスタマイズは別料金です。制作したサイト・アプリの問題や不具合の修正は無料です。`,
   },
   {
-    question: "スマートフォンで使えますか？",
-    answer:
-      "スマートフォンのブラウザから利用できるWebアプリを想定しています。ホーム画面への追加にも対応を目指します。使える機能は端末・OS・ブラウザによって異なる場合があります。",
+    question: "Webサイト・アプリ開発の初月はいくらですか？",
+    answer: `初期費用${formatYen(developmentInitial)}円、初月の基本月額料金も0円です。まず1か月お試しいただき、2か月目から月額${formatYen(developmentMonthly)}円（税込）がかかります。制作する内容や導入までの対応範囲、継続・解約の方法は、ご契約前に確認します。`,
   },
   {
-    question: "App Storeへの登録は必要ですか？",
-    answer:
-      "想定しているWebアプリは、URLやQRコードからアクセスするため、App Storeへの登録・掲載を前提としていません。アプリストアを通じた配信をご希望の場合は、別途ご相談ください。",
+    question: "データベースのアップグレードはいくらですか？",
+    answer: `アップグレードを行う場合は、通常の月額${formatYen(developmentMonthly)}円とは別に月額${formatYen(databaseUpgradeMonthly)}円がかかります。2か月目以降の合計は月額${formatYen(developmentMonthly + databaseUpgradeMonthly)}円（税込）です。必要な内容と費用は、アップグレード前に一緒に確認します。`,
   },
   {
-    question: "お店に合わせてデザインを変えられますか？",
-    answer:
-      "お店のロゴや色、雰囲気を反映したデザインを目指しています。共通システムを土台にするため、ご希望の表現や対応範囲はヒアリングで確認します。",
+    question: "導入後の運用や修正は、どうなりますか？",
+    answer: `${site.pricing.development.storeOperation} ${site.pricing.development.customization} ${site.pricing.development.defectRepair}`,
   },
   {
-    question: "LINE公式アカウントと併用できますか？",
-    answer:
-      "併用を想定したご相談が可能です。LINEでの情報発信と、お店専用の会員サービスなど、それぞれの使い方を一緒に整理します。個別のシステム連携は別途検討となります。",
-  },
-  {
-    question: "料金や契約期間はどうなりますか？",
-    answer: `基本プランは月額${site.pricing.monthlyLabel}円を想定しています。${site.pricing.tax}${site.pricing.conditions}`,
-  },
-  {
-    question: "導入までにどれくらいかかりますか？",
-    answer:
-      "現在はサービスを準備している段階のため、一律の納期は設けていません。ご希望の機能や準備状況を確認し、スケジュールをご相談します。",
+    question: "AIは、どのように活用しますか？",
+    answer: "AIや共通の仕組みを活用して、制作の手間と費用を抑えます。必要な機能を確認し、動作を確かめながらWebサイト・Webアプリを制作します。",
   },
 ];
