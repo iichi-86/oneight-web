@@ -19,7 +19,7 @@
 .hero-upgrade-note > span { display: block; }
 .development-hero .hero-introduction--plan { font-size: 1rem; font-weight: 400; color: #cbd5d7; margin-top: 18px; }
 .hero-simple-heading ~ .hero-main-actions { margin-top: 25px; }
-.development-hero:has(.hero-simple-heading) .development-hero-grid { padding-block: 48px 38px; }
+.development-hero:has(.hero-simple-heading) .development-hero-grid { padding-block: 32px 32px; }
 .hero-introduction { font-size: 1.0625rem; line-height: 1.95; margin-top: 30px; font-weight: 600; }
 .hero-introduction-sub { font-size: 1rem; color: #c6cfd1; line-height: 1.95; max-width: 500px; margin-top: 13px; }
 .hero-main-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 32px; }
