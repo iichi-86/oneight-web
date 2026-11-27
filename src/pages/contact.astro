@@ -7,11 +7,11 @@ import '../styles/contact.css';
 const accepting = site.contact.enabled && !!site.contact.turnstileSiteKey;
 const isPreview = import.meta.env.CF_PAGES === '1' && import.meta.env.CF_PAGES_BRANCH !== contactRelease.productionBranch;
 ---
-<BaseLayout title="無料でひとこと相談" description="Webサイト・アプリ開発のご相談はONE EIGHTへ。「予約の管理が大変」だけでも大丈夫。返信用メールと短い相談内容から送れます。ヒアリング無料、お名前・店舗名・業種は任意です。">
+<BaseLayout title="制作のお問い合わせ" description="Webサイト・Webアプリの制作・導入のお問い合わせはONE EIGHTへ。つくりたいものや用途を、返信用メールと短い文章でお知らせください。お名前・店舗名・業種は任意です。">
   <section class="page-hero container contact-heading">
-    <p class="eyebrow">ヒアリングは無料です</p>
-    <h1>無料でひとこと相談</h1>
-    <p class="page-lead">「予約の管理が大変」だけでも大丈夫。<br />つくりたいものが、まだ決まっていなくても送れます。</p>
+    <p class="eyebrow">Webサイト・Webアプリ制作・導入</p>
+    <h1>制作のお問い合わせ</h1>
+    <p class="page-lead">つくりたいWebサイトやWebアプリ、<br />使いたい場面を、短い言葉でお知らせください。</p>
   </section>
   <section class="container contact-grid section" aria-label="ひとこと相談フォーム">
     <div class="contact-panel">
@@ -59,7 +59,7 @@ const isPreview = import.meta.env.CF_PAGES === '1' && import.meta.env.CF_PAGES_B
         {accepting && <div id="contact-challenge" class="contact-challenge" aria-label="送信前の確認"></div>}
         <div id="contact-status" class="contact-status" role="status" aria-live="polite" tabindex="-1"></div>
         <button type="submit" class="button button--primary contact-submit" disabled>{accepting ? 'この内容で相談を送る' : isPreview ? '確認用のため送信できません' : '受付停止中'}</button>
-        <p class="contact-small">ヒアリングは無料です。制作内容と費用は、制作前に確認します。</p>
+        <p class="contact-small">制作・導入する内容と費用は、制作前に確認します。</p>
         <noscript><p class="contact-notice">フォームの送信にはJavaScriptを有効にしてください。</p></noscript>
       </form>
     </div>

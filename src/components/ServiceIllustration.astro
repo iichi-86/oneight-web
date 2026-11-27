@@ -1,0 +1,127 @@
+---
+interface Props {
+  variant: string;
+  class?: string;
+}
+
+const { variant, class: className } = Astro.props;
+const variants = ['website', 'webapp', 'handoff', 'customize', 'repair'];
+const drawing = variants.includes(variant) ? variant : 'website';
+---
+
+<svg class:list={['service-illustration', `service-illustration--${drawing}`, className]} viewBox="0 0 240 140" fill="none" aria-hidden="true" focusable="false">
+  {drawing === 'website' && <>
+    <ellipse cx="124" cy="77" rx="94" ry="53" fill="#eaf0e5" />
+    <g class="illustration-drawing">
+      <rect x="32" y="21" width="174" height="103" rx="7" fill="#fffefa" />
+      <path d="M33 40h172" />
+      <circle cx="43" cy="31" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="50" cy="31" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="57" cy="31" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M78 31h67" stroke="#b3bdb1" />
+      <rect x="45" y="51" width="60" height="59" rx="3" fill="#f0f4e6" stroke="none" />
+      <path d="M52 71h46v30H52z" fill="#fffefa" />
+      <path d="m49 70 5-12h40l6 12" fill="#f4c5bb" />
+      <path d="M49 70c0 5 8 5 8 0 0 5 9 5 9 0 0 5 9 5 9 0 0 5 9 5 9 0 0 5 8 5 8 0 0 5 8 5 8 0" fill="#f4c5bb" />
+      <path d="M66 59v10m18-10v10" stroke="#c8877b" />
+      <path d="M59 81h13v12H59zM81 101V81h10v20" />
+      <path d="M118 57h65m-65 11h49m-49 12h58" />
+      <rect x="118" y="94" width="47" height="15" rx="3" fill="#e4f35b" stroke="none" />
+      <path d="m180 93 0 24 6-7 8 2z" fill="#fffefa" />
+      <path d="M17 53v8m-4-4h8M219 93v8m-4-4h8" stroke="#8eaa93" />
+    </g>
+  </>}
+
+  {drawing === 'webapp' && <>
+    <ellipse cx="121" cy="77" rx="81" ry="51" fill="#fae8e2" />
+    <g class="illustration-drawing">
+      <rect x="82" y="8" width="77" height="125" rx="13" fill="#fffefa" />
+      <path d="M111 17h19" />
+      <rect x="91" y="34" width="59" height="53" rx="5" fill="#eaf0e5" />
+      <path d="M101 47h17m-17 9h27" />
+      <rect x="101" y="66" width="8" height="8" fill="currentColor" stroke="none" />
+      <rect x="113" y="66" width="8" height="8" fill="currentColor" stroke="none" />
+      <path d="M126 67h13m-13 7h9" stroke-width="1.7" />
+      <circle cx="101" cy="101" r="5" fill="#e4f35b" stroke="none" />
+      <circle cx="120" cy="101" r="5" fill="#e4f35b" stroke="none" />
+      <circle cx="139" cy="101" r="5" fill="#e4f35b" stroke="none" />
+      <path d="M113 122h15" />
+      <path d="M57 57c-7 0-11 5-11 11s4 11 11 11m128-16c7 0 11 5 11 11s-4 11-11 11" stroke="#cc9e90" />
+      <path d="M62 103v9m-4.5-4.5h9M179 32v8m-4-4h8" stroke="#cc9e90" />
+    </g>
+  </>}
+
+  {drawing === 'handoff' && <>
+    <ellipse cx="124" cy="79" rx="101" ry="47" fill="#eaf0e5" />
+    <g class="illustration-drawing">
+      <rect x="22" y="41" width="99" height="69" rx="7" fill="#fffefa" />
+      <rect x="29" y="48" width="85" height="55" rx="2" fill="#f1f5e8" stroke="none" />
+      <path d="M42 63h30m-30 11h51m-51 10h38" />
+      <circle cx="100" cy="91" r="7" fill="#e4f35b" stroke="none" />
+      <path d="m96.5 91 2 2 4-4" stroke-width="1.7" />
+      <path d="M138 64h68v47h-68z" fill="#fffefa" />
+      <path d="m132 63 8-19h63l8 19" fill="#f3c9bc" />
+      <path d="M132 63c0 7 11 7 11 0 0 7 11 7 11 0 0 7 12 7 12 0 0 7 11 7 11 0 0 7 12 7 12 0 0 7 11 7 11 0 0 7 11 7 11 0" fill="#f3c9bc" />
+      <path d="M154 45v17m23-17v17m-30 15h17v19h-17zM178 111V78h17v33" />
+      <path d="M91 28c17-10 35-11 52-5" stroke="#91a187" stroke-dasharray="3 5" />
+      <circle cx="202" cy="110" r="15" fill="#e4f35b" />
+      <path d="m195 110 5 5 9-10" />
+      <path d="M20 119h108m7 0h23" stroke="#b7c4af" />
+    </g>
+  </>}
+
+  {drawing === 'customize' && <>
+    <ellipse cx="120" cy="77" rx="93" ry="51" fill="#e9eef5" />
+    <g class="illustration-drawing">
+      <rect x="34" y="27" width="139" height="89" rx="7" fill="#fffefa" />
+      <path d="M35 45h137" />
+      <circle cx="45" cy="36" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="52" cy="36" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M66 36h27" stroke="#a5b4bf" />
+      <rect x="46" y="56" width="39" height="45" rx="3" fill="#eaf0e5" stroke="none" />
+      <path d="M99 60h51m-51 12h38m-38 12h28" />
+      <circle cx="182" cy="37" r="18" fill="#e4f35b" />
+      <path d="M182 29v16m-8-8h16" />
+      <path d="m119 100 38-38 13 13-38 38-17 4z" fill="#f3c9bc" />
+      <path d="m119 100 13 13m19-45 13 13m-49 36 5-2-3-3z" fill="#fffefa" />
+      <path d="M20 70v8m-4-4h8M200 98v8m-4-4h8" stroke="#9badbe" />
+    </g>
+  </>}
+
+  {drawing === 'repair' && <>
+    <ellipse cx="121" cy="79" rx="95" ry="48" fill="#f3edda" />
+    <g class="illustration-drawing">
+      <rect x="35" y="28" width="144" height="84" rx="7" fill="#fffefa" />
+      <path d="M36 46h142" />
+      <circle cx="46" cy="37" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="53" cy="37" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M68 37h25" stroke="#b9b5a7" />
+      <rect x="49" y="59" width="66" height="11" rx="3" fill="#eaf0e5" stroke="none" />
+      <path d="M49 82h32m-32 12h47" />
+      <path d="M190 22c-13-5-26 7-20 20l-38 38c-9 9 4 22 13 13l38-38c13 5 25-7 20-20l-12 12-13-13z" fill="#fffefa" />
+      <circle cx="139" cy="86" r="2" fill="currentColor" stroke="none" />
+      <circle cx="74" cy="110" r="16" fill="#e4f35b" />
+      <path d="m67 110 5 5 10-11" />
+      <path d="M207 84v9m-4.5-4.5h9M21 54v7m-3.5-3.5h7" stroke="#b9ad85" />
+    </g>
+  </>}
+</svg>
+
+<style>
+  .service-illustration {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 170px;
+    color: #29323a;
+    overflow: visible;
+  }
+
+  .illustration-drawing {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>

@@ -5,6 +5,8 @@
 .service-price-for { font-size: .875rem; color: #52624c; font-weight: 600; margin-bottom: 7px; }
 .service-price-heading h3 { font-size: clamp(1.25rem,2.1vw,1.5rem); line-height: 1.6; }
 .service-price-contract { font-size: clamp(1.25rem,2.4vw,1.75rem); font-weight: 750; color: #172028; padding-bottom: 23px; border-bottom: 1px solid #cbd6ab; }
+.service-price-scope { color: #58636b; font-size: .9375rem; margin-top: 15px; }
+.service-price-customization { color: #58636b; font-size: .9375rem; line-height: 1.9; margin-top: 18px; }
 .service-price-columns { display: grid; grid-template-columns: 1fr 1.1fr; gap: 35px; margin-top: 26px; align-items: start; }
 .service-price-caption { font-size: .9375rem; color: #58636b; }
 .service-price-number { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; margin-top: 4px; }

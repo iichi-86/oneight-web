@@ -7,22 +7,22 @@ import '../styles/details.css';
 
 const development = site.pricing.development;
 const commitments = [
-  { label: '課題整理', title: '現場の仕事を理解する。', text: '受付方法や情報の管理、今使っている道具を確認します。誰が、どこで、何に手間をかけているのか。実際の仕事の流れから、必要な仕組みを整理します。' },
+  { label: '要件整理', title: '現場の仕事を理解する。', text: '掲載する情報や必要な機能、今使っている道具を確認します。誰が、どこで、どのように使うのか。実際の仕事の流れから、Webサイト・Webアプリの内容を整理します。' },
   { label: '設計・制作', title: '必要な範囲を定めてつくる。', text: '制作する内容と範囲、費用を事前に合意します。AIや共通で使える仕組みを活用して制作の手間を抑え、お店・教室ごとに必要な部分を調整します。' },
-  { label: '導入・運用', title: '使い方と、その後を考える。', text: '使う方と操作を確認し、仕事に取り入れる方法を考えます。公開後に必要な対応や、月額料金に含まれる支援の範囲も、ご契約前に確認します。' },
+  { label: '導入支援', title: '使い始める準備を整える。', text: `操作や更新方法を確認し、使い始めるまでを支援します。${development.storeOperation}` },
 ];
 ---
 
-<BaseLayout title="ONE EIGHTについて｜地域の仕事を、技術で前へ" description="ONE EIGHT（ワンエイト）は、地域のお店・教室に向けたWebサイト・アプリ開発に取り組む事業です。実家が和菓子屋の大学生が、現場の仕事を起点に必要な仕組みを考えます。">
+<BaseLayout title="ONE EIGHTについて｜地域の仕事を、技術で前へ" description={`ONE EIGHT（${site.kana}）は、地域のお店・教室に向けたWebサイト・Webアプリの制作と導入支援に取り組む事業です。実家が和菓子屋の大学生が、現場の仕事を起点に必要な仕組みを考えます。`}>
   <section class="page-hero detail-about-hero friendly-about-hero refresh-about-hero">
     <div class="container about-postcard refresh-about-hero-grid">
       <div>
         <p class="eyebrow">ABOUT ONE EIGHT</p>
         <h1>地域の仕事を、<br />技術で前へ。</h1>
-        <p class="page-lead">地域のお店・教室に向けた、Webサイト・アプリ開発。<br />現場の仕事を理解し、使える仕組みを形にします。</p>
+        <p class="page-lead">地域のお店・教室に向けた、Webサイト・Webアプリ制作と導入支援。<br />現場の仕事を理解し、使える仕組みを形にします。</p>
         <p class="detail-hero-note"><strong>{primaryCustomerMessage}</strong></p>
         <div class="refresh-about-hero-actions">
-          <a class="button button--primary" href="/contact/">無料でひとこと相談する</a>
+          <a class="button button--primary" href="/contact/">Web制作について問い合わせる</a>
           <a class="detail-text-link" href="/service/">サービスを見る</a>
         </div>
       </div>
@@ -35,8 +35,8 @@ const commitments = [
       <div><p class="eyebrow">原点</p><h2 class="section-heading">出発点は、<br />実家の和菓子屋。</h2></div>
       <div class="detail-body-copy">
         <p>実家は和菓子屋です。身近にお店がある環境で、個人店にはそれぞれ異なる課題があると学んできました。この経験を出発点に、大学生としてONE EIGHTを立ち上げています。</p>
-        <p>同じ予約管理でも、受付方法や使う人が違えば、必要な仕組みは変わります。お店や教室の規模、仕事の進め方、お客様との関係を踏まえて、その現場に合う方法を考えます。</p>
-        <p>話を聞き、課題を整理し、実際の仕事で使えるものを届ける。ONE EIGHTが目指すのは、地域の事業者にとって技術を身近な道具にすることです。</p>
+        <p>Webアプリの予約機能も、受付方法や使う人が違えば、必要な内容は変わります。お店や教室の規模、仕事の進め方、お客様との関係を踏まえて、その現場に合う方法を考えます。</p>
+        <p>必要な機能を整理し、Webサイト・Webアプリを制作して、使い始めるところを支える。ONE EIGHTが目指すのは、地域の事業者にとって技術を身近な道具にすることです。</p>
       </div>
     </div>
   </section>
@@ -48,17 +48,19 @@ const commitments = [
         <article class="detail-feature refresh-about-service">
           <div class="detail-feature-copy">
             <p class="eyebrow">サービス内容</p>
-            <h3>Webサイト・アプリ開発</h3>
-            <p>ホームページや会員アプリなど、お店・教室専用のサイトやアプリを制作します。載せたい情報や必要な機能を整理し、運営する方と利用する方の使いやすさを考えます。</p>
+            <h3>Webサイト・Webアプリ制作</h3>
+            <p>ホームページや会員向けWebアプリなど、お店・教室に合わせたWebを制作し、導入を支援します。予約・記録・お知らせなど、Webアプリに組み込む機能は、ご依頼時に内容と対応範囲を確認します。</p>
           </div>
         </article>
         <article class="detail-feature refresh-about-service">
           <div class="detail-feature-copy">
             <p class="eyebrow">料金・お試し</p>
             <h3>初期費用{development.initialLabel}円<br />月額{development.monthlyLabel}円</h3>
-            <p>初月の月額料金は0円。1か月お試しいただき、2か月目から月額{development.monthlyLabel}円です。表示金額はすべて税込です。</p>
-            <p>{development.noOtherContracts}</p>
+            <p>初月の基本月額料金は0円。1か月お試しいただき、2か月目から月額{development.monthlyLabel}円です。表示金額はすべて税込です。</p>
+            <p>{development.priceMessage}<br />{development.basePriceScope}</p>
             <p>データベースのアップグレードが必要な場合は、別途月額{development.databaseUpgradeMonthlyLabel}円（税込）のオプションをご案内します。</p>
+            <p>{development.customization}</p>
+            <p>{development.defectRepair}</p>
           </div>
         </article>
       </div>
@@ -69,7 +71,7 @@ const commitments = [
   <section class="section detail-commitments refresh-about-approach">
     <div class="container">
       <p class="eyebrow">取り組み方</p>
-      <h2 class="section-heading">課題の整理から、<br />使い始めるところまで。</h2>
+      <h2 class="section-heading">必要な機能の整理から、<br />使い始めるところまで。</h2>
       <div class="detail-commitment-list">{commitments.map((commitment) => <article><p class="eyebrow">{commitment.label}</p><h3>{commitment.title}</h3><p>{commitment.text}</p></article>)}</div>
     </div>
   </section>
@@ -79,11 +81,11 @@ const commitments = [
       <div><p class="eyebrow">現在の取り組み</p><h2 class="section-heading">現場で確かめ、<br />支援の形を育てる。</h2></div>
       <div class="detail-body-copy">
         <p>ONE EIGHTは、現在、事業立ち上げの段階にあります。今後は実家の和菓子屋や、ご協力いただけるお店での実践を通じて、現場で役立つ仕組みを確かめていく予定です。</p>
-        <p>無料ヒアリングで状況を伺い、対応できる内容をご案内します。制作する範囲や費用、運用の条件は、ご契約前に確認いただける形でお伝えします。料金や1か月お試しの詳細は、<a class="detail-text-link" href="/pricing/">料金ページ</a>をご覧ください。</p>
+        <p>制作する内容と対応範囲、費用、導入の進め方は、利用前にご確認いただける形でお伝えします。料金や1か月お試しの詳細は、<a class="detail-text-link" href="/pricing/">料金ページ</a>をご覧ください。</p>
         <div class="detail-brand-info refresh-about-profile">
-          <p><span>事業名</span><strong>ONE EIGHT <small>（ワンエイト）</small></strong></p>
+          <p><span>事業名</span><strong>ONE EIGHT <small>（{site.kana}）</small></strong></p>
           <p><span>対象</span><strong>地域のお店・教室</strong></p>
-          <p><span>事業内容</span><strong>Webサイト・アプリ開発</strong></p>
+          <p><span>事業内容</span><strong>Webサイト・Webアプリ制作・導入支援</strong></p>
         </div>
       </div>
     </div>
@@ -91,8 +93,8 @@ const commitments = [
 
   <section class="detail-bottom-cta refresh-about-cta">
     <div class="container">
-      <div><p class="eyebrow">CONTACT</p><h2>お店・教室の課題を、<br />無料ヒアリングから。</h2><p>作りたいサイトやアプリ、日々の業務で困っていることをお聞かせください。<br />専門知識は必要ありません。</p></div>
-      <div class="detail-cta-actions"><a class="button button--primary" href="/contact/">無料でひとこと相談する</a><a class="detail-text-link" href="/pricing/">料金・契約条件を見る</a></div>
+      <div><p class="eyebrow">CONTACT</p><h2>お店・教室のWebを、<br />制作から導入まで。</h2><p>ホームページやWebアプリの制作内容、必要な機能についてお問い合わせください。<br />専門知識は必要ありません。</p></div>
+      <div class="detail-cta-actions"><a class="button button--primary" href="/contact/">Web制作について問い合わせる</a><a class="detail-text-link" href="/pricing/">料金・契約条件を見る</a></div>
     </div>
   </section>
 </BaseLayout>

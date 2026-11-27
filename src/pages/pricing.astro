@@ -2,17 +2,18 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import ServicePricingCards from '../components/ServicePricingCards.astro';
+import SupportScope from '../components/SupportScope.astro';
 import { site, faqs } from '../data/site';
 import '../styles/details.css';
 const { development } = site.pricing;
 ---
-<BaseLayout title={`料金｜月額${development.monthlyLabel}円・初期費用${development.initialLabel}円のWebサイト・アプリ開発`} description={`Webサイト・アプリ開発は月額${development.monthlyLabel}円、ほかの契約はありません。初期費用${development.initialLabel}円・初月の基本月額0円、2か月目から月額料金がかかります。データベースのアップグレードは別途月額${development.databaseUpgradeMonthlyLabel}円。すべて税込。`}>
+<BaseLayout title={`料金｜月額${development.monthlyLabel}円・初期費用${development.initialLabel}円のWebサイト・アプリ開発`} description={`基本のWebサイト・Webアプリ制作と導入は、初期費用${development.initialLabel}円・初月の基本月額0円、2か月目から月額${development.monthlyLabel}円。DBアップグレードは別途月額${development.databaseUpgradeMonthlyLabel}円、運用中の追加カスタマイズは別料金、不具合修正は無料です。すべて税込。`}>
   <section class="page-hero detail-pricing-hero friendly-pricing-hero">
     <div class="container">
       <p class="eyebrow">Webサイト・アプリ開発の料金</p>
-      <h1>ほかの契約なし。<br />月額{development.monthlyLabel}円の1プラン。</h1>
+      <h1>{development.priceMessage}<br />月額{development.monthlyLabel}円の1プラン。</h1>
       <p class="page-lead"><strong>初期費用{development.initialLabel}円。</strong> 最初の1か月は基本月額も{development.firstMonthMonthlyAmount}円。<br />2か月目から月額{development.monthlyLabel}円（税込）です。</p>
-      <p class="detail-hero-note">{development.databaseUpgrade}<br />{site.pricing.tax} {site.pricing.hearing}</p>
+      <p class="detail-hero-note">{development.basePriceScope}<br />{development.databaseUpgrade}<br />運用中の追加カスタマイズは別途費用がかかります。不具合の修正は無料です。<br />{site.pricing.tax}</p>
     </div>
   </section>
 
@@ -40,7 +41,7 @@ const { development } = site.pricing;
           <p class="eyebrow">2か月目からのお支払い</p>
           <h3>月額料金で使い続ける</h3>
           <p class="price-path-amount"><span>月額</span><strong>{development.monthlyLabel}</strong><span>円（税込）</span></p>
-          <p>{development.noOtherContracts} Webサイト・アプリの制作と運用について、お店に合う内容を一緒に確認します。</p>
+          <p>Webサイト・Webアプリの制作と導入までが基本サービスです。導入後の日々の運用は店舗側で行っていただきます。</p>
         </li>
       </ol>
       <div class="pricing-database-note">
@@ -55,14 +56,16 @@ const { development } = site.pricing;
     </div>
   </section>
 
+  <section id="support" class="section pricing-support" aria-label="導入後の対応について"><div class="container"><SupportScope /></div></section>
+
   <section class="section detail-price-questions" aria-labelledby="pricing-questions-title">
     <div class="container">
       <p class="eyebrow">料金の気になること</p>
       <h2 id="pricing-questions-title" class="section-heading">始める前に、<br />知っておきたいこと。</h2>
       <dl class="detail-terms-list">
-        {faqs.slice(0, 3).map(faq => <div><dt>{faq.question}</dt><dd>{faq.answer}</dd></div>)}
+        {faqs.slice(0, 4).map(faq => <div><dt>{faq.question}</dt><dd>{faq.answer}</dd></div>)}
       </dl>
     </div>
   </section>
-  <ContactCTA title={'お店のWeb・アプリのこと、\nひとことからご相談ください。'} />
+  <ContactCTA title={'お店のWeb・アプリの制作を、\nここから。'} />
 </BaseLayout>

@@ -7,7 +7,8 @@ const { development } = site.pricing;
 <div class="service-price-single">
   <article class="service-price" aria-labelledby="development-title">
     <div class="service-price-heading"><div><p class="service-price-for">お店のWeb・アプリを、この1プランで。</p><h3 id="development-title">{development.name}</h3></div><Icon name="web" size={36} /></div>
-    <p class="service-price-contract">{development.noOtherContracts}</p>
+    <p class="service-price-contract">{development.priceMessage}</p>
+    <p class="service-price-scope">{development.basePriceScope}</p>
     <div class="service-price-columns">
       <div>
         <p class="service-price-caption">2か月目から</p>
@@ -17,6 +18,7 @@ const { development } = site.pricing;
       <div>
         <div class="service-price-trial"><strong>基本プランは0円で、1か月お試し。</strong><p>{development.firstMonth}</p></div>
         <div class="service-price-upgrade"><strong>データベースのアップグレード</strong><p>アップグレードする場合は、別途<strong>月額{development.databaseUpgradeMonthlyLabel}円（税込）</strong>がかかります。</p><p>2か月目以降のアップグレード時：月額{development.upgradedMonthlyLabel}円（税込）</p></div>
+        <p class="service-price-customization">運用中の追加カスタマイズは別途お見積もり。制作したサイト・アプリの問題や不具合は無料で修正します。</p>
         <a class="text-link" href="/pricing/#development">お試し・月額料金の詳しい案内</a>
       </div>
     </div>

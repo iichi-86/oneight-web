@@ -5,7 +5,7 @@
 .development-hero h1 { font-size: clamp(2.4rem,4.3vw,4.3rem); line-height: 1.48; letter-spacing: -.045em; font-weight: 800; }
 .development-hero h1 span { color: #e4f35b; }
 .development-hero .hero-simple-heading { line-height: 1.2; letter-spacing: -.035em; }
-.development-hero h1 .hero-contract-promise { display: block; color: #e4f35b; font-size: clamp(1.3rem,2.8vw,2rem); line-height: 1.6; }
+.development-hero h1 .hero-contract-promise { display: block; color: #e4f35b; font-size: clamp(1.2rem,2.2vw,1.5rem); line-height: 1.6; }
 .development-hero h1 .hero-monthly-caption { display: block; color: #d3dcdb; font-size: .9375rem; font-weight: 500; margin-top: 20px; letter-spacing: 0; }
 .hero-monthly-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 9px; margin-top: 4px; }
 .development-hero h1 .hero-monthly-price > span { color: white; font-size: 1.25rem; }
@@ -16,6 +16,7 @@
 .hero-initial-price small { font-size: 1.5rem; margin-left: 5px; }
 .hero-first-month { color: #edf1e6; font-size: 1rem; margin-top: 10px; }
 .hero-upgrade-note { border-left: 3px solid #e4f35b; padding-left: 12px; font-size: .9375rem; line-height: 1.8; color: #edf1e6; margin-top: 17px; }
+.hero-upgrade-note > span { display: block; }
 .development-hero .hero-introduction--plan { font-size: 1rem; font-weight: 400; color: #cbd5d7; margin-top: 18px; }
 .hero-simple-heading ~ .hero-main-actions { margin-top: 25px; }
 .development-hero:has(.hero-simple-heading) .development-hero-grid { padding-block: 48px 38px; }
@@ -36,8 +37,9 @@
 .section-note { color: var(--muted); font-size: .875rem; margin-top: 28px; line-height: 1.9; }
 .section-note a { text-decoration: underline; text-underline-offset: 3px; }
 .capability-section { background: #f5f6f3; }
-.capability-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0 36px; }
-.capability-item { padding: 30px 0; border-top: 1px solid #cdd4ca; }
+.capability-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px; }
+.capability-item { padding: 28px; border: 1px solid #d7decf; background: #fff; border-radius: 4px; }
+.capability-item .service-illustration { max-width: 300px; height: 155px; margin: 0 auto 24px; }
 .capability-item > svg { margin-bottom: 19px; color: #354638; }
 .capability-item h3 { font-size: 1.125rem; display: table; background: #e4f35b; padding: 4px 9px; margin-bottom: 15px; }
 .capability-item p { color: var(--muted); font-size: 1rem; line-height: 1.95; }
@@ -68,7 +70,7 @@
 .example-project h3 { font-size: 1.35rem; margin-bottom: 14px; }
 .example-project-copy > p:last-child { color: var(--muted); }
 .development-flow { background: #f5f6f3; }
-.development-steps { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 25px; padding: 0; margin: 0; list-style: none; counter-reset: flow; }
+.development-steps { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 25px; padding: 0; margin: 0; list-style: none; counter-reset: flow; }
 .development-steps li { padding-top: 24px; border-top: 3px solid #aabb93; position: relative; counter-increment: flow; }
 .development-steps li::before { content: 'STEP ' counter(flow); display: block; font-size: .875rem; color: #56654d; letter-spacing: .06em; margin-bottom: 13px; }
 .development-steps h3 { font-size: 1.0625rem; margin-bottom: 14px; }
@@ -121,7 +123,7 @@
   .lp-heading { margin-bottom: 32px; text-align: left; }
   .lp-heading h2 { font-size: clamp(1.7rem,7vw,2.25rem); }
   .lp-heading > p:not(.eyebrow) { margin-top: 17px; }
-  .capability-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 24px; }
+  .capability-grid { grid-template-columns: 1fr; gap: 22px; }
   .capability-item { padding-block: 24px; }
   .capability-item h3 { font-size: 1rem; }
   .capability-item p { font-size: .9375rem; }
@@ -143,4 +145,13 @@
   .origin-sign { margin-top: 22px; }
   .faq-layout .lp-heading { margin-bottom: 0; }
 }
+.home-support-scope { margin-top: 54px; }
+.application-intro { margin-top: 40px; }
+.application-intro h3 { font-size: 1.25rem; }
+.application-intro p { margin-top: 12px; color: var(--muted); }
+.application-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 28px; margin-top: 25px; }
+.application-grid article { border-top: 1px solid #cdd4ca; padding-top: 20px; }
+.application-grid h4 { font-size: 1.0625rem; margin: 12px 0; }
+.application-grid p { color: var(--muted); font-size: .9375rem; line-height: 1.9; }
+@media (max-width: 760px) { .application-grid { grid-template-columns: 1fr; gap: 24px; } .capability-item { padding: 24px; } }
 @media (max-width: 370px) { .capability-grid { grid-template-columns: 1fr; } .example-booking { font-size: .875rem; } }
