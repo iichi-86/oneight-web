@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import ServicePricingCards from '../components/ServicePricingCards.astro';
+import SupportScope from '../components/SupportScope.astro';
+import { site, faqs } from '../data/site';
+import '../styles/details.css';
+const { development } = site.pricing;
+---
+<BaseLayout title={`料金｜月額${development.monthlyLabel}円・初期費用${development.initialLabel}円のWebサイト・アプリ開発`} description={`基本のWebサイト・Webアプリ制作と導入は、初期費用${development.initialLabel}円・初月の基本月額0円、2か月目から月額${development.monthlyLabel}円。DBアップグレードは別途月額${development.databaseUpgradeMonthlyLabel}円、運用中の追加カスタマイズは別料金、不具合修正は無料です。すべて税込。`}>
+  <section class="page-hero detail-pricing-hero friendly-pricing-hero">
+    <div class="container">
+      <p class="eyebrow">Webサイト・アプリ開発の料金</p>
+      <h1>{development.priceMessage}<br />月額{development.monthlyLabel}円の1プラン。</h1>
+      <p class="page-lead"><strong>初期費用{development.initialLabel}円。</strong> 最初の1か月は基本月額も{development.firstMonthMonthlyAmount}円。<br />2か月目から月額{development.monthlyLabel}円（税込）です。</p>
+      <p class="detail-hero-note">{development.basePriceScope}<br />{development.databaseUpgrade}<br />運用中の追加カスタマイズは別途費用がかかります。不具合の修正は無料です。<br />{site.pricing.tax}</p>
+    </div>
+  </section>
+
+  <section class="section detail-price-section" aria-labelledby="pricing-choice-title">
+    <div class="container">
+      <h2 id="pricing-choice-title" class="pricing-comparison-title">初期費用{development.initialLabel}円で、お店のWeb・アプリを。</h2>
+      <ServicePricingCards />
+    </div>
+  </section>
+
+  <section id="development" class="section pricing-explainer pricing-explainer--development" aria-labelledby="development-detail-title">
+    <div class="container">
+      <div class="detail-section-intro">
+        <div><p class="eyebrow">Webサイト・アプリ開発</p><h2 id="development-detail-title" class="section-heading">まずは1か月、<br />お店で使ってみましょう。</h2></div>
+        <p>お店のWebサイトやアプリをつくりたい方へ。初月と2か月目以降で、次の料金をご案内しています。</p>
+      </div>
+      <ol class="price-path">
+        <li>
+          <p class="eyebrow">基本プランの初月のお支払い</p>
+          <h3>初期費用・初月の基本月額料金ともに0円</h3>
+          <p class="price-path-amount"><strong>{development.initialLabel}</strong><span>円（税込）</span></p>
+          <p>初期費用{development.initialLabel}円、<strong>初月の基本月額料金も{development.firstMonthMonthlyAmount}円</strong>。まずは1か月、お店でお試しいただけます。</p>
+        </li>
+        <li>
+          <p class="eyebrow">2か月目からのお支払い</p>
+          <h3>月額料金で使い続ける</h3>
+          <p class="price-path-amount"><span>月額</span><strong>{development.monthlyLabel}</strong><span>円（税込）</span></p>
+          <p>Webサイト・Webアプリの制作と導入までが基本サービスです。導入後の日々の運用は店舗側で行っていただきます。</p>
+        </li>
+      </ol>
+      <div class="pricing-database-note">
+        <p class="eyebrow">アップグレードする場合の追加料金</p>
+        <h3>データベースのアップグレード</h3>
+        <p class="price-path-amount"><span>別途月額</span><strong>{development.databaseUpgradeMonthlyLabel}</strong><span>円（税込）</span></p>
+        <p>通常の月額{development.monthlyLabel}円に追加でかかります。<strong>2か月目以降のアップグレード時の合計は月額{development.upgradedMonthlyLabel}円（税込）</strong>です。必要な内容と費用は、アップグレード前に一緒に確認します。</p>
+      </div>
+      <div class="pricing-scope-note">
+        <p><strong>つくる内容と、お試し後の進め方を先に確認します。</strong><br />{development.scope}</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="support" class="section pricing-support" aria-label="導入後の対応について"><div class="container"><SupportScope /></div></section>
+
+  <section class="section detail-price-questions" aria-labelledby="pricing-questions-title">
+    <div class="container">
+      <p class="eyebrow">料金の気になること</p>
+      <h2 id="pricing-questions-title" class="section-heading">始める前に、<br />知っておきたいこと。</h2>
+      <dl class="detail-terms-list">
+        {faqs.slice(0, 4).map(faq => <div><dt>{faq.question}</dt><dd>{faq.answer}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+  <ContactCTA title={'お店のWeb・アプリの制作を、\nここから。'} />
+</BaseLayout>

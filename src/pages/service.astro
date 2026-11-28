@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TargetAudience from '../components/TargetAudience.astro';
+import { site } from '../data/site';
+import '../styles/details.css';
+
+const { development } = site.pricing;
+
+const solutions = [
+  { kind: 'news', label: '情報発信', title: '必要な情報が見つかるWebサイト', name: 'Webサイト・ホームページ', text: '営業時間、メニュー、サービス、アクセス。SNSや紙に分かれた情報を整理し、お客様が知りたいことにたどり着きやすい構成を考えます。更新する方の使い方も確認します。' },
+  { kind: 'manage', label: 'Webアプリの応用', title: '予約・受注をまとめて確認', name: 'Webアプリへの予約・受注機能', text: '予約や受注の内容をWebアプリで確認する応用例です。現在の受付方法や必要な操作を伺い、ご依頼時に対応できるか、どこまで制作するかを確認します。' },
+  { kind: 'member', label: 'お客様との接点', title: '会員サービスをWebアプリに', name: '店舗・教室向けWebアプリ', text: '会員証、スタンプ、お知らせなど、お客様との継続的な接点をつくる仕組み。接客や利用の場面に合わせて、必要な機能と画面を組み立てます。' },
+  { kind: 'insight', label: 'Webアプリの応用', title: '日々の記録を、確認しやすく', name: 'Webアプリでの記録・集計', text: '必要な記録の入力や、集計結果の表示をWebアプリに組み込む例です。記録する情報や使い方に合わせ、ご依頼時に対応可否と制作内容を確認します。' },
+];
+
+const flow = [
+  { title: '制作内容の確認', text: '載せたい情報や希望する機能、利用する方を確認します。予約・記録などの機能も、Webサイト・Webアプリの応用として対応可否を確認します。' },
+  { title: '内容・費用の確認', text: '課題と目的を整理し、制作するもの、対応範囲、費用、進め方を確認します。内容に合意してから制作へ進みます。' },
+  { title: '設計・制作', text: '実際に使う方の操作や仕事の流れに合わせて設計します。AIも活用して制作を進め、画面や使い方を確認します。' },
+  { title: '公開・利用確認', text: '制作したサイトやアプリの利用方法を確認します。まずは1か月お試し。お試しの開始日や、その後の継続方法は事前にご案内します。' },
+  { title: '店舗での運用', text: development.storeOperation },
+];
+---
+
+<BaseLayout title="サービス｜地域のお店のWebサイト・Webアプリ制作と導入" description={`地域の小さな小売店を中心に、Webサイト・Webアプリの制作と導入を支援します。初期費用${development.initialLabel}円、初月の基本月額0円で1か月お試し。2か月目から月額${development.monthlyLabel}円（税込）、必要な場合のDBアップグレードは別途月額${development.databaseUpgradeMonthlyLabel}円（税込）です。`}>
+  <section class="page-hero detail-service-hero refresh-service-hero">
+    <div class="container detail-hero-grid">
+      <div>
+        <p class="eyebrow">サービス</p>
+        <h1>お店の仕事を、<br />使える仕組みに。</h1>
+        <p class="page-lead">地域の小さな小売店を中心に、<br />お店や教室専用のWebサイト・Webアプリを制作。<br />必要な機能を確認し、導入まで支援します。</p>
+        <div class="refresh-hero-actions"><a class="button button--primary" href="/contact/">制作について問い合わせる</a><a class="detail-text-link" href="#service-lines">サービスと料金を見る</a></div>
+        <p class="detail-hero-note">導入に必要な機能や使い方は、制作前に確認します。</p>
+      </div>
+      <div class="refresh-product-board" role="img" aria-label="店舗向けWebアプリと会員向けWebアプリの構成例。実際の導入画面や利用データではありません。">
+        <div class="refresh-browser">
+          <div class="refresh-browser-bar"><span></span><span></span><span></span><b>Webアプリの画面例</b></div>
+          <div class="refresh-browser-body">
+            <div class="refresh-browser-nav"><strong>SHOP DESK</strong><i class="is-active">予約・受注</i><i>商品・サービス</i><i>お知らせ</i><i>記録・集計</i></div>
+            <div class="refresh-browser-content"><p>予約・受注</p><div class="refresh-screen-summary"><span>受付内容を一覧で確認</span><b>＋ 新規登録</b></div><div class="refresh-screen-row refresh-screen-row--head"><span>受付内容</span><span>対応状況</span></div><div class="refresh-screen-row"><span>ご予約のサンプル</span><b>受付済み</b></div><div class="refresh-screen-row"><span>ご注文のサンプル</span><b>確認中</b></div><div class="refresh-screen-row"><span>受け渡しのサンプル</span><b>対応済み</b></div></div>
+          </div>
+        </div>
+        <div class="refresh-phone"><div class="refresh-phone-top"></div><span>お店のWebアプリ</span><strong>いつものお店と、<br />もっと身近に。</strong><div class="refresh-phone-member"><small>会員証</small><b>YOUR SHOP</b><i></i></div><div class="refresh-phone-links"><span>お知らせ</span><span>スタンプ</span></div><p>お店からのお知らせ</p><div class="refresh-phone-news"></div><div class="refresh-phone-news"></div></div>
+        <p class="refresh-board-caption">画面構成の例です。制作する機能・デザインは個別に確認します。</p>
+      </div>
+    </div>
+  </section>
+
+  <TargetAudience />
+
+  <section id="service-lines" class="section detail-intro refresh-service-overview">
+    <div class="container">
+      <div class="detail-section-intro"><div><p class="eyebrow">Webサイト・Webアプリ制作</p><h2 class="section-heading">Webサイト・アプリを、<br />お店に合う形で。</h2></div><p>発信する情報と必要な機能を確認し、<br />お店専用のWebサイト・Webアプリを<br />制作・導入します。</p></div>
+      <div class="refresh-service-lines">
+        <article><p class="eyebrow">開発内容</p><h3>お店専用のWebサイト・Webアプリ</h3><p class="refresh-service-summary">情報を届ける。お客様とつながる。</p><p>ホームページや会員向けWebアプリなど、お店・教室専用のサイトやアプリを制作します。発信する内容と必要な機能を整理し、利用する方にも更新する方にも使いやすい構成を考えます。</p><a class="detail-text-link" href="#features">制作の応用例を見る</a></article>
+        <article><p class="eyebrow">料金</p><h3>月額{development.monthlyLabel}円（税込）</h3><p class="refresh-service-summary">初期費用{development.initialLabel}円・初月の基本月額0円</p><p>まずは1か月お試し。2か月目から月額{development.monthlyLabel}円（税込）です。{development.basePriceScope}</p><p><strong>{development.priceMessage}</strong><br />運用中の追加カスタマイズは別途お見積もりします。</p><p>データベースのアップグレードが必要な場合は、追加で月額{development.databaseUpgradeMonthlyLabel}円（税込）がかかります。</p><a class="detail-text-link" href="/pricing/">料金・お試し・DB追加費用について</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section detail-features refresh-service-scope" id="features">
+    <div class="container">
+      <div class="detail-section-intro"><div><p class="eyebrow">制作の応用例</p><h2 class="section-heading">Webサイト・Webアプリを、<br />お店の使い方に合わせて。</h2></div><p>予約・記録・お知らせなどは、<br />Webサイト・Webアプリの応用として、<br />ご依頼時に対応可否と内容を確認します。</p></div>
+      <div class="detail-feature-grid">
+        {solutions.map((solution) => <article class="detail-feature">
+          <div class:list={['detail-feature-art', `detail-art-${solution.kind}`]} aria-hidden="true">
+            {solution.kind === 'news' && <div class="detail-mini-news"><span>WEB SITE</span><b>営業日・サービスのご案内</b><i></i><i></i><i></i></div>}
+            {solution.kind === 'manage' && <div class="detail-mini-manage"><span>予約・受注の管理</span><div><i></i><i></i><i></i></div><hr /><hr /><hr /></div>}
+            {solution.kind === 'member' && <div class="detail-mini-member"><span>MEMBERS CARD</span><b>YOUR SHOP</b><div class="detail-mini-barcode"></div></div>}
+            {solution.kind === 'insight' && <div class="detail-mini-insight"><span>記録・集計の確認</span><div><i></i><i></i><i></i><i></i><i></i></div><small>表示イメージ</small></div>}
+          </div>
+          <div class="detail-feature-copy"><p class="eyebrow">{solution.label}</p><h3>{solution.title}</h3><p class="detail-feature-name">{solution.name}</p><p>{solution.text}</p></div>
+        </article>)}
+      </div>
+      <p class="detail-section-note">掲載内容は制作の例であり、導入実績や標準提供機能を示すものではありません。実現する内容と対応範囲は、制作前に個別に確認します。</p>
+      <div class="refresh-detail-contact"><div><h3>制作したいサイト・アプリをお知らせください。</h3><p>必要な機能と、導入に向けた進め方を確認します。</p></div><a class="button button--primary" href="/contact/">制作について問い合わせる</a></div>
+    </div>
+  </section>
+
+  <section class="section detail-approach refresh-service-approach">
+    <div class="container"><div class="detail-section-intro"><div><p class="eyebrow">開発の考え方</p><h2 class="section-heading">現場で使えることを、<br />設計の基準に。</h2></div><p>画面をつくる前に、仕事の流れを理解する。<br />制作と利用の条件を共有して進めます。</p></div>
+      <div class="detail-principles"><article><h3>業務から要件を決める</h3><p>誰が、いつ、どの情報を使うか。現在の道具と作業を確認し、制作する範囲と必要な操作を整理します。</p></article><article><h3>AIと共通の仕組みを活用</h3><p>AIを制作の補助に使い、共通化できる仕組みも活用。制作の手間を抑えながら、お店ごとの使い方に合わせて調整します。</p></article><article><h3>導入後の対応を明確に</h3><p>{development.storeOperation}</p><p>{development.customization}</p><p>{development.defectRepair}</p></article></div>
+    </div>
+  </section>
+
+  <section class="section detail-flow-section refresh-service-flow">
+    <div class="container"><p class="eyebrow">制作の流れ</p><h2 class="section-heading">制作内容の確認から、<br />導入まで。</h2><ol class="detail-flow">{flow.map((step) => <li><h3>{step.title}</h3><p>{step.text}</p></li>)}</ol><p class="detail-section-note">月額料金、1か月のお試し、DBアップグレードの詳しい案内は、<a class="detail-text-link" href="/pricing/">料金ページ</a>をご覧ください。</p></div>
+  </section>
+
+  <section class="detail-bottom-cta"><div class="container"><div><p class="eyebrow">Webサイト・Webアプリ制作</p><h2>お店のWebを、<br />制作から導入まで。</h2><p>制作内容と導入方法を確認し、利用を始められる形でお届けします。</p></div><div class="detail-cta-actions"><a class="button button--primary" href="/contact/">制作について問い合わせる</a><a class="detail-text-link" href="/pricing/">料金・対応範囲を見る</a></div></div></section>
+</BaseLayout>

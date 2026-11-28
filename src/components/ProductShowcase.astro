@@ -1,0 +1,81 @@
+---
+import '../styles/product-showcase.css';
+
+const reservations = [
+  { time: '10:00', seat: '窓側テーブル', people: '2名', status: '受付済み', arrived: true },
+  { time: '10:30', seat: 'カウンター', people: '1名', status: '来店前', arrived: false },
+  { time: '11:00', seat: 'テーブル席', people: '3名', status: '来店前', arrived: false },
+  { time: '11:30', seat: '窓側テーブル', people: '2名', status: '来店前', arrived: false },
+];
+const chartBars = [32, 55, 86, 64, 42, 25];
+---
+
+<figure class="showcase-collage" aria-label="架空店舗の画面イメージ。実際の製品や提供機能は、ご相談のうえ決定します。">
+  <div class="showcase-scene" aria-hidden="true">
+    <div class="showcase-canvas">
+      <div class="showcase-lime-panel"></div>
+      <div class="showcase-coral-spark"></div>
+      <span class="showcase-concept-label">DESIGNED FOR YOUR EVERYDAY.</span>
+
+      <div class="showcase-tablet">
+        <div class="showcase-tablet-screen">
+          <div class="showcase-windowbar">
+            <span class="showcase-window-dots"><i></i><i></i><i></i></span>
+            <span>HANA DESK</span>
+            <span class="showcase-window-account">花と珈琲 <i>H</i></span>
+          </div>
+          <div class="showcase-dashboard">
+            <div class="showcase-sidebar">
+              <span class="showcase-sidebar-logo">h.</span>
+              <span class="showcase-sidebar-item showcase-sidebar-item--active"><i class="showcase-grid-icon"></i>ホーム</span>
+              <span class="showcase-sidebar-item"><i class="showcase-calendar-icon"></i>予約</span>
+              <span class="showcase-sidebar-item"><i class="showcase-member-icon"></i>会員</span>
+              <span class="showcase-sidebar-item"><i class="showcase-news-icon"></i>お知らせ</span>
+              <span class="showcase-sidebar-setting">設定</span>
+            </div>
+            <div class="showcase-dashboard-main">
+              <div class="showcase-dashboard-heading"><div><span class="showcase-dashboard-eyebrow">お店の一日を、ひと目で。</span><strong>今日の予約</strong></div><span class="showcase-date">6月12日 <i></i></span></div>
+              <div class="showcase-summary-grid">
+                <div class="showcase-mini-chart"><span>時間帯ごとの予約</span><div class="showcase-chart-bars">{chartBars.map(height => <i style={`height:${height}%`}></i>)}</div><div class="showcase-chart-axis"><span>10時</span><span>12時</span><span>14時</span></div></div>
+                <div class="showcase-summary"><span>本日の予約</span><p><strong>8</strong><span>件</span></p><i class="showcase-summary-mark showcase-calendar-icon"></i></div>
+                <div class="showcase-summary"><span>来店予定</span><p><strong>17</strong><span>名</span></p><i class="showcase-summary-mark showcase-member-icon"></i></div>
+              </div>
+              <div class="showcase-bookings-heading"><strong>予約一覧</strong><div><span class="showcase-selected-tab">すべて</span><span>来店前</span><span class="showcase-add-reservation">＋ 予約を追加</span></div></div>
+              <div class="showcase-bookings">
+                <div class="showcase-booking-row showcase-booking-row--head"><span>時間</span><span>ご予約内容</span><span>人数</span><span>受付状況</span></div>
+                {reservations.map(reservation => <div class="showcase-booking-row"><strong>{reservation.time}</strong><span>{reservation.seat}</span><span>{reservation.people}</span><span class:list={['showcase-booking-status', { 'showcase-booking-status--arrived': reservation.arrived }]}>{reservation.status}</span></div>)}
+              </div>
+              <div class="showcase-dashboard-footer"><span>予約一覧の表示例</span><span>1–4 / 8件</span></div>
+            </div>
+          </div>
+        </div>
+        <span class="showcase-tablet-camera"></span>
+      </div>
+
+      <div class="showcase-phone">
+        <div class="showcase-phone-screen">
+          <div class="showcase-phone-status"><span>9:41</span><span class="showcase-phone-island"></span><span class="showcase-phone-signal"><i></i><i></i><i></i><b></b></span></div>
+          <div class="showcase-shop-header"><div><strong>HANA</strong><span>花と珈琲</span></div><i class="showcase-bell-icon"></i></div>
+          <div class="showcase-shop-hero">
+            <span class="showcase-shop-hero-copy">日々に、<br />ひと息。</span>
+            <span class="showcase-coffee-saucer"><i></i></span>
+            <span class="showcase-flower-stem"><i></i><b></b></span>
+            <span class="showcase-shop-hero-small">COFFEE & FLOWERS</span>
+          </div>
+          <div class="showcase-shop-content">
+            <div class="showcase-member-card"><span>MEMBER'S CARD</span><div><strong>HANA MEMBER</strong><i class="showcase-card-code"></i></div><span class="showcase-member-card-caption">いつものお店を、もっと身近に。</span></div>
+            <div class="showcase-phone-actions"><span><i class="showcase-stamp-icon">✳</i>スタンプ</span><span><i class="showcase-ticket-icon"></i>クーポン</span><span><i class="showcase-grid-icon"></i>メニュー</span></div>
+            <div class="showcase-phone-news"><strong>お店からのお知らせ</strong><div><span class="showcase-news-thumbnail"><i></i></span><p><span>06.12 · NEWS</span><strong>季節のブレンドが<br />届きました。</strong></p></div></div>
+          </div>
+          <div class="showcase-phone-nav"><span class="showcase-phone-nav--active"><i class="showcase-home-icon"></i>ホーム</span><span><i class="showcase-card-icon"></i>会員証</span><span><i class="showcase-bell-icon"></i>お知らせ</span></div>
+          <span class="showcase-phone-home-line"></span>
+        </div>
+      </div>
+
+      <div class="showcase-note"><span class="showcase-note-icon">＋</span><div><strong>お店の毎日を、ひとつに。</strong><span>管理する人にも、使う人にも。</span></div></div>
+      <span class="showcase-tiny-cross showcase-tiny-cross--one"></span>
+      <span class="showcase-tiny-cross showcase-tiny-cross--two"></span>
+    </div>
+  </div>
+  <figcaption class="showcase-caption">架空店舗の画面イメージです。<br />実際の製品や提供機能は、ご相談のうえ決定します。</figcaption>
+</figure>

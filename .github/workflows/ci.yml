@@ -1,0 +1,30 @@
+name: Website checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - name: Check Cloudflare Pages Functions builder compatibility
+        run: npx --yes wrangler@3.114.17 pages functions build functions --outdir /tmp/oneight-pages-functions
+        env:
+          WRANGLER_SEND_METRICS: 'false'
