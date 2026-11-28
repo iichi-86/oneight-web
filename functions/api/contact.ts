@@ -123,11 +123,14 @@ export async function handleContact(
     return result;
   }
   const origin = new URL(request.url).origin;
+  // Provider keys do not contain whitespace; tolerate surrounding copy/paste whitespace.
+  const resendApiKey = typeof env.RESEND_API_KEY === 'string' ? env.RESEND_API_KEY.trim() : '';
+  const turnstileSecretKey = typeof env.TURNSTILE_SECRET_KEY === 'string' ? env.TURNSTILE_SECRET_KEY.trim() : '';
   if (
     !contactRuntimeEnabled(env.CONTACT_ENABLED, env.CONTACT_ALLOWED_ORIGIN, origin) ||
     !env.CONTACT_ALLOWED_ORIGIN ||
-    !env.RESEND_API_KEY ||
-    !env.TURNSTILE_SECRET_KEY ||
+    !resendApiKey ||
+    !turnstileSecretKey ||
     !validEmail(env.CONTACT_TO_EMAIL) ||
     !validEmail(env.CONTACT_FROM_EMAIL)
   ) {
@@ -210,7 +213,7 @@ export async function handleContact(
   const requestId = data.requestId;
   try {
     const challenge = new URLSearchParams({
-      secret: env.TURNSTILE_SECRET_KEY,
+      secret: turnstileSecretKey,
       response: data.token,
     });
     const remoteIp = request.headers.get("cf-connecting-ip");
@@ -269,7 +272,7 @@ export async function handleContact(
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          Authorization: `Bearer ${resendApiKey}`,
           "Content-Type": "application/json",
           "Idempotency-Key": `contact/${data.requestId}`,
         },

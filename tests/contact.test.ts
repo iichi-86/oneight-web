@@ -25,6 +25,33 @@ test('unconfigured form returns 503 without upstream calls', async () => {
   assert.equal((await response.json()).ok, false);
   assert.equal((await handleContact(request(), {}, forbiddenFetch, now)).status, 503);
 });
+test('surrounding copy/paste whitespace is removed from provider keys before external requests', async () => {
+  const calls: { url: string; init?: RequestInit }[] = [];
+  const response = await handleContact(request(), {
+    ...env,
+    RESEND_API_KEY: ` \r\n${env.RESEND_API_KEY}\t `,
+    TURNSTILE_SECRET_KEY: `\t ${env.TURNSTILE_SECRET_KEY}\n`,
+  }, provider(calls), now);
+  assert.equal(response.status, 200);
+  assert.equal(calls.length, 2);
+  assert.equal((calls[0].init?.body as URLSearchParams).get('secret'), env.TURNSTILE_SECRET_KEY);
+  assert.equal(new Headers(calls[1].init?.headers).get('Authorization'), `Bearer ${env.RESEND_API_KEY}`);
+});
+test('whitespace-only or wrongly typed provider keys stop before external requests', async () => {
+  let upstreamCalls = 0;
+  const rejectExternalCall: typeof fetch = async () => {
+    upstreamCalls++;
+    throw new Error('Provider must not be contacted');
+  };
+  for (const key of ['RESEND_API_KEY', 'TURNSTILE_SECRET_KEY']) {
+    for (const value of [' \t\r\n ', null, 24, {}]) {
+      const response = await handleContact(request(), { ...env, [key]: value } as ContactEnv, rejectExternalCall, now);
+      assert.equal(response.status, 503, `${key} must remain configured`);
+      assert.equal((await response.json()).ok, false);
+      assert.equal(upstreamCalls, 0, `${key} must stop before any provider request`);
+    }
+  }
+});
 test('rejects cross-origin, missing origin and mismatched runtime origin before upstream access', async () => {
   for (const origin of ['https://attacker.test', 'null', '']) assert.equal((await handleContact(request(input, { origin }), env, forbiddenFetch, now)).status, 403);
   assert.equal((await handleContact(request(), { ...env, CONTACT_ALLOWED_ORIGIN: 'https://other.test' }, forbiddenFetch, now)).status, 403);
