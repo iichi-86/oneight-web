@@ -272,6 +272,10 @@ test('delivery diagnostics distinguish failure stages without logging private va
   };
   const cases = [
     { mode: 'turnstile-http', stage: 'turnstile_response', code: 'upstream_http_error', httpStatus: 403, status: 503, message: messages.turnstileHttp },
+    { mode: 'turnstile-invalid-secret', stage: 'turnstile_response', code: 'verification_configuration_error', httpStatus: 400, status: 503, message: messages.turnstileHttp },
+    { mode: 'turnstile-missing-secret', stage: 'turnstile_response', code: 'verification_configuration_error', httpStatus: 400, status: 503, message: messages.turnstileHttp },
+    { mode: 'turnstile-other-400', stage: 'turnstile_response', code: 'upstream_http_error', httpStatus: 400, status: 503, message: messages.turnstileHttp },
+    { mode: 'turnstile-non-json-400', stage: 'turnstile_response', code: 'upstream_http_error', httpStatus: 400, status: 503, message: messages.turnstileHttp },
     { mode: 'turnstile-rejected', stage: 'turnstile_response', code: 'verification_rejected', httpStatus: 200, status: 422, message: messages.rejected },
     { mode: 'turnstile-json', stage: 'turnstile_response', code: 'invalid_json', httpStatus: 200, status: 503, message: messages.exception },
     { mode: 'turnstile-exception', stage: 'turnstile_fetch', code: 'upstream_exception', status: 503, message: messages.exception },
@@ -288,6 +292,10 @@ test('delivery diagnostics distinguish failure stages without logging private va
     const response = await handleContact(request(privateInput, { 'cf-connecting-ip': privateIp }), privateEnv, async url => {
       if (String(url).includes('siteverify')) {
         if (scenario.mode === 'turnstile-http') return new Response(privateBody, { status: 403 });
+        if (scenario.mode === 'turnstile-invalid-secret') return Response.json({ 'error-codes': ['invalid-input-secret'], debug: privateBody }, { status: 400 });
+        if (scenario.mode === 'turnstile-missing-secret') return Response.json({ 'error-codes': ['missing-input-secret'], debug: privateBody }, { status: 400 });
+        if (scenario.mode === 'turnstile-other-400') return Response.json({ 'error-codes': [privateBody] }, { status: 400 });
+        if (scenario.mode === 'turnstile-non-json-400') return new Response(privateBody, { status: 400 });
         if (scenario.mode === 'turnstile-rejected') return Response.json({ success: false, debug: privateBody });
         if (scenario.mode === 'turnstile-json') return new Response(privateBody, { status: 200 });
         if (scenario.mode === 'turnstile-exception') throw new Error(privateException);

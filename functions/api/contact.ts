@@ -24,7 +24,7 @@ const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 type DeliveryStage = 'turnstile_fetch' | 'turnstile_response' | 'resend_fetch' | 'resend_response';
-type DeliveryFailureCode = 'upstream_http_error' | 'verification_rejected' | 'invalid_json' | 'invalid_receipt' | 'upstream_exception';
+type DeliveryFailureCode = 'upstream_http_error' | 'verification_configuration_error' | 'verification_rejected' | 'invalid_json' | 'invalid_receipt' | 'upstream_exception';
 
 function deliveryFailure(status: 422 | 503, message: string, requestId: string, stage: DeliveryStage, code: DeliveryFailureCode, httpStatus?: number): Response {
   // Only a previously validated UUID and fixed diagnostic fields may be logged.
@@ -224,10 +224,24 @@ export async function handleContact(
     stage = 'turnstile_response';
     upstreamStatus = verification.status;
     if (!verification.ok) {
+      let code: DeliveryFailureCode = 'upstream_http_error';
+      if (verification.status === 400) {
+        try {
+          const failure: unknown = await verification.json();
+          if (failure && typeof failure === 'object' && 'error-codes' in failure) {
+            const codes = failure['error-codes'];
+            if (Array.isArray(codes) && codes.some(value => value === 'invalid-input-secret' || value === 'missing-input-secret')) {
+              code = 'verification_configuration_error';
+            }
+          }
+        } catch {
+          // Keep the HTTP failure classification; never expose the provider body.
+        }
+      }
       return deliveryFailure(
         503,
         "確認サービスに接続できませんでした。少し時間をおいて再度お試しください。",
-        requestId, stage, 'upstream_http_error', upstreamStatus,
+        requestId, stage, code, upstreamStatus,
       );
     }
     const check = (await verification.json()) as {
