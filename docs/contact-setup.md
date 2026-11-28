@@ -73,6 +73,8 @@
 
 診断の改善として、外部サービスの不調は503 JSON、認証結果の拒否は従来どおり422 JSONで返します。送信成功には引き続きTurnstileのhostname・action一致とResendの受付IDが必要です。外部処理の失敗時だけ、固定の `stage`・`code`、検証済みUUIDの `requestId`、取得できた有効な数値 `httpStatus` をログと応答の `diagnostic` に出します。本文・名前・メールアドレス・秘密キー・トークン・IP・プロバイダの生レスポンス・例外の内容は記録も返却もしません。この変更の検証と、本番の送信経路の復旧確認は区別します。
 
+本番コミット `d266053` のPagesデプロイ `c7336e8f-e34e-4e94-9e0f-e93184965447` 成功後、無効トークンの負の検査で503 JSON、`stage=turnstile_response`、`code=upstream_http_error`、`httpStatus=400` を確認しました。メール配信より前のSiteverifyが拒否している状態です。400の応答に既知の `invalid-input-secret` または `missing-input-secret` が含まれる場合だけ、固定分類 `verification_configuration_error` へ変換します。他のエラーコードや生レスポンスは返却しません。これにより既存の `TURNSTILE_SECRET_KEY` の設定を確認すべき状態を、安全に区別します。
+
 `npm test` は未設定、送信元偽装、必須項目、本文サイズ、スパム条件、Turnstile失敗、メールAPI失敗、受付成功・重複抑止キーをモックで検証します。実キー・実メールは使いません。
 
 Pages Functionsの結合確認では、Cloudflare公式Wranglerで `npx wrangler pages dev dist` を**リポジトリルートで**実行し、`.dev.vars`でローカル実行時変数を設定します。Astroの `npm run dev` / `npm run preview` はPages Functionを実行しません。両環境の違いを送信成功と混同しないでください。
