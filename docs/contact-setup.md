@@ -75,6 +75,8 @@
 
 本番コミット `d266053` のPagesデプロイ `c7336e8f-e34e-4e94-9e0f-e93184965447` 成功後、無効トークンの負の検査で503 JSON、`stage=turnstile_response`、`code=upstream_http_error`、`httpStatus=400` を確認しました。メール配信より前のSiteverifyが拒否している状態です。400の応答に既知の `invalid-input-secret` または `missing-input-secret` が含まれる場合だけ、固定分類 `verification_configuration_error` へ変換します。他のエラーコードや生レスポンスは返却しません。これにより既存の `TURNSTILE_SECRET_KEY` の設定を確認すべき状態を、安全に区別します。
 
+続く本番コミット `5bdeba0` の負の検査で `verification_configuration_error` を確認し、秘密キーの設定が認証サービスに拒否されていることを特定しました。コピー時の前後の空白・改行で正しいキーが使えなくなる場合に対応するため、`TURNSTILE_SECRET_KEY` と `RESEND_API_KEY` は前後の空白だけを除去して使用します。空白だけの値・文字列以外の値は、外部通信前に503で停止します。許可originとメールアドレスの厳密な検証は維持します。除去後も同じ設定エラーが続く場合は、公開フォームと同じSite keyに対応する既存TurnstileウィジェットのSecret keyを、Productionの `TURNSTILE_SECRET_KEY` に正しく設定し直す必要があります。秘密キーをチャットやGitへ貼り付けず、所有者の管理画面内で扱います。
+
 `npm test` は未設定、送信元偽装、必須項目、本文サイズ、スパム条件、Turnstile失敗、メールAPI失敗、受付成功・重複抑止キーをモックで検証します。実キー・実メールは使いません。
 
 Pages Functionsの結合確認では、Cloudflare公式Wranglerで `npx wrangler pages dev dist` を**リポジトリルートで**実行し、`.dev.vars`でローカル実行時変数を設定します。Astroの `npm run dev` / `npm run preview` はPages Functionを実行しません。両環境の違いを送信成功と混同しないでください。
