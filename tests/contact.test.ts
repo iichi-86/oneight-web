@@ -38,11 +38,17 @@ test('surrounding copy/paste whitespace is removed from provider keys before ext
   assert.equal(new Headers(calls[1].init?.headers).get('Authorization'), `Bearer ${env.RESEND_API_KEY}`);
 });
 test('whitespace-only or wrongly typed provider keys stop before external requests', async () => {
+  let upstreamCalls = 0;
+  const rejectExternalCall: typeof fetch = async () => {
+    upstreamCalls++;
+    throw new Error('Provider must not be contacted');
+  };
   for (const key of ['RESEND_API_KEY', 'TURNSTILE_SECRET_KEY']) {
     for (const value of [' \t\r\n ', null, 24, {}]) {
-      const response = await handleContact(request(), { ...env, [key]: value } as ContactEnv, forbiddenFetch, now);
+      const response = await handleContact(request(), { ...env, [key]: value } as ContactEnv, rejectExternalCall, now);
       assert.equal(response.status, 503, `${key} must remain configured`);
       assert.equal((await response.json()).ok, false);
+      assert.equal(upstreamCalls, 0, `${key} must stop before any provider request`);
     }
   }
 });
