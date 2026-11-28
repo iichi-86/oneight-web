@@ -1,6 +1,9 @@
-import test from 'node:test';
+import test, { after, mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { handleContact, type ContactEnv } from '../functions/api/contact.ts';
+
+const diagnosticLogs = mock.method(console, 'error', () => {});
+after(() => mock.restoreAll());
 
 const now = 1_800_000_000_000;
 const env = { CONTACT_ENABLED: 'true', CONTACT_ALLOWED_ORIGIN: 'https://oneight.test', RESEND_API_KEY: 'unit-test-secret', CONTACT_TO_EMAIL: 'owner@oneight.test', CONTACT_FROM_EMAIL: 'contact@oneight.test', TURNSTILE_SECRET_KEY: 'unit-test-challenge' };
@@ -170,9 +173,9 @@ test('new customer industries are accepted and delivered with their Japanese lab
   }
 });
 test('upstream failures and timeouts never become success or leak provider details', async () => {
-  for (const mode of ['provider-error', 'empty-receipt']) assert.equal((await handleContact(request(), env, provider([], mode), now)).status, 502);
+  for (const mode of ['provider-error', 'empty-receipt']) assert.equal((await handleContact(request(), env, provider([], mode), now)).status, 503);
   const response = await handleContact(request(), env, async () => { throw new Error('provider secret'); }, now);
-  assert.equal(response.status, 502);
+  assert.equal(response.status, 503);
   assert.doesNotMatch(await response.text(), /provider secret|unit-test/);
 });
 test('non-POST requests are rejected', async () => {
@@ -252,4 +255,82 @@ test('production release fallback keeps Origin-header checks and field validatio
   const response = await handleContact(releaseRequest('https://oneight.jp', 'https://oneight.jp', {}), releaseEnv, fetcher, now);
   assert.equal(response.status, 422);
   assert.equal(upstreamCalls, 0);
+});
+
+test('delivery diagnostics distinguish failure stages without logging private values', async () => {
+  const privateInput = { ...input, name: 'private-name-canary', shop: 'private-shop-canary', email: 'private-reply-canary@fixture.invalid', message: 'private-message-canary', token: 'private-token-canary' };
+  const privateEnv = { ...env, RESEND_API_KEY: 'private-resend-key-canary', TURNSTILE_SECRET_KEY: 'private-turnstile-key-canary', CONTACT_FROM_EMAIL: 'private-from-canary@fixture.invalid', CONTACT_TO_EMAIL: 'private-to-canary@fixture.invalid' };
+  const privateIp = '192.0.2.42';
+  const privateBody = 'private-provider-body-canary';
+  const privateException = 'private-exception-canary';
+  const messages = {
+    turnstileHttp: '確認サービスに接続できませんでした。少し時間をおいて再度お試しください。',
+    rejected: '送信前の確認が有効ではありません。もう一度確認してください。',
+    resendHttp: '送信の受付を確認できませんでした。入力内容は残っています。時間をおいて再度お試しください。',
+    receipt: '送信の受付を確認できませんでした。時間をおいて再度お試しください。',
+    exception: '接続に時間がかかっているため、送信の受付を確認できませんでした。入力内容を変えずに再度お試しください。',
+  };
+  const cases = [
+    { mode: 'turnstile-http', stage: 'turnstile_response', code: 'upstream_http_error', httpStatus: 403, status: 503, message: messages.turnstileHttp },
+    { mode: 'turnstile-rejected', stage: 'turnstile_response', code: 'verification_rejected', httpStatus: 200, status: 422, message: messages.rejected },
+    { mode: 'turnstile-json', stage: 'turnstile_response', code: 'invalid_json', httpStatus: 200, status: 503, message: messages.exception },
+    { mode: 'turnstile-exception', stage: 'turnstile_fetch', code: 'upstream_exception', status: 503, message: messages.exception },
+    { mode: 'resend-http', stage: 'resend_response', code: 'upstream_http_error', httpStatus: 429, status: 503, message: messages.resendHttp },
+    { mode: 'resend-json', stage: 'resend_response', code: 'invalid_json', httpStatus: 200, status: 503, message: messages.exception },
+    { mode: 'resend-receipt', stage: 'resend_response', code: 'invalid_receipt', httpStatus: 200, status: 503, message: messages.receipt },
+    { mode: 'resend-null', stage: 'resend_response', code: 'upstream_exception', httpStatus: 200, status: 503, message: messages.exception },
+    { mode: 'resend-exception', stage: 'resend_fetch', code: 'upstream_exception', status: 503, message: messages.exception },
+    { mode: 'resend-status-zero', stage: 'resend_response', code: 'upstream_http_error', status: 503, message: messages.resendHttp },
+  ];
+  const privateValues = [privateInput.name, privateInput.shop, privateInput.email, privateInput.message, privateInput.token, privateEnv.RESEND_API_KEY, privateEnv.TURNSTILE_SECRET_KEY, privateEnv.CONTACT_FROM_EMAIL, privateEnv.CONTACT_TO_EMAIL, privateIp, privateBody, privateException];
+  for (const scenario of cases) {
+    const start = diagnosticLogs.mock.calls.length;
+    const response = await handleContact(request(privateInput, { 'cf-connecting-ip': privateIp }), privateEnv, async url => {
+      if (String(url).includes('siteverify')) {
+        if (scenario.mode === 'turnstile-http') return new Response(privateBody, { status: 403 });
+        if (scenario.mode === 'turnstile-rejected') return Response.json({ success: false, debug: privateBody });
+        if (scenario.mode === 'turnstile-json') return new Response(privateBody, { status: 200 });
+        if (scenario.mode === 'turnstile-exception') throw new Error(privateException);
+        return Response.json({ success: true, hostname: 'oneight.test', action: 'contact' });
+      }
+      if (scenario.mode === 'resend-http') return new Response(privateBody, { status: 429 });
+      if (scenario.mode === 'resend-json') return new Response(privateBody, { status: 200 });
+      if (scenario.mode === 'resend-receipt') return Response.json({ debug: privateBody });
+      if (scenario.mode === 'resend-null') return Response.json(null);
+      if (scenario.mode === 'resend-exception') throw new Error(privateException);
+      if (scenario.mode === 'resend-status-zero') return Response.error();
+      throw new Error('Unexpected test scenario');
+    }, now);
+    assert.equal(response.status, scenario.status, scenario.mode);
+    const result = await response.json();
+    assert.equal(result.message, scenario.message, scenario.mode);
+    assert.equal(result.ok, false, scenario.mode);
+    assert.match(response.headers.get('content-type') || '', /^application\/json/);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    const emitted = diagnosticLogs.mock.calls.slice(start);
+    assert.equal(emitted.length, 1, scenario.mode);
+    assert.equal(emitted[0].arguments.length, 1, scenario.mode);
+    const encoded = emitted[0].arguments[0];
+    assert.equal(typeof encoded, 'string');
+    assert.deepEqual(JSON.parse(encoded), {
+      event: 'contact_delivery_failure', requestId: input.requestId, stage: scenario.stage, code: scenario.code,
+      ...('httpStatus' in scenario ? { httpStatus: scenario.httpStatus } : {}),
+    }, scenario.mode);
+    const { event: _event, ...expectedDiagnostic } = JSON.parse(encoded);
+    assert.deepEqual(result.diagnostic, expectedDiagnostic, scenario.mode);
+    for (const value of privateValues) {
+      assert.ok(!encoded.includes(value), `${scenario.mode} must not log private fields`);
+      assert.ok(!JSON.stringify(result).includes(value), `${scenario.mode} must not expose private fields`);
+    }
+  }
+});
+
+test('successful delivery and failures before external checks do not produce delivery diagnostics', async () => {
+  const start = diagnosticLogs.mock.calls.length;
+  assert.equal((await handleContact(request(), env, provider([]), now)).status, 200);
+  assert.equal((await handleContact(request(), {}, forbiddenFetch, now)).status, 503);
+  assert.equal((await handleContact(request({}, {}), env, forbiddenFetch, now)).status, 422);
+  assert.equal((await handleContact(request({ ...input, requestId: 'private-invalid-uuid-canary' }), env, forbiddenFetch, now)).status, 400);
+  assert.equal((await handleContact(request({ ...input, token: '' }), env, forbiddenFetch, now)).status, 422);
+  assert.equal(diagnosticLogs.mock.calls.length, start);
 });
