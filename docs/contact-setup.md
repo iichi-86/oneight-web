@@ -1,6 +1,6 @@
 # お問い合わせ受付の設定
 
-フォームとCloudflare Pages Function `/api/contact` を実装し、修正 `536e65fa` はデプロイ済みです。[公開フォーム](https://oneight.jp/contact/) の有効化表示、送信ボタン、空入力時の必須エラー、TurnstileのSuccess表示を実ブラウザで確認しました。公開プライバシーページの反映も確認済みです。その後、所有者が実フォームを送信し、Gmailへの到達を確認したと報告しています。エージェントは送信・メールボックス閲覧を行っておらず、Siteverify・Resendのプロバイダログと返信先は未確認です。
+フォームとCloudflare Pages Function `/api/contact` を実装しています。2026年11月28日の送信障害では、Turnstileの秘密キー設定の拒否を特定し、所有者がTurnstile・Resendの本番キーを設定し直しました。再デプロイ後、エージェントが所有者の明示許可を得て[公開フォーム](https://oneight.jp/contact/)から最終テストを1回送信し、成功表示と入力欄の初期化を確認しました。所有者も設定済みGmailへの到着を確認しています。秘密キーの値と受信箱の内容はエージェントに共有していません。詳細な経緯・検証範囲は下記と[検証記録](validation.md)を参照してください。
 
 ## 採用する最小構成
 
@@ -76,6 +76,12 @@
 本番コミット `d266053` のPagesデプロイ `c7336e8f-e34e-4e94-9e0f-e93184965447` 成功後、無効トークンの負の検査で503 JSON、`stage=turnstile_response`、`code=upstream_http_error`、`httpStatus=400` を確認しました。メール配信より前のSiteverifyが拒否している状態です。400の応答に既知の `invalid-input-secret` または `missing-input-secret` が含まれる場合だけ、固定分類 `verification_configuration_error` へ変換します。他のエラーコードや生レスポンスは返却しません。これにより既存の `TURNSTILE_SECRET_KEY` の設定を確認すべき状態を、安全に区別します。
 
 続く本番コミット `5bdeba0` の負の検査で `verification_configuration_error` を確認し、秘密キーの設定が認証サービスに拒否されていることを特定しました。コピー時の前後の空白・改行で正しいキーが使えなくなる場合に対応するため、`TURNSTILE_SECRET_KEY` と `RESEND_API_KEY` は前後の空白だけを除去して使用します。空白だけの値・文字列以外の値は、外部通信前に503で停止します。許可originとメールアドレスの厳密な検証は維持します。除去後も同じ設定エラーが続く場合は、公開フォームと同じSite keyに対応する既存TurnstileウィジェットのSecret keyを、Productionの `TURNSTILE_SECRET_KEY` に正しく設定し直す必要があります。秘密キーをチャットやGitへ貼り付けず、所有者の管理画面内で扱います。
+
+### 復旧確認
+
+所有者が既存の `oneight-contact` ウィジェットのSecret keyを保存し、`8bc447a` の再デプロイ後にSiteverifyの設定エラーが解消しました。その後の実フォーム試行でResendの受付失敗が判明したため、所有者が新しい送信用APIキーを作成し、Productionの `RESEND_API_KEY` を更新しました。キーの値はエージェントへ共有していません。
+
+同じアプリコードの空コミット `15831798fad064a89834dce328f6735ae1030e99` で再デプロイし、Pagesデプロイ `19f9c14e-4a32-4e5f-adc4-85433a5f757f` の成功を確認しました。公開ページはHTTP200・フォーム有効、不正トークンの負の検査は想定どおり422 JSONです。最終実フォームテストは所有者が改めて許可し、送信成功表示・入力初期化・送信ボタン復帰を確認。続いて所有者がGmailへの到着を確認しました。これを実送信の復旧確認とし、30件のモックテストの成功とは区別します。
 
 `npm test` は未設定、送信元偽装、必須項目、本文サイズ、スパム条件、Turnstile失敗、メールAPI失敗、受付成功・重複抑止キーをモックで検証します。実キー・実メールは使いません。
 
