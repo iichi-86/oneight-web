@@ -23,6 +23,23 @@ const emailPattern =
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+type DeliveryStage = 'turnstile_fetch' | 'turnstile_response' | 'resend_fetch' | 'resend_response';
+type DeliveryFailureCode = 'upstream_http_error' | 'verification_rejected' | 'invalid_json' | 'invalid_receipt' | 'upstream_exception';
+
+function deliveryFailure(status: 422 | 503, message: string, requestId: string, stage: DeliveryStage, code: DeliveryFailureCode, httpStatus?: number): Response {
+  // Only a previously validated UUID and fixed diagnostic fields may be logged.
+  // Never pass request data, provider bodies, headers or caught errors here.
+  const entry: { event: string; requestId: string; stage: DeliveryStage; code: DeliveryFailureCode; httpStatus?: number } = {
+    event: 'contact_delivery_failure', requestId, stage, code,
+  };
+  if (httpStatus !== undefined && Number.isInteger(httpStatus) && httpStatus >= 100 && httpStatus <= 599) {
+    entry.httpStatus = httpStatus;
+  }
+  console.error(JSON.stringify(entry));
+  const { event: _event, ...diagnostic } = entry;
+  return json(status, message, { diagnostic });
+}
+
 function json(
   status: number,
   message: string,
@@ -188,6 +205,9 @@ export async function handleContact(
   )
     return json(422, "送信前の確認を完了してください。");
 
+  let stage: DeliveryStage = 'turnstile_fetch';
+  let upstreamStatus: number | undefined;
+  const requestId = data.requestId;
   try {
     const challenge = new URLSearchParams({
       secret: env.TURNSTILE_SECRET_KEY,
@@ -201,11 +221,15 @@ export async function handleContact(
       { method: "POST", body: challenge },
       8000,
     );
-    if (!verification.ok)
-      return json(
-        502,
+    stage = 'turnstile_response';
+    upstreamStatus = verification.status;
+    if (!verification.ok) {
+      return deliveryFailure(
+        503,
         "確認サービスに接続できませんでした。少し時間をおいて再度お試しください。",
+        requestId, stage, 'upstream_http_error', upstreamStatus,
       );
+    }
     const check = (await verification.json()) as {
       success?: boolean;
       hostname?: string;
@@ -215,12 +239,16 @@ export async function handleContact(
       !check.success ||
       check.hostname !== new URL(origin).hostname ||
       check.action !== "contact"
-    )
-      return json(
+    ) {
+      return deliveryFailure(
         422,
         "送信前の確認が有効ではありません。もう一度確認してください。",
+        requestId, stage, 'verification_rejected', upstreamStatus,
       );
+    }
 
+    stage = 'resend_fetch';
+    upstreamStatus = undefined;
     const mail = await upstream(
       fetcher,
       "https://api.resend.com/emails",
@@ -241,25 +269,32 @@ export async function handleContact(
       },
       10_000,
     );
-    if (!mail.ok)
-      return json(
-        502,
+    stage = 'resend_response';
+    upstreamStatus = mail.status;
+    if (!mail.ok) {
+      return deliveryFailure(
+        503,
         "送信の受付を確認できませんでした。入力内容は残っています。時間をおいて再度お試しください。",
+        requestId, stage, 'upstream_http_error', upstreamStatus,
       );
+    }
     const receipt = (await mail.json()) as { id?: unknown };
-    if (typeof receipt.id !== "string" || !receipt.id)
-      return json(
-        502,
+    if (typeof receipt.id !== "string" || !receipt.id) {
+      return deliveryFailure(
+        503,
         "送信の受付を確認できませんでした。時間をおいて再度お試しください。",
+        requestId, stage, 'invalid_receipt', upstreamStatus,
       );
+    }
     return json(
       200,
       "ご相談の送信を受け付けました。内容を確認のうえ、入力いただいたメールアドレスへご連絡します。",
     );
-  } catch {
-    return json(
-      502,
+  } catch (error) {
+    return deliveryFailure(
+      503,
       "接続に時間がかかっているため、送信の受付を確認できませんでした。入力内容を変えずに再度お試しください。",
+      requestId, stage, error instanceof SyntaxError ? 'invalid_json' : 'upstream_exception', upstreamStatus,
     );
   }
 }
